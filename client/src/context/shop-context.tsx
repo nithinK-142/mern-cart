@@ -40,20 +40,15 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
   const [cartItems, setCartItems] = useState<{ [itemId: string]: number }>({});
   const [availableMoney, setAvailableMoney] = useState<number>(0);
   const [purchasedItems, setpurchasedItems] = useState<IProduct[]>([]);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(cookies.access_token !== null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
+    cookies.access_token !== null
+  );
 
   const { products } = useGetProducts();
 
   const { headers } = useGetToken();
 
   const navigate = useNavigate();
-
-  console.log(
-    `http://localhost:3001/user/available-money/${localStorage.getItem(
-      "userID"
-    )}`,
-    { headers }
-  );
 
   const fetchPurchasedItems = async () => {
     try {
@@ -125,11 +120,6 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
 
   const checkout = async () => {
     const body = { customerID: localStorage.getItem("userID"), cartItems };
-    console.log(
-      "Checkout Request: " + "http://localhost:3001/product/checkout",
-      body,
-      { headers }
-    );
     try {
       await axios.post("http://localhost:3001/product/checkout", body, {
         headers,
@@ -149,7 +139,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
       fetchPurchasedItems();
     }
   }, [isAuthenticated]);
-  
+
   useEffect(() => {
     if (!isAuthenticated) {
       localStorage.clear();
