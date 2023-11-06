@@ -27,11 +27,11 @@ const Register = () => {
         username,
         password,
       });
-      console.log("Registration Complete!");
+      alert("Registration Complete!");
     } catch (err: any) {
       if (err.response.data.type === UserErrors.USERNAME_ALREADY_EXISTS)
-        console.log("ERROR: Username already in use!");
-      else console.log("ERROR: Something went wrong!");
+        alert("ERROR: Username already in use!");
+      else alert("ERROR: Something went wrong!");
     }
   };
 
@@ -103,7 +103,7 @@ const Login = () => {
         default:
           errorMessage = "Something went wrong!";
       }
-      console.log("ERROR: " + errorMessage);
+      alert("ERROR: " + errorMessage);
     }
   };
 
