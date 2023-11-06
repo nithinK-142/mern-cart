@@ -1,8 +1,10 @@
 import axios from "axios";
-import { SyntheticEvent, useState } from "react";
-import { UserErrors } from "../../errors";
+import { SyntheticEvent, useContext, useState } from "react";
+import { UserErrors } from "../../models/errors";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { IShopContext, ShopContext } from "../../context/shop-context";
+import "./style.css";
 
 export const AuthPage = () => {
   return (
@@ -21,7 +23,7 @@ const Register = () => {
     event.preventDefault();
 
     try {
-      await axios.post("http://localhost:3001/auth/register", {
+      await axios.post("http://localhost:3001/user/register", {
         username,
         password,
       });
@@ -60,7 +62,7 @@ const Register = () => {
           />
         </div>
 
-        <button type="submit">Submit</button>
+        <button id="submit-btn" type="submit">Submit</button>
       </form>
     </div>
   );
@@ -72,17 +74,22 @@ const Login = () => {
   const [_, setCookies] = useCookies(["access_token"]);
 
   const navigate = useNavigate();
-
+  const { setIsAuthenticated } =
+    useContext<IShopContext>(ShopContext);
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
 
     try {
-      const result = await axios.post("http://localhost:3001/auth/login", {
+      const result = await axios.post("http://localhost:3001/user/login", {
         username,
         password,
       });
-      setCookies("access_token", result.data.token);
-      localStorage.setItem("userID", result.data.token);
+      setCookies("access_token", result.data.token, {
+        sameSite: "None" as any,
+        secure: true,
+      });
+      localStorage.setItem("userID", result.data.userID);
+      setIsAuthenticated(true);
       navigate("/");
     } catch (err: any) {
       let errorMessage: string = "";
@@ -127,7 +134,7 @@ const Login = () => {
           />
         </div>
 
-        <button type="submit">Submit</button>
+        <button id="submit-btn" type="submit">Submit</button>
       </form>
     </div>
   );

@@ -3,6 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 
 import { userRouter } from "./routes/user";
+import { productRouter } from "./routes/product";
 // require('dotenv').config();
 import { config } from "dotenv";
 
@@ -12,16 +13,16 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use("/auth", userRouter);
+app.use("/user", userRouter);
+app.use("/product", productRouter);
 
 const connectDB = async () => {
   await mongoose
     .connect(
-      // `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@ecommerce.td2to3g.mongodb.net/ecommerce`
       `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@ecommerce.td2to3g.mongodb.net/ecommerce`
     )
     .catch(function (error) {
-      console.log(`error connecting...  ${error} `);
+      console.log(`ERROR: ${error} `);
     });
 };
 
