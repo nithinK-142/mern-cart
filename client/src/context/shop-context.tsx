@@ -107,15 +107,18 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     let totalAmount = 0;
     for (const item in cartItems) {
       if (cartItems[item] > 0) {
-        let itemInfo: IProduct | undefined = products.find(
+        const itemInfo: IProduct | undefined = products.find(
           (product) => product._id === item
         );
-
-        totalAmount += cartItems[item] * itemInfo!.price;
+  
+        if (itemInfo) {
+          totalAmount += cartItems[item] * itemInfo.price;
+        }
       }
     }
     return totalAmount;
   };
+  
 
   const checkout = async () => {
     const body = { customerID: localStorage.getItem("userID"), cartItems };
