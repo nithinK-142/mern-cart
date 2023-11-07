@@ -23,7 +23,7 @@ const Register = () => {
     event.preventDefault();
 
     try {
-      await axios.post("http://localhost:3001/user/register", {
+      await axios.post("https://mern-cart.vercel.app/user/register", {
         username,
         password,
       });
@@ -80,7 +80,7 @@ const Login = () => {
     event.preventDefault();
 
     try {
-      const result = await axios.post("http://localhost:3001/user/login", {
+      const result = await axios.post("https://mern-cart.vercel.app/user/login", {
         username,
         password,
       });

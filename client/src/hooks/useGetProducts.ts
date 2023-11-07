@@ -11,7 +11,7 @@ export const useGetProducts = () => {
 
   const fetchProducts = async () => {
     try {
-      const fetchedProducts = await axios.get("http://localhost:3001/product", {
+      const fetchedProducts = await axios.get("https://mern-cart.vercel.app/product", {
         headers,
       });
       setProducts(fetchedProducts.data.products);
