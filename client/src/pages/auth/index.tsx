@@ -44,7 +44,7 @@ const Register = () => {
           <label htmlFor="username">Username: </label>
           <input
             type="text"
-            id="username"
+            id="register-username"
             value={username}
             onChange={(event) => setUsername(event.target.value)}
             required
@@ -55,14 +55,14 @@ const Register = () => {
           <label htmlFor="username">Password: </label>
           <input
             type="password"
-            id="password"
+            id="register-password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             required
           />
         </div>
 
-        <button id="submit-btn" type="submit">Submit</button>
+        <button className="btn" type="submit">Submit</button>
       </form>
     </div>
   );
@@ -116,7 +116,7 @@ const Login = () => {
           <label htmlFor="username">Username: </label>
           <input
             type="text"
-            id="username"
+            id="login-username"
             value={username}
             onChange={(event) => setUsername(event.target.value)}
             required
@@ -127,14 +127,14 @@ const Login = () => {
           <label htmlFor="username">Password: </label>
           <input
             type="password"
-            id="password"
+            id="login-password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             required
           />
         </div>
 
-        <button id="submit-btn" type="submit">Submit</button>
+        <button className="btn" type="submit">Submit</button>
       </form>
     </div>
   );
