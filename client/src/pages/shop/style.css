@@ -17,6 +17,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+}
+
+.stock-quantity {
+  position: absolute;
+  bottom: -8rem;
 }
 
 .product img {

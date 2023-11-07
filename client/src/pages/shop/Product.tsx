@@ -21,12 +21,15 @@ export const Product = (props: Props) => {
         <p>${price}</p>
       </div>
 
-      <button className="add-to-cart-btn" onClick={() => addToCart(_id)}>
-        Add to Cart {count > 0 && <>({count})</>}
-      </button>
-      <div className="stock-quantity">
-        {stockQuantity === 0 && <h2>OUT OF STOCK</h2>}
-      </div>
+      {stockQuantity === 0 ? (
+        <div className="stock-quantity">
+          <h2>OUT OF STOCK</h2>
+        </div>
+      ) : (
+        <button className="add-to-cart-btn" onClick={() => addToCart(_id)}>
+          Add to Cart {count > 0 && <>({count})</>}
+        </button>
+      )}
     </div>
   );
 };
