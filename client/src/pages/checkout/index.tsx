@@ -17,21 +17,25 @@ export const CheckoutPage = () => {
       <div>
         <h1>Your Cart Items</h1>
       </div>
+
       <div className="cart">
-        {products.map((product: IProduct) => {
-          if (getCartItemCount(product._id) !== 0)
-            return <CartItem key={product._id} product={product} />;
-        })}
+        {products.length === 0 ? (
+          <h2>No Items in the Cart</h2>
+        ) : (
+          products.map((product: IProduct) => {
+            if (getCartItemCount(product._id) !== 0) {
+              return <CartItem key={product._id} product={product} />;
+            }
+          })
+        )}
       </div>
 
-      {totalAmount > 0 ? (
+      {totalAmount > 0 && (
         <div className="checkout">
           <p>Subtotal : ${totalAmount.toFixed(2)}</p>
           <button onClick={() => navigate("/")}>Continue Shopping</button>
           <button onClick={checkout}>Checkout</button>
         </div>
-      ) : (
-        <h2>No Items in the Cart</h2>
       )}
     </div>
   );
