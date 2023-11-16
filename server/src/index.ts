@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3001;
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://mern-cart.vercel.app"],
+    origin: [`${process.env.URL}`],
     methods: ["POST", "GET"],
     credentials: true,
   })
