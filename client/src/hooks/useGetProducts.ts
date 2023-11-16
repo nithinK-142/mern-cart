@@ -11,7 +11,7 @@ export const useGetProducts = () => {
 
   const fetchProducts = async () => {
     try {
-      const fetchedProducts = await axios.get("https://mern-cart-api.vercel.app/product", {
+      const fetchedProducts = await axios.get(`${import.meta.env.VITE_API_URL}/product`, {
         headers,
       });
       setProducts(fetchedProducts.data.products);

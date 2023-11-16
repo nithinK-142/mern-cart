@@ -52,9 +52,9 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
   const fetchPurchasedItems = async () => {
     try {
       const res = await axios.get(
-        `https://mern-cart-api.vercel.app/product/purchased-items/${localStorage.getItem(
-          "userID"
-        )}`,
+        `${
+          import.meta.env.VITE_API_URL
+        }/product/purchased-items/${localStorage.getItem("userID")}`,
         { headers }
       );
       setpurchasedItems(res.data.purchasedItems);
@@ -66,9 +66,9 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
   const fetchAvailableMoney = async () => {
     try {
       const res = await axios.get(
-        `https://mern-cart-api.vercel.app/user/available-money/${localStorage.getItem(
-          "userID"
-        )}`,
+        `${
+          import.meta.env.VITE_API_URL
+        }/user/available-money/${localStorage.getItem("userID")}`,
         { headers }
       );
       setAvailableMoney(res.data.availableMoney);
@@ -110,7 +110,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
         const itemInfo: IProduct | undefined = products.find(
           (product) => product._id === item
         );
-  
+
         if (itemInfo) {
           totalAmount += cartItems[item] * itemInfo.price;
         }
@@ -118,14 +118,17 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     }
     return totalAmount;
   };
-  
 
   const checkout = async () => {
     const body = { customerID: localStorage.getItem("userID"), cartItems };
     try {
-      await axios.post("https://mern-cart-api.vercel.app/product/checkout", body, {
-        headers,
-      });
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/product/checkout`,
+        body,
+        {
+          headers,
+        }
+      );
       setCartItems({});
       fetchAvailableMoney();
       fetchPurchasedItems();

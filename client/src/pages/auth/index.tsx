@@ -23,7 +23,7 @@ const Register = () => {
     event.preventDefault();
 
     try {
-      await axios.post("https://mern-cart-api.vercel.app/user/register", {
+      await axios.post(`${import.meta.env.VITE_API_URL}/user/register`, {
         username,
         password,
       });
@@ -80,7 +80,7 @@ const Login = () => {
     event.preventDefault();
 
     try {
-      const result = await axios.post("https://mern-cart-api.vercel.app/user/login", {
+      const result = await axios.post(`${import.meta.env.VITE_API_URL}/user/login`, {
         username,
         password,
       });
