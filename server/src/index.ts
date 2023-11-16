@@ -34,11 +34,7 @@ const connectDB = async () => {
 connectDB();
 
 app.get("/test", (_, res) => {
-  res.send(PORT);
+  res.send("Hey there");
 });
 
 app.listen(PORT, () => console.log("SERVER STARTED"));
-
-// await mongoose.connect(
-//   `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@ecommerce.td2to3g.mongodb.net/${process.env.MONGODB_CLUSTERNAME}`
-// );
