@@ -23,11 +23,11 @@ router.post("/checkout", verifyToken, async (req: Request, res: Response) => {
     const products = await ProductModel.find({ _id: { $in: productIDs } });
 
     if (!user) {
-      res.status(400).json({ type: ProductErrors.NO_USERS_FOUND });
+      return res.status(400).json({ type: ProductErrors.NO_USERS_FOUND });
     }
 
     if (products.length !== productIDs.length) {
-      res.status(400).json({ type: ProductErrors.NO_PRODUCT_FOUND });
+      return res.status(400).json({ type: ProductErrors.NO_PRODUCT_FOUND });
     }
 
     let totalPrice = 0;
@@ -35,17 +35,18 @@ router.post("/checkout", verifyToken, async (req: Request, res: Response) => {
       const product = products.find((product) => String(product._id) === item);
 
       if (!product) {
-        res.status(400).json({ type: ProductErrors.NO_PRODUCT_FOUND });
+        return res.status(400).json({ type: ProductErrors.NO_PRODUCT_FOUND });
       }
 
       if (product.stockQuantity < cartItems[item]) {
-        res.status(400).json({ type: ProductErrors.NOT_ENOUGH_STOCK });
+        return res.status(400).json({ type: ProductErrors.NOT_ENOUGH_STOCK });
       }
 
       totalPrice += product.price * cartItems[item];
     }
+
     if (user.availableMoney < totalPrice) {
-      res.status(400).json({ type: ProductErrors.NO_AVAILABLE_MONEY });
+      return res.status(400).json({ type: ProductErrors.NO_AVAILABLE_MONEY });
     }
 
     user.availableMoney -= totalPrice;
