@@ -30,13 +30,13 @@ export const CheckoutPage = () => {
         )}
       </div>
 
-      {totalAmount > 0 && (
-        <div className="checkout">
-          <p>Subtotal : ${totalAmount.toFixed(2)}</p>
-          <button onClick={() => navigate("/")}>Continue Shopping</button>
-          <button onClick={checkout}>Checkout</button>
-        </div>
-      )}
+      {/* {totalAmount > 0 && ( */}
+      <div className="checkout">
+        <p>Subtotal : ${totalAmount.toFixed(2)}</p>
+        <button onClick={() => navigate("/")}>Continue Shopping</button>
+        <button onClick={checkout}>Checkout</button>
+      </div>
+      {/* )} */}
     </div>
   );
 };
