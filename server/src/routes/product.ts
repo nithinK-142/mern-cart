@@ -59,9 +59,9 @@ router.post("/checkout", verifyToken, async (req: Request, res: Response) => {
       { $inc: { stockQuantity: -1 } }
     );
 
-    res.json({ purchasedItems: user.purchasedItems });
+    return res.json({ purchasedItems: user.purchasedItems });
   } catch (err) {
-    res.status(400).json({ err });
+    return res.status(400).json({ err });
   }
 });
 
