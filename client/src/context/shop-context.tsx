@@ -5,6 +5,7 @@ import axios from "axios";
 import { useGetToken } from "../hooks/useGetToken";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { ProductErrors } from "../models/errors";
 
 export interface IShopContext {
   addToCart: (itemId: string) => void;
@@ -135,7 +136,22 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
       fetchPurchasedItems();
       navigate("/");
     } catch (err) {
-      console.log("ERROR: " + err);
+      let errorMessage: string = "";
+      switch (err.response.data.type) {
+        case ProductErrors.NO_PRODUCT_FOUND:
+          errorMessage = "No product found";
+          break;
+        case ProductErrors.NO_AVAILABLE_MONEY:
+          errorMessage = "Not enough money";
+          break;
+        case ProductErrors.NOT_ENOUGH_STOCK:
+          errorMessage = "Not enough stock";
+          break;
+        default:
+          errorMessage = "Something went wrong";
+      }
+
+      console.log("ERROR: " + errorMessage);
     }
   };
 
@@ -151,6 +167,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     if (!isAuthenticated) {
       localStorage.clear();
       setCookies("access_token", null);
+      setCartItems({});
     }
   }, [isAuthenticated]);
 

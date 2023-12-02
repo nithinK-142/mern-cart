@@ -33,8 +33,4 @@ const connectDB = async () => {
 
 connectDB();
 
-app.get("/test", (_, res) => {
-  res.send("Hey there");
-});
-
 app.listen(PORT, () => console.log("SERVER STARTED"));
