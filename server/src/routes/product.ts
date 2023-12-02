@@ -3,6 +3,7 @@ import { ProductModel } from "../models/product";
 import { UserModel } from "../models/user";
 import { verifyToken } from "./user";
 import { ProductErrors } from "../common/errors";
+import { Types } from "mongoose";
 
 const router = Router();
 
@@ -19,8 +20,16 @@ router.post("/checkout", verifyToken, async (req: Request, res: Response) => {
   const { customerID, cartItems } = req.body;
   try {
     const user = await UserModel.findById(customerID);
+    
+    
     const productIDs = Object.keys(cartItems);
-    const products = await ProductModel.find({ _id: { $in: productIDs } });
+    const productObjectIDs = productIDs.map((el) => { return new Types.ObjectId(el) })
+    const products = await ProductModel.find({ _id: { $in: productObjectIDs } });
+    // const products = await ProductModel.find({ _id: { $in: productIDs } });
+    // const products = await ProductModel.find({}, '_id');
+
+    console.log("ProductIDs: ", productObjectIDs);
+    console.log("Products: ", products);
 
     if (!user) {
       return res.status(400).json({ type: ProductErrors.NO_USERS_FOUND });
@@ -61,7 +70,8 @@ router.post("/checkout", verifyToken, async (req: Request, res: Response) => {
 
     return res.json({ purchasedItems: user.purchasedItems });
   } catch (err) {
-    return res.status(400).json({ err });
+    console.error("Server Error:", err);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
