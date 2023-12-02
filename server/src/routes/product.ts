@@ -3,7 +3,6 @@ import { ProductModel } from "../models/product";
 import { UserModel } from "../models/user";
 import { verifyToken } from "./user";
 import { ProductErrors } from "../common/errors";
-import { Types } from "mongoose";
 
 const router = Router();
 
@@ -23,13 +22,8 @@ router.post("/checkout", verifyToken, async (req: Request, res: Response) => {
     
     
     const productIDs = Object.keys(cartItems);
-    const productObjectIDs = productIDs.map((el) => { return new Types.ObjectId(el) })
-    const products = await ProductModel.find({ _id: { $in: productObjectIDs } });
-    // const products = await ProductModel.find({ _id: { $in: productIDs } });
+    const products = await ProductModel.find({ _id: { $in: productIDs } });
     // const products = await ProductModel.find({}, '_id');
-
-    console.log("ProductIDs: ", productObjectIDs);
-    console.log("Products: ", products);
 
     if (!user) {
       return res.status(400).json({ type: ProductErrors.NO_USERS_FOUND });
