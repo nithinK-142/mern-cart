@@ -11,9 +11,12 @@ export const useGetProducts = () => {
 
   const fetchProducts = async () => {
     try {
-      const fetchedProducts = await axios.get(`${import.meta.env.VITE_API_URL}/product`, {
-        headers,
-      });
+      const fetchedProducts = await axios.get(
+        `${import.meta.env.VITE_API_URL}/product`,
+        {
+          headers,
+        }
+      );
       setProducts(fetchedProducts.data.products);
     } catch (err) {
       console.log("ERROR: Something went wrong!");
@@ -24,5 +27,5 @@ export const useGetProducts = () => {
     if (isAuthenticated) fetchProducts();
   }, [isAuthenticated]);
 
-  return { products };
+  return { products, fetchProducts };
 };

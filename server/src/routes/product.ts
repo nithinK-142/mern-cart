@@ -77,7 +77,9 @@ router.get(
         return res.status(400).json({ type: ProductErrors.NO_USERS_FOUND });
       }
 
-      const products = await ProductModel.find({ _id: { $in: user.purchasedItems } });
+      const products = await ProductModel.find({
+        _id: { $in: user.purchasedItems },
+      });
       res.json({ purchasedItems: products });
     } catch (err) {
       res.status(500).json({ type: err });
