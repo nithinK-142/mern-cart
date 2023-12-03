@@ -12,7 +12,7 @@ export const PurchasedItemsPage = () => {
         {purchasedItems.map((item) => {
           const count = getCartItemCount(item._id);
           return (
-            <div className="item">
+            <div key={item._id} className="item">
               <h3> {item.productName}</h3>
               <img src={item.imageURL} alt={item.productName} />
               <p>$: {item.price}</p>
