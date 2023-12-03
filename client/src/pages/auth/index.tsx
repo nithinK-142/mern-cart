@@ -69,9 +69,9 @@ const Register = () => {
 
         <button className="btn" type="submit">
           {loading ? (
-            <div>
+            <span>
               Registering <img id="register" src={spinner} alt="spinner" />
-            </div>
+            </span>
           ) : (
             "Submit"
           )}

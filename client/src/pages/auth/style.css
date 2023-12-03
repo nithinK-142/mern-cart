@@ -48,7 +48,7 @@ input {
   border-radius: 4px;
 }
 
-.btn div {
+.btn span {
   display: flex;
   align-items: center;
   justify-content: center;
