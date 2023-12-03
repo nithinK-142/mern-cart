@@ -6,21 +6,27 @@ import { CartItem } from "./CartItem";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
 import spinner from "../../assets/spinner.svg";
-import toast from 'react-hot-toast';
-
 
 export const CheckoutPage = () => {
   const [loading, setLoading] = useState(false);
-  const { cartItems, getCartItemCount, getTotalCartAmount, checkout } =
-    useContext<IShopContext>(ShopContext);
+  const {
+    availableMoney,
+    cartItems,
+    getCartItemCount,
+    getTotalCartAmount,
+    checkout,
+  } = useContext<IShopContext>(ShopContext);
   const hasItemsInCart = Object.keys(cartItems).length === 0;
   const { products } = useGetProducts();
   const totalAmount = getTotalCartAmount();
+  const hasMoney = availableMoney >= totalAmount;
   const navigate = useNavigate();
   const handleButonClick = () => {
     setLoading(true);
     checkout();
-    toast.success('Order placed 👍');
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
   };
   return (
     <div className="cart">
@@ -45,7 +51,7 @@ export const CheckoutPage = () => {
           <p>Subtotal : ${totalAmount.toFixed(2)}</p>
           <button onClick={() => navigate("/")}>Continue Shopping</button>
           <button onClick={handleButonClick}>
-            {loading ? (
+            {loading && hasMoney ? (
               <span>
                 Checkout
                 <img id="checkout" src={spinner} alt="spinner" />
