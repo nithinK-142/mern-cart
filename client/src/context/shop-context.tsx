@@ -18,6 +18,7 @@ export interface IShopContext {
   purchasedItems: IProduct[];
   isAuthenticated: boolean;
   setIsAuthenticated: (isAuthenticated: boolean) => void;
+  cartItems: { [itemId: string]: number };
 }
 
 const defaultVal: IShopContext = {
@@ -31,6 +32,7 @@ const defaultVal: IShopContext = {
   purchasedItems: [],
   isAuthenticated: false,
   setIsAuthenticated: () => null,
+  cartItems: {},
 };
 
 export const ShopContext = createContext<IShopContext>(defaultVal);
@@ -182,6 +184,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     purchasedItems,
     isAuthenticated,
     setIsAuthenticated,
+    cartItems,
   };
   return (
     <ShopContext.Provider value={contextValue}>

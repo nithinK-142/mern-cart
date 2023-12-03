@@ -7,8 +7,9 @@ import "./style.css";
 import { useNavigate } from "react-router-dom";
 
 export const CheckoutPage = () => {
-  const { getCartItemCount, getTotalCartAmount, checkout } =
+  const { cartItems, getCartItemCount, getTotalCartAmount, checkout } =
     useContext<IShopContext>(ShopContext);
+    const hasItemsInCart = Object.keys(cartItems).length === 0;
   const { products } = useGetProducts();
   const totalAmount = getTotalCartAmount();
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ export const CheckoutPage = () => {
       </div>
 
       <div className="cart">
-        {products.length === 0 ? (
+        {hasItemsInCart ? (
           <h2>No Items in the Cart</h2>
         ) : (
           products.map((product: IProduct) => {
