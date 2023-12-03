@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { IShopContext, ShopContext } from "../../context/shop-context";
 import "./style.css";
+import spinner from "../../assets/spinner.svg";
 
 export const AuthPage = () => {
   return (
@@ -18,11 +19,13 @@ export const AuthPage = () => {
 const Register = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
 
     try {
+      setLoading(true);
       await axios.post(`${import.meta.env.VITE_API_URL}/user/register`, {
         username,
         password,
@@ -32,6 +35,8 @@ const Register = () => {
       if (err.response.data.type === UserErrors.USERNAME_ALREADY_EXISTS)
         alert("ERROR: Username already in use!");
       else alert("ERROR: Something went wrong!");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -62,7 +67,15 @@ const Register = () => {
           />
         </div>
 
-        <button className="btn" type="submit">Submit</button>
+        <button className="btn" type="submit">
+          {loading ? (
+            <div>
+              Registering <img id="register" src={spinner} alt="spinner" />
+            </div>
+          ) : (
+            "Submit"
+          )}
+        </button>
       </form>
     </div>
   );
@@ -71,19 +84,23 @@ const Register = () => {
 const Login = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState(false);
   const [_, setCookies] = useCookies(["access_token"]);
 
   const navigate = useNavigate();
-  const { setIsAuthenticated } =
-    useContext<IShopContext>(ShopContext);
+  const { setIsAuthenticated } = useContext<IShopContext>(ShopContext);
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
 
     try {
-      const result = await axios.post(`${import.meta.env.VITE_API_URL}/user/login`, {
-        username,
-        password,
-      });
+      setLoading(true);
+      const result = await axios.post(
+        `${import.meta.env.VITE_API_URL}/user/login`,
+        {
+          username,
+          password,
+        }
+      );
       setCookies("access_token", result.data.token, {
         sameSite: "None" as any,
         secure: true,
@@ -104,6 +121,8 @@ const Login = () => {
           errorMessage = "Something went wrong!";
       }
       alert("ERROR: " + errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -134,7 +153,15 @@ const Login = () => {
           />
         </div>
 
-        <button className="btn" type="submit">Submit</button>
+        <button className="btn" type="submit">
+          {loading ? (
+            <div>
+              Logging in <img id="login" src={spinner} alt="spinner" />
+            </div>
+          ) : (
+            "Submit"
+          )}
+        </button>
       </form>
     </div>
   );
