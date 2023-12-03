@@ -6,6 +6,7 @@ import { useGetToken } from "../hooks/useGetToken";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ProductErrors } from "../models/errors";
+import toast from "react-hot-toast";
 
 export interface IShopContext {
   addToCart: (itemId: string) => void;
@@ -115,9 +116,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
           (product) => product._id === item
         );
 
-        if (itemInfo) {
-          totalAmount += cartItems[item] * itemInfo.price;
-        }
+        if (itemInfo) totalAmount += cartItems[item] * itemInfo.price;
       }
     }
     return totalAmount;
@@ -133,6 +132,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
           headers,
         }
       );
+      toast.success("Order placed 👍");
       setCartItems({});
       fetchAvailableMoney();
       fetchPurchasedItems();
@@ -153,7 +153,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
           errorMessage = "Something went wrong";
       }
 
-      console.log("ERROR: " + errorMessage);
+      toast.error("ERROR: " + errorMessage);
     }
   };
 
