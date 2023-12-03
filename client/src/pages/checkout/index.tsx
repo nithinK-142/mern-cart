@@ -6,6 +6,8 @@ import { CartItem } from "./CartItem";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
 import spinner from "../../assets/spinner.svg";
+import toast from 'react-hot-toast';
+
 
 export const CheckoutPage = () => {
   const [loading, setLoading] = useState(false);
@@ -18,6 +20,7 @@ export const CheckoutPage = () => {
   const handleButonClick = () => {
     setLoading(true);
     checkout();
+    toast.success('Order placed 👍');
   };
   return (
     <div className="cart">

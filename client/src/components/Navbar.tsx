@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import CartSVG from "../assets/cart.svg";
 import { useContext } from "react";
 import { IShopContext, ShopContext } from "../context/shop-context";
+import toast from "react-hot-toast";
 
 export const Navbar = () => {
   const { availableMoney, isAuthenticated, setIsAuthenticated } =
@@ -9,11 +10,12 @@ export const Navbar = () => {
 
   const logout = () => {
     setIsAuthenticated(false);
+    toast.success("Successfully logged out!");
   };
   return (
     <div className="navbar">
       <div className="navbar-title">
-        <h1>MERN Cart</h1>
+        <Link to={"/"}><h1>MERN Cart</h1></Link>
       </div>
       <div className="navbar-links">
         {isAuthenticated && (

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { IShopContext, ShopContext } from "../../context/shop-context";
 import "./style.css";
 import spinner from "../../assets/spinner.svg";
+import toast from 'react-hot-toast';
 
 export const AuthPage = () => {
   return (
@@ -30,11 +31,11 @@ const Register = () => {
         username,
         password,
       });
-      alert("Registration Complete!");
+      toast.success("Registration Complete!");
     } catch (err: any) {
       if (err.response.data.type === UserErrors.USERNAME_ALREADY_EXISTS)
-        alert("ERROR: Username already in use!");
-      else alert("ERROR: Something went wrong!");
+        toast.error("ERROR: Username already in use!");
+      else toast.error("ERROR: Something went wrong!");
     } finally {
       setLoading(false);
     }
@@ -108,6 +109,7 @@ const Login = () => {
       localStorage.setItem("userID", result.data.userID);
       setIsAuthenticated(true);
       navigate("/");
+      toast.success("Successfully logged in!");
     } catch (err: any) {
       let errorMessage: string = "";
       switch (err.response.data.type) {
@@ -120,7 +122,7 @@ const Login = () => {
         default:
           errorMessage = "Something went wrong!";
       }
-      alert("ERROR: " + errorMessage);
+      toast.error("ERROR: " + errorMessage);
     } finally {
       setLoading(false);
     }

@@ -6,6 +6,7 @@ import { ShopPage } from "./pages/shop";
 import { CheckoutPage } from "./pages/checkout";
 import { PurchasedItemsPage } from "./pages/purchased-items";
 import { ShopContextProvider } from "./context/shop-context";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/purchased-items" element={<PurchasedItemsPage />} />
           </Routes>
+          <Toaster />
         </ShopContextProvider>
       </Router>
     </div>

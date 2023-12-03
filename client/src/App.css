@@ -23,6 +23,11 @@ button:active {
   padding: 10px;
 }
 
+h1 {
+  font-size: 2rem;
+  padding-top: 16px;
+  margin: 0;
+}
 .navbar-links {
   display: flex;
   margin-right: 20px;
