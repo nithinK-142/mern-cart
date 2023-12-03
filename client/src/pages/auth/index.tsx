@@ -157,9 +157,9 @@ const Login = () => {
 
         <button className="btn" type="submit">
           {loading ? (
-            <div>
+            <span>
               Logging in <img id="login" src={spinner} alt="spinner" />
-            </div>
+            </span>
           ) : (
             "Submit"
           )}
