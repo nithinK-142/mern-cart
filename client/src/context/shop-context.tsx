@@ -6,7 +6,6 @@ import { useGetToken } from "../hooks/useGetToken";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ProductErrors } from "../models/errors";
-import toast from 'react-hot-toast';
 
 export interface IShopContext {
   addToCart: (itemId: string) => void;
