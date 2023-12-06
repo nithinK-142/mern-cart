@@ -1,0 +1,14 @@
+.skeleton-loader {
+  position: relative;
+  top: -100px;
+  width: 400px;
+  height: 200px;
+}
+
+.skeleton-image {
+  position: absolute;
+  border-radius: 8px;
+  width: 400px;
+  height: 200px;
+  background-color: #f0f0f0;
+}
