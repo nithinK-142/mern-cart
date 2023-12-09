@@ -6,10 +6,12 @@ import { CartItem } from "./CartItem";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
 import spinner from "../../assets/spinner.svg";
+import toast from "react-hot-toast";
 
 export const CheckoutPage = () => {
   const [loading, setLoading] = useState(false);
   const {
+    isAuthenticated,
     availableMoney,
     cartItems,
     getCartItemCount,
@@ -28,6 +30,12 @@ export const CheckoutPage = () => {
       setLoading(false);
     }, 3000);
   };
+
+  if (!isAuthenticated) {
+    navigate("/");
+    toast.error("You're not logged in, please log in.");
+  }
+
   return (
     <div className="cart">
       <div>
