@@ -29,7 +29,12 @@ export const Product = (props: Props) => {
           <h2>OUT OF STOCK</h2>
         </div>
       ) : (
-        <button className="add-to-cart-btn" onClick={() => addToCart(_id)}>
+        <button
+          className={`add-to-cart-btn ${
+            count > 0 ? "btn-green" : "btn-transparent"
+          }`}
+          onClick={() => addToCart(_id)}
+        >
           Add to Cart {count > 0 && <>({count})</>}
         </button>
       )}
