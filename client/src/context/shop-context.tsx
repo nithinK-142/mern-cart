@@ -39,14 +39,13 @@ const defaultVal: IShopContext = {
 export const ShopContext = createContext<IShopContext>(defaultVal);
 
 export const ShopContextProvider = (props: { children: React.ReactNode }) => {
-  const [_, setCookies] = useCookies(["access_token"]);
+  const [cookies, setCookies] = useCookies(["access_token"]);
   const [cartItems, setCartItems] = useState<{ [itemId: string]: number }>({});
   const [availableMoney, setAvailableMoney] = useState<number>(0);
   const [purchasedItems, setpurchasedItems] = useState<IProduct[]>([]);
-  // const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
-  //   cookies.access_token !== null
-  // );
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
+    cookies.access_token && cookies.access_token !== ""
+  );
 
   const { products, fetchProducts } = useGetProducts();
 
