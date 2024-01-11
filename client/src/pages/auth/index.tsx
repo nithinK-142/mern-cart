@@ -31,7 +31,7 @@ const Register = () => {
         username,
         password,
       });
-      toast.success("Registration Complete!");
+      toast.success("Registration Complete, now please login!");
     } catch (err: any) {
       if (err.response.data.type === UserErrors.USERNAME_ALREADY_EXISTS)
         toast.error("ERROR: Username already in use!");
