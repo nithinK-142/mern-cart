@@ -5,7 +5,7 @@ const { Generator } = require("npm-dts");
 
 new Generator({
   entry: "src/index.ts",
-  output: "build/index.d.ts",
+  output: "dist/index.d.ts",
 }).generate();
 
 const sharedConfig = {
@@ -18,12 +18,12 @@ const sharedConfig = {
 build({
   ...sharedConfig,
   platform: "node", // for CJS
-  outfile: "build/index.js",
+  outfile: "dist/index.js",
 });
 
 build({
   ...sharedConfig,
-  outfile: "build/index.esm.js",
+  outfile: "dist/index.esm.js",
   platform: "neutral", // for ESM
   format: "esm",
 });

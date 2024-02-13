@@ -5,7 +5,7 @@
 
     /* Modules */
     "module": "commonjs",
-    "outDir": "./build",
+    "outDir": "./dist",
 
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
