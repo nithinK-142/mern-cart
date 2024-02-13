@@ -9,14 +9,14 @@
     "build": "node build-api.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "module": "build/index.esm.js",
+  "typings": "build/index.d.ts",
   "files": [
     "build/*"
   ],
-  "module": "build/index.esm.js",
-  "typings": "build/index.d.ts",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
