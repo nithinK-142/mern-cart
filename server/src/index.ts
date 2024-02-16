@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 config();
 
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import { userRouter } from "./routes/user";
@@ -19,6 +19,10 @@ app.use(
   })
 );
 
+app.get("/", (_req: Request, res: Response) => {
+  res.status(200).send("Mern Cart API");
+});
+
 app.use("/user", userRouter);
 app.use("/product", productRouter);
 
@@ -34,3 +38,5 @@ const connectDB = async () => {
 connectDB();
 
 app.listen(PORT, () => console.log("SERVER STARTED"));
+
+export default app;

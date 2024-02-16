@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
@@ -30,7 +30,7 @@ router.post("/register", async (req: Request, res: Response) => {
 router.post("/login", async (req: Request, res: Response) => {
   const { username, password } = req.body;
   try {
-    const user: IUser = await UserModel.findOne({ username });
+    const user: IUser | null = await UserModel.findOne({ username });
     if (!user) {
       return res.status(400).json({ type: UserErrors.NO_USER_FOUND });
     }
@@ -47,7 +47,11 @@ router.post("/login", async (req: Request, res: Response) => {
   }
 });
 
-export const verifyToken = (req: Request, res: Response, next) => {
+export const verifyToken = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
     jwt.verify(authHeader, "secret", (err) => {
