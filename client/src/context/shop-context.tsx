@@ -58,7 +58,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
       const res = await axios.get(
         `${
           import.meta.env.VITE_API_URL
-        }/product/purchased-items/${localStorage.getItem("userID")}`,
+        }/product/purchased-items/${sessionStorage.getItem("userID")}`,
         { headers }
       );
       setpurchasedItems(res.data.purchasedItems);
@@ -72,7 +72,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
       const res = await axios.get(
         `${
           import.meta.env.VITE_API_URL
-        }/user/available-money/${localStorage.getItem("userID")}`,
+        }/user/available-money/${sessionStorage.getItem("userID")}`,
         { headers }
       );
       setAvailableMoney(res.data.availableMoney);
@@ -122,7 +122,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
   };
 
   const checkout = async () => {
-    const body = { customerID: localStorage.getItem("userID"), cartItems };
+    const body = { customerID: sessionStorage.getItem("userID"), cartItems };
     try {
       await axios.post(
         `${import.meta.env.VITE_API_URL}/product/checkout`,
@@ -166,7 +166,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      localStorage.clear();
+      sessionStorage.clear();
       setCookies("access_token", null);
       setCartItems({});
     }
