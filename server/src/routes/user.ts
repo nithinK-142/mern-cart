@@ -1,4 +1,10 @@
-import { Router, Request, Response, NextFunction } from "express";
+import {
+  Router,
+  Request,
+  Response,
+  NextFunction,
+  CookieOptions,
+} from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
@@ -34,13 +40,21 @@ router.post("/login", async (req: Request, res: Response) => {
     if (!user) {
       return res.status(400).json({ type: UserErrors.NO_USER_FOUND });
     }
-
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(400).json({ type: UserErrors.WRONG_CREDENTIALS });
     }
 
     const token = jwt.sign({ id: user._id }, "secret");
+
+    const cookieOptions: CookieOptions = {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: true,
+    };
+
+    res.cookie("authToken", token, cookieOptions);
+
     res.json({ token, userID: user._id });
   } catch (err) {
     res.status(500).json({ type: err });

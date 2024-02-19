@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { IShopContext, ShopContext } from "../../context/shop-context";
 import "./style.css";
 import spinner from "../../assets/spinner.svg";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 
 export const AuthPage = () => {
   return (
@@ -32,6 +32,7 @@ const Register = () => {
         password,
       });
       toast.success("Registration Complete, now please login!");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       if (err.response.data.type === UserErrors.USERNAME_ALREADY_EXISTS)
         toast.error("ERROR: Username already in use!");
@@ -47,7 +48,7 @@ const Register = () => {
         <h2>Register</h2>
 
         <div className="form-group">
-          <label htmlFor="username">Username: </label>
+          <label htmlFor="register-username">Username: </label>
           <input
             type="text"
             id="register-username"
@@ -58,7 +59,7 @@ const Register = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="username">Password: </label>
+          <label htmlFor="register-password">Password: </label>
           <input
             type="password"
             id="register-password"
@@ -86,7 +87,7 @@ const Login = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState(false);
-  const [_, setCookies] = useCookies(["access_token"]);
+  const [, setCookies] = useCookies(["access_token"]);
 
   const navigate = useNavigate();
   const { setIsAuthenticated } = useContext<IShopContext>(ShopContext);
@@ -102,14 +103,12 @@ const Login = () => {
           password,
         }
       );
-      setCookies("access_token", result.data.token, {
-        sameSite: "None" as any,
-        secure: true,
-      });
+      setCookies("access_token", result.data.token);
       localStorage.setItem("userID", result.data.userID);
       setIsAuthenticated(true);
       navigate("/");
       toast.success("Successfully logged in!");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       let errorMessage: string = "";
       switch (err.response.data.type) {
@@ -134,7 +133,7 @@ const Login = () => {
         <h2>Login</h2>
 
         <div className="form-group">
-          <label htmlFor="username">Username: </label>
+          <label htmlFor="login-username">Username: </label>
           <input
             type="text"
             id="login-username"
@@ -145,7 +144,7 @@ const Login = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="username">Password: </label>
+          <label htmlFor="login-password">Password: </label>
           <input
             type="password"
             id="login-password"
