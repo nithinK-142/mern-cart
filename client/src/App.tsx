@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./App.css";
 import { Navbar } from "./components/Navbar";
 import { AuthPage } from "./pages/auth";
 import { ShopPage } from "./pages/shop";
