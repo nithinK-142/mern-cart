@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import CartSVG from "../assets/cart.svg";
+import CartSVG from "@/assets/cart.svg";
 import { useContext } from "react";
-import { IShopContext, ShopContext } from "../context/shop-context";
+import { IShopContext, ShopContext } from "@/context/shop-context";
 import toast from "react-hot-toast";
 
 export const Navbar = () => {
@@ -15,7 +15,9 @@ export const Navbar = () => {
   return (
     <div className="navbar">
       <div className="navbar-title">
-        <Link to={"/"}><h1>MERN Cart</h1></Link>
+        <Link to={"/"}>
+          <h1>MERN Cart</h1>
+        </Link>
       </div>
       <div className="navbar-links">
         {isAuthenticated && (

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { IShopContext, ShopContext } from "../../context/shop-context";
+import { IShopContext, ShopContext } from "@/context/shop-context";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";

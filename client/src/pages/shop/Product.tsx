@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { IProduct } from "../../models/interfaces";
-import { IShopContext, ShopContext } from "../../context/shop-context";
-import ImageSkeletonLoader from "../../components/ImageSkeletonLoader";
-import { useGetProducts } from "../../hooks/useGetProducts";
+import { IProduct } from "@/models/interfaces";
+import { IShopContext, ShopContext } from "@/context/shop-context";
+import ImageSkeletonLoader from "@/components/ImageSkeletonLoader";
+import { useGetProducts } from "@/hooks/useGetProducts";
 
 interface Props {
   product: IProduct;

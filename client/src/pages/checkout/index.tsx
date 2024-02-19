@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
-import { useGetProducts } from "../../hooks/useGetProducts";
-import { IProduct } from "../../models/interfaces";
-import { IShopContext, ShopContext } from "../../context/shop-context";
+import { useGetProducts } from "@/hooks/useGetProducts";
+import { IProduct } from "@/models/interfaces";
+import { IShopContext, ShopContext } from "@/context/shop-context";
 import { CartItem } from "./CartItem";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
-import spinner from "../../assets/spinner.svg";
+import spinner from "@/assets/spinner.svg";
 import toast from "react-hot-toast";
 
 export const CheckoutPage = () => {

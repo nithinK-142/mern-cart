@@ -1,11 +1,11 @@
 import { createContext, useEffect, useState } from "react";
-import { useGetProducts } from "../hooks/useGetProducts";
-import { IProduct } from "../models/interfaces";
+import { useGetProducts } from "@/hooks/useGetProducts";
+import { IProduct } from "@/models/interfaces";
 import axios from "axios";
-import { useGetToken } from "../hooks/useGetToken";
+import { useGetToken } from "@/hooks/useGetToken";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { ProductErrors } from "../models/errors";
+import { ProductErrors } from "@/models/errors";
 import toast from "react-hot-toast";
 
 export interface IShopContext {

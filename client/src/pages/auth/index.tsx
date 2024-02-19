@@ -1,11 +1,11 @@
 import axios from "axios";
 import { SyntheticEvent, useContext, useState } from "react";
-import { UserErrors } from "../../models/errors";
+import { UserErrors } from "@/models/errors";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { IShopContext, ShopContext } from "../../context/shop-context";
+import { IShopContext, ShopContext } from "@/context/shop-context";
 import "./style.css";
-import spinner from "../../assets/spinner.svg";
+import spinner from "@/assets/spinner.svg";
 import toast from "react-hot-toast";
 
 export const AuthPage = () => {

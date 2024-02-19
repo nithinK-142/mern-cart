@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { IShopContext, ShopContext } from "../../context/shop-context";
-import { IProduct } from "../../models/interfaces";
+import { IShopContext, ShopContext } from "@/context/shop-context";
+import { IProduct } from "@/models/interfaces";
 
 interface Props {
   product: IProduct;

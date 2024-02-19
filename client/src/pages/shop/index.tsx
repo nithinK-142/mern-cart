@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { useGetProducts } from "../../hooks/useGetProducts";
+import { useGetProducts } from "@/hooks/useGetProducts";
 import { Product } from "./Product";
 import "./style.css";
-import { IShopContext, ShopContext } from "../../context/shop-context";
+import { IShopContext, ShopContext } from "@/context/shop-context";
 import { Navigate } from "react-router-dom";
-import Spinner from "../../components/Spinner";
+import Spinner from "@/components/Spinner";
 
 export const ShopPage = () => {
   const { products } = useGetProducts();
@@ -12,7 +12,7 @@ export const ShopPage = () => {
 
   if (!isAuthenticated) return <Navigate to="/auth" />;
 
-  if(products.length === 0) return <Spinner />
+  if (products.length === 0) return <Spinner />;
 
   return (
     <div className="shop">
