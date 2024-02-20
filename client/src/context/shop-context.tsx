@@ -20,6 +20,7 @@ export interface IShopContext {
   isAuthenticated: boolean;
   setIsAuthenticated: (isAuthenticated: boolean) => void;
   cartItems: { [itemId: string]: number };
+  logout: () => void;
 }
 
 const defaultVal: IShopContext = {
@@ -34,6 +35,7 @@ const defaultVal: IShopContext = {
   isAuthenticated: false,
   setIsAuthenticated: () => null,
   cartItems: {},
+  logout: () => null,
 };
 
 export const ShopContext = createContext<IShopContext>(defaultVal);
@@ -156,20 +158,21 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     }
   };
 
+  const logout = () => {
+    setIsAuthenticated(false);
+    sessionStorage.clear();
+    setCookies("access_token", null);
+    setCartItems({});
+    toast.success("Successfully logged out!");
+  };
+
   useEffect(() => {
     if (isAuthenticated) {
       fetchProducts();
       fetchAvailableMoney();
       fetchPurchasedItems();
     }
-  }, [isAuthenticated]);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      sessionStorage.clear();
-      setCookies("access_token", null);
-      setCartItems({});
-    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
 
   const contextValue: IShopContext = {
@@ -184,6 +187,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     isAuthenticated,
     setIsAuthenticated,
     cartItems,
+    logout,
   };
   return (
     <ShopContext.Provider value={contextValue}>

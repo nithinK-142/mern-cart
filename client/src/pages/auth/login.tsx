@@ -44,6 +44,7 @@ const Login = () => {
       );
       setCookies("access_token", result.data.token);
       sessionStorage.setItem("userID", result.data.userID);
+      sessionStorage.setItem("username", loginUser?.username as string);
       setIsAuthenticated(true);
       navigate("/");
       toast.success("Successfully logged in!");
