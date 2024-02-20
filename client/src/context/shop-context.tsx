@@ -172,7 +172,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
       fetchProducts();
       fetchAvailableMoney();
       fetchPurchasedItems();
-    }
+    } else if (!isAuthenticated) navigate("/auth");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
 
