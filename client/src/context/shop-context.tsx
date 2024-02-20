@@ -160,6 +160,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
 
   const logout = () => {
     setIsAuthenticated(false);
+    navigate("/auth");
     sessionStorage.clear();
     setCookies("access_token", null);
     setCartItems({});

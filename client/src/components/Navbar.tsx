@@ -9,6 +9,7 @@ import {
   // BellElectricIcon,
   LogOutIcon,
   CircleDollarSign,
+  BellIcon,
 } from "lucide-react";
 
 import { Link } from "react-router-dom";
@@ -25,13 +26,14 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "./ui/dropdown-menu";
+import { ModeToggle } from "./mode-toggle";
 
 export const Navbar = () => {
   const { availableMoney, isAuthenticated, logout } =
     useContext<IShopContext>(ShopContext);
   const user = sessionStorage.getItem("username");
   return (
-    <nav className="border border-gray-300 bggray-400 dark:bg-white">
+    <nav className="bg-white border border-gray-300 dark:border-opacity-20 dark:bg-black/70">
       <div
         className={`flex flex-wrap items-center ${
           isAuthenticated ? "justify-between" : "justify-center"
@@ -44,8 +46,12 @@ export const Navbar = () => {
         {isAuthenticated && (
           <>
             <div className="flex items-center space-x-4 md:order-2 md:space-x-6 rtl:space-x-reverse">
-              <span className="w-6 h-6 cursor-pointer">{icons.bell}</span>
-              <span className="w-6 h-6 cursor-pointer">{icons.cart}</span>
+              <ModeToggle />
+
+              <BellIcon className="w-6 h-6 mr-2 cursor-pointer" />
+              <span className="w-6 h-6 cursor-pointer dark:fill-white">
+                {icons.cart}
+              </span>
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -96,19 +102,19 @@ export const Navbar = () => {
               className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
               id="navbar-user"
             >
-              <ul className="flex flex-col p-4 mt-4 font-medium transition-colors duration-500 rounded-lg md:p-0 md:space-x-2 rtl:space-x-reverse md:flex-row md:mt-0">
+              <ul className="flex flex-col p-4 mt-4 font-medium rounded-lg md:p-0 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0">
                 <li>
-                  <Link to="/" className="nav__list" aria-current="page">
+                  <Link to="/" className="hover:opacity-65" aria-current="page">
                     Home
                   </Link>
                 </li>
                 <li>
-                  <Link to="/purchased-items" className="nav__list">
+                  <Link to="/purchased-items" className="hover:opacity-65">
                     Purchases
                   </Link>
                 </li>
                 <li>
-                  <Link to="/checkout" className="nav__list">
+                  <Link to="/checkout" className="hover:opacity-65">
                     Checkout
                   </Link>
                 </li>

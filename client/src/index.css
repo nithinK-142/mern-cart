@@ -75,10 +75,6 @@
   }
 }
 
-.nav__list {
-  @apply px-4 py-1 rounded-lg hover:bg-white/10 hover:text-black;
-}
-
 * {
   scrollbar-width: thin; /* For Firefox */
   scrollbar-color: #90a4ae white; /* For Firefox */
