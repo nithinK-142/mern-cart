@@ -28,7 +28,7 @@ import {
 } from "./ui/dropdown-menu";
 import { ModeToggle } from "./mode-toggle";
 
-export const Navbar = () => {
+const Header = () => {
   const { availableMoney, isAuthenticated, logout } =
     useContext<IShopContext>(ShopContext);
   const user = sessionStorage.getItem("username");
@@ -126,3 +126,5 @@ export const Navbar = () => {
     </nav>
   );
 };
+
+export default Header;
