@@ -45,7 +45,7 @@ router.post("/login", async (req: Request, res: Response) => {
       return res.status(400).json({ type: UserErrors.WRONG_CREDENTIALS });
     }
 
-    const token = jwt.sign({ id: user._id }, "secret");
+    const token = jwt.sign({ id: user._id }, process.env.SECRET as string);
 
     const cookieOptions: CookieOptions = {
       httpOnly: true,
@@ -68,7 +68,7 @@ export const verifyToken = (
 ) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
-    jwt.verify(authHeader, "secret", (err) => {
+    jwt.verify(authHeader, process.env.SECRET as string, (err) => {
       if (err) {
         return res.sendStatus(403);
       }
