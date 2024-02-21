@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useGetProducts } from "@/hooks/useGetProducts";
+import { useGetCartData } from "@/hooks/useGetCartData";
 import { Product } from "./Product";
 // import "./style.css";
 import { IShopContext, ShopContext } from "@/context/shop-context";
@@ -7,7 +7,7 @@ import { Navigate } from "react-router-dom";
 import Spinner from "@/components/Spinner";
 
 const Home = () => {
-  const { products } = useGetProducts();
+  const { products } = useGetCartData();
   const { isAuthenticated } = useContext<IShopContext>(ShopContext);
 
   if (!isAuthenticated) return <Navigate to="/auth" />;

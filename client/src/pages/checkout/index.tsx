@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useGetProducts } from "@/hooks/useGetProducts";
+import { useGetCartData } from "@/hooks/useGetCartData";
 import { IProduct } from "@/models/interfaces";
 import { IShopContext, ShopContext } from "@/context/shop-context";
 import { CartItem } from "./CartItem";
@@ -19,7 +19,7 @@ export const CheckoutPage = () => {
     checkout,
   } = useContext<IShopContext>(ShopContext);
   const hasItemsInCart = Object.keys(cartItems).length === 0;
-  const { products } = useGetProducts();
+  const { products } = useGetCartData();
   const totalAmount = getTotalCartAmount();
   const hasMoney = availableMoney >= totalAmount;
   const navigate = useNavigate();

@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { useGetProducts } from "@/hooks/useGetProducts";
+import { useGetCartData } from "@/hooks/useGetCartData";
 import { IProduct } from "@/models/interfaces";
 import axios from "axios";
 import { useGetToken } from "@/hooks/useGetToken";
@@ -46,45 +46,21 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
   const [cookies, setCookies] = useCookies(["access_token"]);
   const [cartItems, setCartItems] = useState<{ [itemId: string]: number }>({});
   // const [cartItemCount, setCartItemCount] = useState<number>(0);
-  const [availableMoney, setAvailableMoney] = useState<number>(0);
-  const [purchasedItems, setpurchasedItems] = useState<IProduct[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
     cookies.access_token && cookies.access_token !== ""
   );
 
-  const { products } = useGetProducts();
+  const {
+    products,
+    availableMoney,
+    purchasedItems,
+    fetchAvailableMoney,
+    fetchPurchasedItems,
+  } = useGetCartData();
 
   const { headers } = useGetToken();
 
   const navigate = useNavigate();
-
-  const fetchPurchasedItems = async () => {
-    try {
-      const res = await axios.get(
-        `${
-          import.meta.env.VITE_API_URL
-        }/product/purchased-items/${localStorage.getItem("userID")}`,
-        { headers }
-      );
-      setpurchasedItems(res.data.purchasedItems);
-    } catch (err) {
-      console.log("ERROR: " + err);
-    }
-  };
-
-  const fetchAvailableMoney = async () => {
-    try {
-      const res = await axios.get(
-        `${
-          import.meta.env.VITE_API_URL
-        }/user/available-money/${localStorage.getItem("userID")}`,
-        { headers }
-      );
-      setAvailableMoney(res.data.availableMoney);
-    } catch (err) {
-      console.log("ERROR: " + err);
-    }
-  };
 
   const getCartItemCount = (itemId: string): number => {
     if (itemId in cartItems) {
@@ -161,29 +137,20 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     }
   };
 
-  const logout = (message: string = "Successfully logged out!") => {
+  const logout = () => {
     setIsAuthenticated(false);
     navigate("/auth");
     localStorage.clear();
     setCookies("access_token", null);
     setCartItems({});
-    toast.success(message);
+    toast.success("Successfully logged out!");
   };
 
   useEffect(() => {
-    if (!localStorage.getItem("userID")) {
-      logout("Please log in again");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated || !localStorage.getItem("userID")) {
       navigate("/auth");
       return;
     }
-    fetchAvailableMoney();
-    fetchPurchasedItems();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
 
