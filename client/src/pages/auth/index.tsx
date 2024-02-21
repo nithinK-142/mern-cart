@@ -2,7 +2,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Login from "./login";
 import Register from "./register";
 
-export const AuthPage = () => {
+const AuthPage = () => {
   return (
     <div className="flex justify-center mt-28">
       <Tabs defaultValue="login" className="w-[340px] sm:w-[400px] h-[400px]">
@@ -20,3 +20,5 @@ export const AuthPage = () => {
     </div>
   );
 };
+
+export default AuthPage;

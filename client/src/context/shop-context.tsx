@@ -12,6 +12,7 @@ export interface IShopContext {
   addToCart: (itemId: string) => void;
   removeFromCart: (itemId: string) => void;
   updateCardItemCount: (newAmount: number, itemId: string) => void;
+  // cartItemCount: number;
   getCartItemCount: (itemId: string) => number;
   getTotalCartAmount: () => number;
   checkout: () => void;
@@ -27,6 +28,7 @@ const defaultVal: IShopContext = {
   addToCart: () => null,
   removeFromCart: () => null,
   updateCardItemCount: () => null,
+  // cartItemCount: 0,
   getCartItemCount: () => 0,
   getTotalCartAmount: () => 0,
   checkout: () => null,
@@ -43,6 +45,7 @@ export const ShopContext = createContext<IShopContext>(defaultVal);
 export const ShopContextProvider = (props: { children: React.ReactNode }) => {
   const [cookies, setCookies] = useCookies(["access_token"]);
   const [cartItems, setCartItems] = useState<{ [itemId: string]: number }>({});
+  // const [cartItemCount, setCartItemCount] = useState<number>(0);
   const [availableMoney, setAvailableMoney] = useState<number>(0);
   const [purchasedItems, setpurchasedItems] = useState<IProduct[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
@@ -180,6 +183,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     addToCart,
     removeFromCart,
     updateCardItemCount,
+    // cartItemCount,
     getCartItemCount,
     getTotalCartAmount,
     checkout,

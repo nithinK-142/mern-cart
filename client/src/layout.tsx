@@ -10,7 +10,9 @@ function App() {
       <ShopContextProvider>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
           <Header />
-          <Outlet />
+          <div className="px-10 sm:px-20 md:px-32 lg:px-40">
+            <Outlet />
+          </div>
           {/* <Footer /> */}
           <Toaster />
         </ThemeProvider>

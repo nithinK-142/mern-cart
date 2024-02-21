@@ -8,15 +8,15 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import Layout from "./layout.tsx";
-import { AuthPage } from "./pages/auth/index.tsx";
-import { ShopPage } from "./pages/shop/index.tsx";
+import AuthPage from "./pages/auth/index.tsx";
+import Home from "./pages/home/index.tsx";
 import { CheckoutPage } from "./pages/checkout/index.tsx";
 import { PurchasedItemsPage } from "./pages/purchased-items/index.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
-      <Route path="" element={<ShopPage />} />
+      <Route path="" element={<Home />} />
       <Route path="auth" element={<AuthPage />} />
       <Route path="checkout" element={<CheckoutPage />} />
       <Route path="purchased-items" element={<PurchasedItemsPage />} />
