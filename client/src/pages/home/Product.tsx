@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { IProduct } from "@/models/interfaces";
 import { IShopContext, ShopContext } from "@/context/shop-context";
-// import ImageSkeletonLoader from "@/components/ImageSkeletonLoader";
-// import { useGetProducts } from "@/hooks/useGetProducts";
 import {
   Card,
   CardDescription,
@@ -20,7 +18,6 @@ interface Props {
 export const Product = (props: Props) => {
   const { _id, productName, description, price, imageURL, stockQuantity } =
     props.product;
-  // const { imageLoading } = useGetProducts();
   const { addToCart, getCartItemCount } = useContext<IShopContext>(ShopContext);
   const [count, setCount] = useState<number>(0);
 

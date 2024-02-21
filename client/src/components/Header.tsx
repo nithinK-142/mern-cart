@@ -31,7 +31,7 @@ import { ModeToggle } from "./mode-toggle";
 const Header = () => {
   const { availableMoney, isAuthenticated, logout } =
     useContext<IShopContext>(ShopContext);
-  const user = sessionStorage.getItem("username");
+  const user = localStorage.getItem("username");
   return (
     <nav className="bg-white border border-gray-300 dark:border-opacity-20 dark:bg-black/70">
       <div

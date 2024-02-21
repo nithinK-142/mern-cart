@@ -52,7 +52,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     cookies.access_token && cookies.access_token !== ""
   );
 
-  const { products, fetchProducts } = useGetProducts();
+  const { products } = useGetProducts();
 
   const { headers } = useGetToken();
 
@@ -63,7 +63,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
       const res = await axios.get(
         `${
           import.meta.env.VITE_API_URL
-        }/product/purchased-items/${sessionStorage.getItem("userID")}`,
+        }/product/purchased-items/${localStorage.getItem("userID")}`,
         { headers }
       );
       setpurchasedItems(res.data.purchasedItems);
@@ -77,7 +77,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
       const res = await axios.get(
         `${
           import.meta.env.VITE_API_URL
-        }/user/available-money/${sessionStorage.getItem("userID")}`,
+        }/user/available-money/${localStorage.getItem("userID")}`,
         { headers }
       );
       setAvailableMoney(res.data.availableMoney);
@@ -127,7 +127,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
   };
 
   const checkout = async () => {
-    const body = { customerID: sessionStorage.getItem("userID"), cartItems };
+    const body = { customerID: localStorage.getItem("userID"), cartItems };
     try {
       await axios.post(
         `${import.meta.env.VITE_API_URL}/product/checkout`,
@@ -161,21 +161,29 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     }
   };
 
-  const logout = () => {
+  const logout = (message: string = "Successfully logged out!") => {
     setIsAuthenticated(false);
     navigate("/auth");
-    sessionStorage.clear();
+    localStorage.clear();
     setCookies("access_token", null);
     setCartItems({});
-    toast.success("Successfully logged out!");
+    toast.success(message);
   };
 
   useEffect(() => {
-    if (isAuthenticated) {
-      fetchProducts();
-      fetchAvailableMoney();
-      fetchPurchasedItems();
-    } else if (!isAuthenticated) navigate("/auth");
+    if (!localStorage.getItem("userID")) {
+      logout("Please log in again");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/auth");
+      return;
+    }
+    fetchAvailableMoney();
+    fetchPurchasedItems();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
 
