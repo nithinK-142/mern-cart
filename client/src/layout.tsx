@@ -9,7 +9,7 @@ function App() {
   return (
     <main className="h-screen">
       <ShopContextProvider>
-        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
           <Header />
           <div className="px-10 sm:px-20 md:px-32 lg:px-40">
             <Outlet />

@@ -53,14 +53,12 @@ const Header = () => {
                 to="/checkout"
                 className="relative w-6 h-6 cursor-pointer dark:fill-white"
               >
-                {/* <span className="relative w-6 h-6 cursor-pointer dark:fill-white"> */}
                 {icons.cart}
                 {cartItemCount > 0 && (
                   <span className="absolute px-1 text-sm text-black bg-yellow-400 rounded-full -right-2 -top-3">
                     {cartItemCount}
                   </span>
                 )}
-                {/* </span> */}
               </Link>
 
               <DropdownMenu>
