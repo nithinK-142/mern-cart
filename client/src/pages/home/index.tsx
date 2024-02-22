@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { useGetCartData } from "@/hooks/useGetCartData";
 import { Product } from "./Product";
-// import "./style.css";
 import { IShopContext, ShopContext } from "@/context/shop-context";
 import { Navigate } from "react-router-dom";
 import Spinner from "@/components/Spinner";

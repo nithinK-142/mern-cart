@@ -76,6 +76,13 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
       setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
     }
     setCartItemCount((prev) => prev + 1);
+    toast.success("Item added to the cart.", {
+      style: {
+        border: "1px solid #713200",
+        padding: "8px",
+        color: "#713200",
+      },
+    });
   };
 
   const removeFromCart = (itemId: string) => {
