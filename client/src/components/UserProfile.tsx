@@ -22,9 +22,11 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
+import { useGetCartData } from "@/hooks/useGetCartData";
 
 const UserProfile = () => {
-  const { availableMoney, logout } = useContext<IShopContext>(ShopContext);
+  const { logout } = useContext<IShopContext>(ShopContext);
+  const { availableMoney } = useGetCartData();
   const user = localStorage.getItem("username");
   return (
     <DropdownMenu>

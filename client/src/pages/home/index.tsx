@@ -6,12 +6,12 @@ import { Navigate } from "react-router-dom";
 import Spinner from "@/components/Spinner";
 
 const Home = () => {
-  const { products } = useGetCartData();
+  const { products, productsLoading } = useGetCartData();
   const { isAuthenticated } = useContext<IShopContext>(ShopContext);
 
   if (!isAuthenticated) return <Navigate to="/auth" />;
 
-  if (products.length === 0) return <Spinner />;
+  if (productsLoading) return <Spinner />;
 
   return (
     <div className="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

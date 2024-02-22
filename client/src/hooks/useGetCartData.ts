@@ -1,67 +1,66 @@
+import { useQuery } from "react-query";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { useGetToken } from "./useGetToken";
-import { IProduct } from "../models/interfaces";
+import { IProduct } from "@/models/interfaces";
+import { useContext } from "react";
+import { ShopContext } from "@/context/shop-context";
 
 export const useGetCartData = () => {
-  const [products, setProducts] = useState<IProduct[]>([]);
-  const [availableMoney, setAvailableMoney] = useState<number>(0);
-  const [purchasedItems, setpurchasedItems] = useState<IProduct[]>([]);
   const { headers } = useGetToken();
+  const { isAuthenticated } = useContext(ShopContext);
 
   const fetchProducts = async () => {
-    try {
-      const fetchedProducts = await axios.get(
-        `${import.meta.env.VITE_API_URL}/product`,
-        {
-          headers,
-        }
-      );
-      setProducts(fetchedProducts.data.products);
-    } catch (err) {
-      console.log("ERROR: Something went wrong!");
-    }
+    const response = await axios.get<{ products: IProduct[] }>(
+      `${import.meta.env.VITE_API_URL}/product`,
+      {
+        headers,
+      }
+    );
+    return response.data.products;
   };
 
   const fetchPurchasedItems = async () => {
-    try {
-      const res = await axios.get(
-        `${
-          import.meta.env.VITE_API_URL
-        }/product/purchased-items/${localStorage.getItem("userID")}`,
-        { headers }
-      );
-      setpurchasedItems(res.data.purchasedItems);
-    } catch (err) {
-      console.log("ERROR: " + err);
-    }
+    const response = await axios.get<{ purchasedItems: IProduct[] }>(
+      `${
+        import.meta.env.VITE_API_URL
+      }/product/purchased-items/${localStorage.getItem("userID")}`,
+      { headers }
+    );
+    return response.data.purchasedItems;
   };
 
   const fetchAvailableMoney = async () => {
-    try {
-      const res = await axios.get(
-        `${
-          import.meta.env.VITE_API_URL
-        }/user/available-money/${localStorage.getItem("userID")}`,
-        { headers }
-      );
-      setAvailableMoney(res.data.availableMoney);
-    } catch (err) {
-      console.log("ERROR: " + err);
-    }
+    const response = await axios.get<{ availableMoney: number }>(
+      `${
+        import.meta.env.VITE_API_URL
+      }/user/available-money/${localStorage.getItem("userID")}`,
+      { headers }
+    );
+    return response.data.availableMoney;
   };
 
-  useEffect(() => {
-    fetchProducts();
-    fetchPurchasedItems();
-    fetchAvailableMoney();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { data: products } = useQuery<IProduct[]>("products", fetchProducts, {
+    enabled: isAuthenticated,
+  });
+  const { data: purchasedItems } = useQuery<IProduct[]>(
+    "purchasedItems",
+    fetchPurchasedItems,
+    {
+      enabled: isAuthenticated,
+    }
+  );
+  const { data: availableMoney } = useQuery<number>(
+    "availableMoney",
+    fetchAvailableMoney,
+    {
+      enabled: isAuthenticated,
+    }
+  );
 
   return {
-    products,
-    availableMoney,
-    purchasedItems,
+    products: products || [],
+    availableMoney: availableMoney || 0,
+    purchasedItems: purchasedItems || [],
     fetchAvailableMoney,
     fetchPurchasedItems,
   };

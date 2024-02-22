@@ -8,7 +8,7 @@ const Notifications = () => {
       <HoverCardTrigger>
         <BellIcon className="w-6 h-6 cursor-pointer" />
       </HoverCardTrigger>
-      <HoverCardContent className="">
+      <HoverCardContent>
         <h2 className="font-semibold">Notifications</h2>
         <div className="flex flex-col py-2">
           <div className="flex items-center justify-between py-2 hover:bg-gradient-to-b hover:from-muted/50 to-muted">
