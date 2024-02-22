@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { IShopContext, ShopContext } from "@/context/shop-context";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import { ErrorToast } from "@/components/CustomToast";
 
 export const PurchasedItemsPage = () => {
   const { isAuthenticated, addToCart, getCartItemCount, purchasedItems } =
@@ -11,7 +11,7 @@ export const PurchasedItemsPage = () => {
 
   if (!isAuthenticated) {
     navigate("/");
-    toast.error("You're not logged in, please log in.");
+    ErrorToast("You're not logged in, please log in.");
   }
 
   return (

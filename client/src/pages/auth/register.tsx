@@ -12,10 +12,10 @@ import { TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 
 import axios from "axios";
 import { SyntheticEvent, useState } from "react";
-import toast from "react-hot-toast";
 import { icons } from "@/assets/icons";
 import { UserErrors } from "@/models/errors";
 import { useNavigate } from "react-router-dom";
+import { ErrorToast, SuccessToast } from "@/components/CustomToast";
 
 const Register = () => {
   const [registerUser, setRegisterUser] = useState<{
@@ -40,7 +40,7 @@ const Register = () => {
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
     if (registerUser?.password !== registerUser?.confirmPassword) {
-      return toast.error("ERROR: Passwords don't match!");
+      return ErrorToast("ERROR: Passwords don't match!");
     }
 
     try {
@@ -55,14 +55,14 @@ const Register = () => {
         password: "",
         confirmPassword: "",
       });
-      toast.success("Registration Complete, now please login!");
+      SuccessToast("Registration Complete, now please login!");
       navigate("/");
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       if (err.response.data.type === UserErrors.USERNAME_ALREADY_EXISTS)
-        toast.error("ERROR: Username already in use!");
-      else toast.error("ERROR: Something went wrong!");
+        ErrorToast("ERROR: Username already in use!");
+      else ErrorToast("ERROR: Something went wrong!");
     } finally {
       setLoading(false);
     }

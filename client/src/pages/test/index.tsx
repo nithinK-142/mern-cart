@@ -1,13 +1,13 @@
+import { SuccessToast, ErrorToast } from "@/components/CustomToast";
 import { Button } from "@/components/ui/button";
-import toast from "react-hot-toast";
 
 const Test = () => {
   const success = () => {
-    toast.success("Success");
+    SuccessToast("Success");
   };
 
   const error = () => {
-    toast.error("Error");
+    ErrorToast("Error");
   };
 
   return (

@@ -15,10 +15,9 @@ import { TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import axios from "axios";
 import { SyntheticEvent, useContext, useState } from "react";
 import { useCookies } from "react-cookie";
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { icons } from "@/assets/icons";
-import { WelcomeToast } from "@/components/CustomToast";
+import { ErrorToast, WelcomeToast } from "@/components/CustomToast";
 
 const Login = () => {
   const [loginUser, setLoginUser] = useState<{
@@ -62,7 +61,7 @@ const Login = () => {
         default:
           errorMessage = "Something went wrong!";
       }
-      toast.error("ERROR: " + errorMessage);
+      ErrorToast("ERROR: " + errorMessage);
     } finally {
       setLoading(false);
     }

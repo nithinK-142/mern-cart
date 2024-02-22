@@ -43,3 +43,11 @@ export const CartToast = (productname: string) => {
     }
   );
 };
+
+export const SuccessToast = (message: string) => {
+  toast.success(message);
+};
+
+export const ErrorToast = (message: string) => {
+  toast.error(message);
+};

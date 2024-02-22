@@ -6,7 +6,7 @@ import { useGetToken } from "@/hooks/useGetToken";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ProductErrors } from "@/models/errors";
-import toast from "react-hot-toast";
+import { ErrorToast, SuccessToast } from "@/components/CustomToast";
 
 export interface IShopContext {
   addToCart: (itemId: string) => void;
@@ -113,7 +113,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
           headers,
         }
       );
-      toast.success("Order placed 👍");
+      SuccessToast("Order placed 👍");
       setCartItemCount(0);
       setCartItems({});
       fetchAvailableMoney();
@@ -135,7 +135,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
           errorMessage = "Something went wrong";
       }
 
-      toast.error("ERROR: " + errorMessage);
+      ErrorToast("ERROR: " + errorMessage);
     }
   };
 
@@ -145,7 +145,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     localStorage.clear();
     setCookies("access_token", null);
     setCartItems({});
-    toast.success("Successfully logged out!");
+    SuccessToast("Successfully logged out!");
   };
 
   useEffect(() => {
