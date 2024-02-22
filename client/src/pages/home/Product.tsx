@@ -25,8 +25,15 @@ export const Product = (props: Props) => {
     addToCart(_id);
     CartToast(productName);
   };
+
+  const stockZero = stockQuantity === 0;
+
   return (
-    <Card className="flex flex-col justify-between max-w-[80vw] md:max-w-max md:min-w-[14rem]">
+    <Card
+      className={`${
+        stockZero && "opacity-70"
+      } flex flex-col justify-between max-w-[80vw] md:max-w-max md:min-w-[14rem]`}
+    >
       <div className="flex items-center justify-center pt-1 bg-white rounded-tl-xl rounded-tr-xl min-h-56">
         <img
           src={imageURL}
@@ -43,13 +50,15 @@ export const Product = (props: Props) => {
         </h2>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      <CardFooter>
-        {stockQuantity === 0 ? (
-          <h4 className="text-lg font-semibold tracking-wide">OUT OF STOCK</h4>
-        ) : (
+      {stockZero ? (
+        <CardFooter className="flex items-center justify-center font-medium tracking-wider">
+          OUT OF STOCK
+        </CardFooter>
+      ) : (
+        <CardFooter>
           <Button onClick={handleAddToCart}>Add to cart</Button>
-        )}
-      </CardFooter>
+        </CardFooter>
+      )}
     </Card>
   );
 };
