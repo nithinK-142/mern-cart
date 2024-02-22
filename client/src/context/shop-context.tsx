@@ -12,7 +12,7 @@ export interface IShopContext {
   addToCart: (itemId: string) => void;
   removeFromCart: (itemId: string) => void;
   updateCardItemCount: (newAmount: number, itemId: string) => void;
-  // cartItemCount: number;
+  cartItemCount: number;
   getCartItemCount: (itemId: string) => number;
   getTotalCartAmount: () => number;
   checkout: () => void;
@@ -28,7 +28,7 @@ const defaultVal: IShopContext = {
   addToCart: () => null,
   removeFromCart: () => null,
   updateCardItemCount: () => null,
-  // cartItemCount: 0,
+  cartItemCount: 0,
   getCartItemCount: () => 0,
   getTotalCartAmount: () => 0,
   checkout: () => null,
@@ -45,7 +45,7 @@ export const ShopContext = createContext<IShopContext>(defaultVal);
 export const ShopContextProvider = (props: { children: React.ReactNode }) => {
   const [cookies, setCookies] = useCookies(["access_token"]);
   const [cartItems, setCartItems] = useState<{ [itemId: string]: number }>({});
-  // const [cartItemCount, setCartItemCount] = useState<number>(0);
+  const [cartItemCount, setCartItemCount] = useState<number>(0);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
     cookies.access_token && cookies.access_token !== ""
   );
@@ -75,6 +75,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     } else {
       setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
     }
+    setCartItemCount((prev) => prev + 1);
   };
 
   const removeFromCart = (itemId: string) => {
@@ -113,6 +114,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
         }
       );
       toast.success("Order placed 👍");
+      setCartItemCount(0);
       setCartItems({});
       fetchAvailableMoney();
       fetchPurchasedItems();
@@ -158,7 +160,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     addToCart,
     removeFromCart,
     updateCardItemCount,
-    // cartItemCount,
+    cartItemCount,
     getCartItemCount,
     getTotalCartAmount,
     checkout,

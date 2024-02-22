@@ -29,7 +29,7 @@ import {
 import { ModeToggle } from "./mode-toggle";
 
 const Header = () => {
-  const { availableMoney, isAuthenticated, logout } =
+  const { availableMoney, isAuthenticated, cartItemCount, logout } =
     useContext<IShopContext>(ShopContext);
   const user = localStorage.getItem("username");
   return (
@@ -49,9 +49,19 @@ const Header = () => {
               <ModeToggle />
 
               <BellIcon className="w-6 h-6 mr-2 cursor-pointer" />
-              <span className="w-6 h-6 cursor-pointer dark:fill-white">
+              <Link
+                to="/checkout"
+                className="relative w-6 h-6 cursor-pointer dark:fill-white"
+              >
+                {/* <span className="relative w-6 h-6 cursor-pointer dark:fill-white"> */}
                 {icons.cart}
-              </span>
+                {cartItemCount > 0 && (
+                  <span className="absolute px-1 text-sm text-black bg-yellow-400 rounded-full -right-2 -top-3">
+                    {cartItemCount}
+                  </span>
+                )}
+                {/* </span> */}
+              </Link>
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
