@@ -1,38 +1,14 @@
-import {
-  // CreditCard,
-  // Keyboard,
-  // Settings,
-  // User,
-  // Bell,
-  // BellDotIcon,
-  // BellElectric,
-  // BellElectricIcon,
-  LogOutIcon,
-  CircleDollarSign,
-  BellIcon,
-} from "lucide-react";
-
-import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { IShopContext, ShopContext } from "@/context/shop-context";
 import { icons } from "@/assets/icons";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-} from "./ui/dropdown-menu";
 import { ModeToggle } from "./ModeToggle";
-import { HoverCard, HoverCardTrigger, HoverCardContent } from "./ui/hover-card";
+import Notifications from "./Notifications";
+import UserCart from "./UserCart";
+import UserProfile from "./UserProfile";
+import NavLinks from "./NavLinks";
 
 const Header = () => {
-  const { availableMoney, isAuthenticated, cartItemCount, logout } =
-    useContext<IShopContext>(ShopContext);
-  const user = localStorage.getItem("username");
+  const { isAuthenticated } = useContext<IShopContext>(ShopContext);
   return (
     <nav className="bg-white border border-gray-300 dark:border-opacity-20 dark:bg-black/70">
       <div
@@ -48,103 +24,14 @@ const Header = () => {
           <>
             <div className="flex items-center space-x-4 md:order-2 md:space-x-6 rtl:space-x-reverse">
               <ModeToggle />
-              <HoverCard openDelay={100}>
-                <HoverCardTrigger>
-                  <BellIcon className="w-6 h-6 cursor-pointer" />
-                </HoverCardTrigger>
-                <HoverCardContent className="">
-                  <h2 className="font-semibold">Notifications</h2>
-                  <div className="flex flex-col py-2">
-                    <div className="flex items-center justify-between py-2 hover:bg-gradient-to-b hover:from-muted/50 to-muted">
-                      <div className="relative flex items-center">
-                        <div className="absolute inline-block p-1 bg-blue-600 rounded-full -left-1" />
-                        <span className="pl-2">item added to cart</span>
-                      </div>
-                      <span className="h-6">{icons.trashBin}</span>
-                    </div>
-                  </div>
-                </HoverCardContent>
-              </HoverCard>
 
-              <Link
-                to="/checkout"
-                className="relative w-6 h-6 cursor-pointer dark:fill-white"
-              >
-                {icons.cart}
-                {cartItemCount > 0 && (
-                  <span className="absolute px-1 text-sm text-black bg-yellow-400 rounded-full -right-2 -top-3">
-                    {cartItemCount}
-                  </span>
-                )}
-              </Link>
+              <Notifications />
 
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Avatar className="cursor-pointer">
-                    <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56">
-                  <DropdownMenuLabel>{user}&apos;s Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                      <CircleDollarSign className="w-4 h-4 mr-2" />
-                      <span className="font-medium opacity-90">
-                        {availableMoney.toFixed(2)}
-                      </span>
-                    </DropdownMenuItem>
-                    {/* <DropdownMenuItem>
-                      <User className="w-4 h-4 mr-2" />
-                      <span>Profile</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <CreditCard className="w-4 h-4 mr-2" />
-                      <span>Billing</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Settings className="w-4 h-4 mr-2" />
-                      <span>Settings</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Keyboard className="w-4 h-4 mr-2" />
-                      <span>Keyboard shortcuts</span>
-                    </DropdownMenuItem> */}
-                  </DropdownMenuGroup>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                      <LogOutIcon className="w-4 h-4 mr-2" />
-                      <button onClick={logout}>Logout</button>
-                    </DropdownMenuItem>
-                  </DropdownMenuGroup>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <UserCart />
+
+              <UserProfile />
             </div>
-
-            <div
-              className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
-              id="navbar-user"
-            >
-              <ul className="flex flex-col p-4 mt-4 font-medium rounded-lg md:p-0 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0">
-                <li>
-                  <Link to="/" className="hover:opacity-65" aria-current="page">
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/purchased-items" className="hover:opacity-65">
-                    Purchases
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/checkout" className="hover:opacity-65">
-                    Checkout
-                  </Link>
-                </li>
-              </ul>
-            </div>
+            <NavLinks />
           </>
         )}
       </div>
