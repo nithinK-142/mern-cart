@@ -18,7 +18,7 @@ import { useCookies } from "react-cookie";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { icons } from "@/assets/icons";
-import CustomToast from "@/components/custom-toast";
+import CustomToast from "@/components/CustomToast";
 
 const Login = () => {
   const [loginUser, setLoginUser] = useState<{
