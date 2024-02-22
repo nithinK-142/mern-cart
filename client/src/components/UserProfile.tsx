@@ -23,10 +23,11 @@ import {
 } from "./ui/dropdown-menu";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { useGetCartData } from "@/hooks/useGetCartData";
+import { Skeleton } from "./ui/skeleton";
 
 const UserProfile = () => {
   const { logout } = useContext<IShopContext>(ShopContext);
-  const { availableMoney } = useGetCartData();
+  const { availableMoney, availableMoneyLoading } = useGetCartData();
   const user = localStorage.getItem("username");
   return (
     <DropdownMenu>
@@ -40,12 +41,16 @@ const UserProfile = () => {
         <DropdownMenuLabel>{user}&apos;s Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <CircleDollarSign className="w-4 h-4 mr-2" />
-            <span className="font-medium opacity-90">
-              {availableMoney.toFixed(2)}
-            </span>
-          </DropdownMenuItem>
+          {!availableMoneyLoading ? (
+            <DropdownMenuItem>
+              <CircleDollarSign className="w-4 h-4 mr-2" />
+              <span className="font-medium opacity-90">
+                {availableMoney.toFixed(2)}
+              </span>
+            </DropdownMenuItem>
+          ) : (
+            <Skeleton className="w-1/2 h-5 ml-1 bg-gray-300 dark:bg-gray-500" />
+          )}
           {/* <DropdownMenuItem>
           <User className="w-4 h-4 mr-2" />
           <span>Profile</span>

@@ -39,9 +39,13 @@ export const useGetCartData = () => {
     return response.data.availableMoney;
   };
 
-  const { data: products } = useQuery<IProduct[]>("products", fetchProducts, {
-    enabled: isAuthenticated,
-  });
+  const { data: products, isLoading: productsLoading } = useQuery<IProduct[]>(
+    "products",
+    fetchProducts,
+    {
+      enabled: isAuthenticated,
+    }
+  );
   const { data: purchasedItems } = useQuery<IProduct[]>(
     "purchasedItems",
     fetchPurchasedItems,
@@ -49,17 +53,16 @@ export const useGetCartData = () => {
       enabled: isAuthenticated,
     }
   );
-  const { data: availableMoney } = useQuery<number>(
-    "availableMoney",
-    fetchAvailableMoney,
-    {
+  const { data: availableMoney, isLoading: availableMoneyLoading } =
+    useQuery<number>("availableMoney", fetchAvailableMoney, {
       enabled: isAuthenticated,
-    }
-  );
+    });
 
   return {
     products: products || [],
+    productsLoading,
     availableMoney: availableMoney || 0,
+    availableMoneyLoading,
     purchasedItems: purchasedItems || [],
     fetchAvailableMoney,
     fetchPurchasedItems,
