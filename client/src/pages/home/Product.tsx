@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { IProduct } from "@/models/interfaces";
 import { IShopContext, ShopContext } from "@/context/shop-context";
 import {
@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { DollarSign } from "lucide-react";
+import { CartToast } from "@/components/CustomToast";
 
 interface Props {
   product: IProduct;
@@ -18,20 +19,14 @@ interface Props {
 export const Product = (props: Props) => {
   const { _id, productName, description, price, imageURL, stockQuantity } =
     props.product;
-  const { addToCart, getCartItemCount } = useContext<IShopContext>(ShopContext);
-  const [count, setCount] = useState<number>(0);
+  const { addToCart } = useContext<IShopContext>(ShopContext);
 
-  useEffect(() => {
-    const itemCount = getCartItemCount(_id);
-    setCount(itemCount);
-  }, [_id, getCartItemCount]);
-
+  const handleAddToCart = () => {
+    addToCart(_id);
+    CartToast(productName);
+  };
   return (
-    <Card
-      className={`flex flex-col justify-between max-w-[80vw] md:max-w-max md:min-w-[14rem]
-      ${count !== 0 ? "border-green-500 dark:border-green-300" : ""}
-      `}
-    >
+    <Card className="flex flex-col justify-between max-w-[80vw] md:max-w-max md:min-w-[14rem]">
       <div className="flex items-center justify-center pt-1 bg-white rounded-tl-xl rounded-tr-xl min-h-56">
         <img
           src={imageURL}
@@ -52,7 +47,7 @@ export const Product = (props: Props) => {
         {stockQuantity === 0 ? (
           <h4 className="text-lg font-semibold tracking-wide">OUT OF STOCK</h4>
         ) : (
-          <Button onClick={() => addToCart(_id)}>Add to cart</Button>
+          <Button onClick={handleAddToCart}>Add to cart</Button>
         )}
       </CardFooter>
     </Card>

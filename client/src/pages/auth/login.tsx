@@ -18,7 +18,7 @@ import { useCookies } from "react-cookie";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { icons } from "@/assets/icons";
-import CustomToast from "@/components/CustomToast";
+import { WelcomeToast } from "@/components/CustomToast";
 
 const Login = () => {
   const [loginUser, setLoginUser] = useState<{
@@ -48,7 +48,7 @@ const Login = () => {
       localStorage.setItem("username", loginUser?.username as string);
       setIsAuthenticated(true);
       navigate("/");
-      CustomToast(loginUser?.username);
+      WelcomeToast(loginUser?.username);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       let errorMessage: string = "";

@@ -1,6 +1,7 @@
+import { icons } from "@/assets/icons";
 import toast from "react-hot-toast";
 
-const CustomToast = (username: string | undefined) => {
+export const WelcomeToast = (username: string | undefined) => {
   toast.custom(
     (t) => (
       <div
@@ -19,4 +20,26 @@ const CustomToast = (username: string | undefined) => {
   );
 };
 
-export default CustomToast;
+export const CartToast = (productname: string) => {
+  // toast(`${productname} added to 🛒`, {
+  //   style: {
+  //     fontWeight: "bold",
+  //     opacity: "0",
+  //   },
+  // });
+
+  toast(
+    () => (
+      <div className="flex space-x-2">
+        <span className="font-semibold">{productname}</span>
+        <span> added to </span>
+        <div className="w-6 h-6">{icons.cart}</div>
+      </div>
+    ),
+    {
+      style: {
+        backgroundColor: "#99cc99",
+      },
+    }
+  );
+};
