@@ -70,9 +70,9 @@ const UserProfile = () => {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={logout}>
             <LogOutIcon className="w-4 h-4 mr-2" />
-            <button onClick={logout}>Logout</button>
+            Logout
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
