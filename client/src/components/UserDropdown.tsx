@@ -25,11 +25,11 @@ import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { useGetCartData } from "@/hooks/useGetCartData";
 import { Skeleton } from "./ui/skeleton";
 
-const UserProfile = () => {
+const UserDropdown = () => {
   const { logout } = useContext<IShopContext>(ShopContext);
   const { availableMoney, availableMoneyLoading } = useGetCartData();
-  const user = localStorage.getItem("username");
   const validMoney = !availableMoneyLoading && availableMoney > 0;
+  const user = localStorage.getItem("username");
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -39,7 +39,7 @@ const UserProfile = () => {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>{user}&apos;s Account</DropdownMenuLabel>
+        {user && <DropdownMenuLabel>{user}&apos;s Account</DropdownMenuLabel>}
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           {validMoney ? (
@@ -81,4 +81,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default UserDropdown;

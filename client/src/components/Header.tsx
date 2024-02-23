@@ -4,7 +4,7 @@ import { icons } from "@/assets/icons";
 import { ModeToggle } from "./ModeToggle";
 import Notifications from "./Notifications";
 import UserCart from "./UserCart";
-import UserProfile from "./UserProfile";
+import UserDropdown from "./UserDropdown";
 import NavLinks from "./NavLinks";
 
 const Header = () => {
@@ -29,7 +29,7 @@ const Header = () => {
 
               <UserCart />
 
-              <UserProfile />
+              <UserDropdown />
             </div>
             <NavLinks />
           </>

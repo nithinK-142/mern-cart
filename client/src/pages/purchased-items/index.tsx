@@ -1,21 +1,10 @@
 import walle from "@/assets/walle-not-found.png";
-import { useContext } from "react";
-import { IShopContext, ShopContext } from "@/context/shop-context";
-import { useNavigate } from "react-router-dom";
-import { ErrorToast } from "@/components/CustomToast";
 import Product from "./Product";
 import { useGetCartData } from "@/hooks/useGetCartData";
 import Spinner from "@/components/Spinner";
 
 export const PurchasedItemsPage = () => {
-  const { isAuthenticated } = useContext<IShopContext>(ShopContext);
   const { purchasedItems, purchasedItemsLoading } = useGetCartData();
-  const navigate = useNavigate();
-
-  if (!isAuthenticated) {
-    navigate("/");
-    ErrorToast("You're not logged in, please log in.");
-  }
 
   return (
     <div>

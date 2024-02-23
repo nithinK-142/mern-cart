@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import { useGetCartData } from "@/hooks/useGetCartData";
 import { IProduct } from "@/models/interfaces";
 import axios from "axios";
@@ -149,14 +149,6 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     setCartItems({});
     SuccessToast("Successfully logged out!");
   };
-
-  useEffect(() => {
-    if (!isAuthenticated || !localStorage.getItem("userID")) {
-      navigate("/auth");
-      return;
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated]);
 
   const contextValue: IShopContext = {
     addToCart,

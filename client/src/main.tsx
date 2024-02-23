@@ -13,14 +13,36 @@ import Home from "./pages/home/index.tsx";
 import { CheckoutPage } from "./pages/checkout/index.tsx";
 import { PurchasedItemsPage } from "./pages/purchased-items/index.tsx";
 import Test from "./pages/test/index.tsx";
+import ProtectedRoute from "./components/ProtectedRoute.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
-      <Route path="" element={<Home />} />
+      <Route
+        path=""
+        element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        }
+      />
       <Route path="auth" element={<AuthPage />} />
-      <Route path="checkout" element={<CheckoutPage />} />
-      <Route path="purchased-items" element={<PurchasedItemsPage />} />
+      <Route
+        path="checkout"
+        element={
+          <ProtectedRoute>
+            <CheckoutPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="purchased-items"
+        element={
+          <ProtectedRoute>
+            <PurchasedItemsPage />
+          </ProtectedRoute>
+        }
+      />
       <Route path="test" element={<Test />} />
     </Route>
   )

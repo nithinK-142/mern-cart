@@ -11,6 +11,7 @@ function App() {
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
+      <Toaster />
       <Layout />
     </QueryClientProvider>
   );
@@ -23,7 +24,6 @@ function Layout() {
     <main className="h-screen">
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
         <ShopContextProvider>
-          <Toaster />
           <Header />
           <div className="relative px-10 sm:px-20 md:px-32 lg:px-40">
             <Outlet />
