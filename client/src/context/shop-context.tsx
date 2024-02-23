@@ -11,7 +11,7 @@ import { ErrorToast, SuccessToast } from "@/components/CustomToast";
 export interface IShopContext {
   addToCart: (itemId: string) => void;
   removeFromCart: (itemId: string) => void;
-  updateCardItemCount: (newAmount: number, itemId: string) => void;
+  updateCartItemCount: (newAmount: number, itemId: string) => void;
   cartItemCount: number;
   getCartItemCount: (itemId: string) => number;
   getTotalCartAmount: () => number;
@@ -27,7 +27,7 @@ export interface IShopContext {
 const defaultVal: IShopContext = {
   addToCart: () => null,
   removeFromCart: () => null,
-  updateCardItemCount: () => null,
+  updateCartItemCount: () => null,
   cartItemCount: 0,
   getCartItemCount: () => 0,
   getTotalCartAmount: () => 0,
@@ -82,11 +82,13 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     if (!cartItems[itemId]) return;
     if (cartItems[itemId] === 0) return;
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+    setCartItemCount((prev) => prev - 1);
   };
 
-  const updateCardItemCount = (newAmount: number, itemId: string) => {
+  const updateCartItemCount = (newAmount: number, itemId: string) => {
     if (newAmount < 0) return;
     setCartItems((prev) => ({ ...prev, [itemId]: newAmount }));
+    setCartItemCount((prev) => prev - cartItems[itemId] + newAmount);
   };
 
   const getTotalCartAmount = (): number => {
@@ -126,7 +128,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
           errorMessage = "No product found";
           break;
         case ProductErrors.NO_AVAILABLE_MONEY:
-          errorMessage = "Not enough money";
+          errorMessage = "Not enough credits";
           break;
         case ProductErrors.NOT_ENOUGH_STOCK:
           errorMessage = "Not enough stock";
@@ -159,7 +161,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
   const contextValue: IShopContext = {
     addToCart,
     removeFromCart,
-    updateCardItemCount,
+    updateCartItemCount: updateCartItemCount,
     cartItemCount,
     getCartItemCount,
     getTotalCartAmount,

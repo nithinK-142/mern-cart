@@ -38,6 +38,7 @@ export const CartToast = (productname: string) => {
       style: {
         backgroundColor: "#99cc99",
       },
+      duration: 1000,
     }
   );
 };
