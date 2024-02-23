@@ -7,16 +7,14 @@ export const WelcomeToast = (username: string | undefined) => {
       <div
         className={`${
           t.visible ? "animate-enter" : "animate-leave"
-        } max-w-[10rem] w-full bg-[#333] dark:text-black text-[#fff] dark:bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+        } bg-[#333] dark:text-black text-[#fff] dark:bg-white flex space-x-2 px-4 py-2.5 rounded-lg shadow-lg`}
       >
-        <div className="flex-1 w-0 p-4">
-          <p className="text-sm font-medium text-center">
-            Welcome, {username} 👏
-          </p>
-        </div>
+        <p className="text-sm font-medium text-center">
+          Welcome, {username} 👏
+        </p>
       </div>
     ),
-    { duration: 1000 }
+    { duration: 2000 }
   );
 };
 
