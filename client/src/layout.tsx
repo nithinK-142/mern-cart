@@ -6,7 +6,6 @@ import { ThemeProvider } from "@/context/theme-provider";
 import Footer from "./components/Footer";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useGetCartData } from "./hooks/useGetCartData";
-import Spinner from "./components/Spinner";
 
 function App() {
   const queryClient = new QueryClient();
@@ -18,7 +17,7 @@ function App() {
 }
 
 function Layout() {
-  const { productsLoading } = useGetCartData();
+  const { productsLoading, purchasedItemsLoading } = useGetCartData();
 
   return (
     <main className="h-screen">
@@ -27,9 +26,9 @@ function Layout() {
           <Toaster />
           <Header />
           <div className="relative px-10 sm:px-20 md:px-32 lg:px-40">
-            {productsLoading ? <Spinner /> : <Outlet />}
+            <Outlet />
           </div>
-          {!productsLoading && <Footer />}
+          {!productsLoading && !purchasedItemsLoading && <Footer />}
         </ShopContextProvider>
       </ThemeProvider>
     </main>
