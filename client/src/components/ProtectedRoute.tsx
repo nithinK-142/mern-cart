@@ -18,7 +18,6 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     }
   }, [cookies.access_token, setIsAuthenticated]);
 
-  console.log(isAuthenticated);
   if (!isAuthenticated) {
     ErrorToast("You're not logged in, please log in.");
     return <Navigate to="/auth" />;
