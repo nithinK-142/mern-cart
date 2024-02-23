@@ -1,12 +1,15 @@
+import walle from "@/assets/walle-not-found.png";
 import { useContext } from "react";
 import { IShopContext, ShopContext } from "@/context/shop-context";
-import "./style.css";
 import { useNavigate } from "react-router-dom";
 import { ErrorToast } from "@/components/CustomToast";
+import Product from "./Product";
+import { useGetCartData } from "@/hooks/useGetCartData";
+import Spinner from "@/components/Spinner";
 
 export const PurchasedItemsPage = () => {
-  const { isAuthenticated, addToCart, getCartItemCount, purchasedItems } =
-    useContext<IShopContext>(ShopContext);
+  const { isAuthenticated } = useContext<IShopContext>(ShopContext);
+  const { purchasedItems, purchasedItemsLoading } = useGetCartData();
   const navigate = useNavigate();
 
   if (!isAuthenticated) {
@@ -16,26 +19,21 @@ export const PurchasedItemsPage = () => {
 
   return (
     <div>
-      <h1>Previously Purchased Items</h1>
-      <div className="purchased-items">
-        {purchasedItems.map((item) => {
-          const count = getCartItemCount(item._id);
-          return (
-            <div key={item._id} className="item">
-              <h3> {item.productName}</h3>
-              <img src={item.imageURL} alt={item.productName} />
-              <p>$: {item.price}</p>
-
-              <button
-                className="add-to-cart-btn"
-                onClick={() => addToCart(item._id)}
-              >
-                Purchase Again {count > 0 && <>({count})</>}
-              </button>
-            </div>
-          );
-        })}
-      </div>
+      {!purchasedItemsLoading && purchasedItems.length === 0 ? (
+        <div className="flex justify-center my-10">
+          <img src={walle} className="select-none md:w-1/3" />
+        </div>
+      ) : (
+        <div className="flex flex-wrap justify-center my-4">
+          {purchasedItemsLoading ? (
+            <Spinner />
+          ) : (
+            purchasedItems.map((item) => (
+              <Product key={item._id} product={item} />
+            ))
+          )}
+        </div>
+      )}
     </div>
   );
 };
