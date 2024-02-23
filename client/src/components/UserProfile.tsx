@@ -29,6 +29,7 @@ const UserProfile = () => {
   const { logout } = useContext<IShopContext>(ShopContext);
   const { availableMoney, availableMoneyLoading } = useGetCartData();
   const user = localStorage.getItem("username");
+  const validMoney = !availableMoneyLoading && availableMoney > 0;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -41,7 +42,7 @@ const UserProfile = () => {
         <DropdownMenuLabel>{user}&apos;s Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          {!availableMoneyLoading ? (
+          {validMoney ? (
             <DropdownMenuItem>
               <CircleDollarSign className="w-4 h-4 mr-2" />
               <span className="font-medium opacity-90">

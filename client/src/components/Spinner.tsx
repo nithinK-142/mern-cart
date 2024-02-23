@@ -1,21 +1,92 @@
-import "./Spinner.css";
-const Spinner = () => {
-  return (
-    <div className="spinner-gear-container">
-      <div className="spinner-gear">
-        <div className="gear">
-          <div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        </div>
-      </div>
+const Spinner = () => (
+  <div className="absolute left-0 flex items-center justify-center w-screen top-32">
+    <div
+      aria-label="Loading..."
+      role="status"
+      className="flex items-center space-x-2"
+    >
+      <svg
+        className="w-8 h-8 2xl:w-10 2xl:h-10 animate-spin stroke-gray-500 dark:stroke-white"
+        viewBox="0 0 256 256"
+      >
+        <line
+          x1="128"
+          y1="32"
+          x2="128"
+          y2="64"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="24"
+        ></line>
+        <line
+          x1="195.9"
+          y1="60.1"
+          x2="173.3"
+          y2="82.7"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="24"
+        ></line>
+        <line
+          x1="224"
+          y1="128"
+          x2="192"
+          y2="128"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="24"
+        ></line>
+        <line
+          x1="195.9"
+          y1="195.9"
+          x2="173.3"
+          y2="173.3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="24"
+        ></line>
+        <line
+          x1="128"
+          y1="224"
+          x2="128"
+          y2="192"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="24"
+        ></line>
+        <line
+          x1="60.1"
+          y1="195.9"
+          x2="82.7"
+          y2="173.3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="24"
+        ></line>
+        <line
+          x1="32"
+          y1="128"
+          x2="64"
+          y2="128"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="24"
+        ></line>
+        <line
+          x1="60.1"
+          y1="60.1"
+          x2="82.7"
+          y2="82.7"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="24"
+        ></line>
+      </svg>
+      <span className="text-xl font-medium text-gray-500 dark:text-gray-300">
+        Loading...
+      </span>
     </div>
-  );
-};
+  </div>
+);
 
 export default Spinner;
