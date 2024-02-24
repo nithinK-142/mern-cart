@@ -21,7 +21,7 @@ function Layout() {
   const { productsLoading, purchasedItemsLoading } = useGetCartData();
 
   return (
-    <main className="h-screen">
+    <main className="h-screen floating-scrollbar">
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
         <ShopContextProvider>
           <Header />
