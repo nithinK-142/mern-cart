@@ -51,7 +51,7 @@ export const CheckoutPage = () => {
   return (
     <div>
       {hasItemsInCart ? (
-        <div className="flex flex-wrap justify-center my-4">
+        <div className="flex flex-wrap justify-center mb-4">
           {products.map((product: IProduct) => {
             if (getCartItemCount(product._id) !== 0) {
               return <CartItem key={product._id} product={product} />;

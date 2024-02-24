@@ -25,7 +25,7 @@ function Layout() {
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
         <ShopContextProvider>
           <Header />
-          <div className="relative px-10 sm:px-20 md:px-32 lg:px-40">
+          <div className="relative px-10 pt-16 sm:px-20 md:px-32 lg:px-40">
             <Outlet />
           </div>
           {!productsLoading && !purchasedItemsLoading && <Footer />}

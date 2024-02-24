@@ -10,7 +10,7 @@ import NavLinks from "./NavLinks";
 const Header = () => {
   const { isAuthenticated } = useContext<IShopContext>(ShopContext);
   return (
-    <nav className="bg-white border border-gray-300 dark:border-opacity-20 dark:bg-black/70">
+    <nav className="fixed top-0 z-50 w-full bg-white border border-gray-300 dark:border-opacity-20 dark:bg-black/70">
       <div
         className={`flex flex-wrap items-center ${
           isAuthenticated ? "justify-between" : "justify-center"

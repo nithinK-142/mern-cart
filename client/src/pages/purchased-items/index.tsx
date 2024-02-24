@@ -13,7 +13,7 @@ export const PurchasedItemsPage = () => {
           <img src={walle} className="select-none md:w-1/3" />
         </div>
       ) : (
-        <div className="flex flex-wrap justify-center my-4">
+        <div className="flex flex-wrap justify-center mb-4">
           {purchasedItemsLoading ? (
             <Spinner />
           ) : (
