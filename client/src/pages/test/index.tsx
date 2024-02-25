@@ -1,20 +1,40 @@
-import { SuccessToast, ErrorToast } from "@/components/CustomToast";
-import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogOverlay,
+  DialogPortal,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Test = () => {
-  const success = () => {
-    SuccessToast("Success");
-  };
-
-  const error = () => {
-    ErrorToast("Error");
-  };
-
   return (
-    <div className="grid grid-cols-2 mt-20 border border-black place-items-center">
-      <Button onClick={success}>Success</Button>
-      <Button onClick={error}>Error</Button>
-    </div>
+    <Dialog>
+      <DropdownMenu>
+        <DropdownMenuTrigger>Dropdown Menu</DropdownMenuTrigger>
+        <DropdownMenuPortal>
+          <DropdownMenuContent>
+            <DialogTrigger>
+              <DropdownMenuItem>
+                <div>"Test"</div>
+              </DropdownMenuItem>
+            </DialogTrigger>
+          </DropdownMenuContent>
+        </DropdownMenuPortal>
+      </DropdownMenu>
+      <DialogPortal>
+        <DialogOverlay className="DialogOverlay" />
+        <DialogContent className="DialogContent">
+          This is a modal.
+        </DialogContent>
+      </DialogPortal>
+    </Dialog>
   );
 };
 
