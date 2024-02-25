@@ -21,6 +21,7 @@ export interface IShopContext {
   isAuthenticated: boolean;
   setIsAuthenticated: (isAuthenticated: boolean) => void;
   cartItems: { [itemId: string]: number };
+  clearCart: () => void;
   logout: () => void;
 }
 
@@ -37,6 +38,7 @@ const defaultVal: IShopContext = {
   isAuthenticated: false,
   setIsAuthenticated: () => null,
   cartItems: {},
+  clearCart: () => null,
   logout: () => null,
 };
 
@@ -105,6 +107,14 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     return totalAmount;
   };
 
+  const clearCart = () => {
+    if (cartItemCount > 0) {
+      setCartItems({});
+      setCartItemCount(0);
+      SuccessToast("Cleared cart items.");
+    } else ErrorToast("No items in the cart!");
+  };
+
   const checkout = async () => {
     const body = { customerID: localStorage.getItem("userID"), cartItems };
     try {
@@ -117,7 +127,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
       );
       SuccessToast("Order placed 👍");
       setCartItemCount(0);
-      setCartItems({});
+      clearCart();
       fetchAvailableMoney();
       fetchPurchasedItems();
       navigate("/");
@@ -146,14 +156,14 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     navigate("/auth");
     localStorage.clear();
     setCookies("access_token", null);
-    setCartItems({});
+    clearCart();
     SuccessToast("Successfully logged out!");
   };
 
   const contextValue: IShopContext = {
     addToCart,
     removeFromCart,
-    updateCartItemCount: updateCartItemCount,
+    updateCartItemCount,
     cartItemCount,
     getCartItemCount,
     getTotalCartAmount,
@@ -163,6 +173,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     isAuthenticated,
     setIsAuthenticated,
     cartItems,
+    clearCart,
     logout,
   };
   return (
