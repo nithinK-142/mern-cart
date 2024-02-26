@@ -22,11 +22,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { CreditCardIcon, XCircleIcon } from "lucide-react";
+import { CreditCardIcon, XCircleIcon, XIcon } from "lucide-react";
 
 const UserCart = () => {
   const { cartItemCount, clearCart } = useContext(ShopContext);
-  const [cartLogs] = useState([
+  const [cartLogs, setCartLogs] = useState([
     {
       title: "item added to the cart.",
     },
@@ -34,6 +34,10 @@ const UserCart = () => {
       title: "cart cleared.",
     },
   ]);
+
+  const clearCartLogs = () => {
+    setCartLogs([]);
+  };
 
   return (
     <Dialog>
@@ -49,18 +53,34 @@ const UserCart = () => {
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
-          <DropdownMenuLabel className="text-center">Cart</DropdownMenuLabel>
+          <DropdownMenuLabel className="relative text-center">
+            Cart
+            <div className="absolute right-1 top-0.5 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full p-1">
+              <XIcon
+                className="w-4 h-4 cursor-pointer"
+                onClick={clearCartLogs}
+              />
+            </div>
+          </DropdownMenuLabel>
 
           <DropdownMenuSeparator />
 
-          {cartLogs.map(({ title }) => (
-            <DropdownMenuGroup>
-              <DropdownMenuItem className="flex items-center justify-between">
-                <span>{title}</span>
-                <span className="inline-block p-1 bg-blue-600 rounded-full cursor-pointer" />
-              </DropdownMenuItem>
+          {cartLogs.length === 0 ? (
+            <DropdownMenuGroup className="flex justify-center">
+              <span className="py-1 text-center text-gray-500">
+                cart is empty
+              </span>
             </DropdownMenuGroup>
-          ))}
+          ) : (
+            cartLogs.map(({ title }) => (
+              <DropdownMenuGroup>
+                <DropdownMenuItem className="flex items-center justify-between">
+                  <span>{title}</span>
+                  <span className="inline-block p-1 bg-blue-600 rounded-full cursor-pointer" />
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            ))
+          )}
 
           <DropdownMenuSeparator />
 
