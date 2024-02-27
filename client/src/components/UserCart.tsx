@@ -28,15 +28,23 @@ const UserCart = () => {
   const { cartItemCount, clearCart } = useContext(ShopContext);
   const [cartLogs, setCartLogs] = useState([
     {
-      title: "item added to the cart.",
+      id: 1,
+      title: "item added to the cart",
     },
     {
-      title: "cart cleared.",
+      id: 2,
+      title: "cart cleared",
     },
   ]);
 
   const clearCartLogs = () => {
     setCartLogs([]);
+  };
+
+  const removeLog = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
+    e.stopPropagation();
+    const updatedLogs = cartLogs.filter((log) => log.id !== id);
+    setCartLogs(updatedLogs);
   };
 
   return (
@@ -72,11 +80,14 @@ const UserCart = () => {
               </span>
             </DropdownMenuGroup>
           ) : (
-            cartLogs.map(({ title }) => (
-              <DropdownMenuGroup>
+            cartLogs.map(({ title, id }) => (
+              <DropdownMenuGroup key={id}>
                 <DropdownMenuItem className="flex items-center justify-between">
                   <span>{title}</span>
-                  <span className="inline-block p-1 bg-blue-600 rounded-full cursor-pointer" />
+                  <button
+                    onClick={(e) => removeLog(e, id)}
+                    className="inline-block p-1 bg-blue-600 hover:p-1.5 rounded-full cursor-pointer"
+                  />
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             ))
