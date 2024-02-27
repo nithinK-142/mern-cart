@@ -2,7 +2,6 @@ import { ShopContext } from "@/context/shop-context";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { icons } from "@/assets/icons";
-import { Button } from "./ui/button";
 import {
   Dialog,
   DialogClose,
@@ -120,9 +119,12 @@ const UserCart = () => {
         </DialogHeader>
         <DialogFooter>
           <DialogClose>
-            <Button type="submit" variant={"destructive"} onClick={clearCart}>
+            <div
+              onClick={clearCart}
+              className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors rounded-md shadow-sm whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
               Clear cart!
-            </Button>
+            </div>
           </DialogClose>
         </DialogFooter>
       </DialogContent>
