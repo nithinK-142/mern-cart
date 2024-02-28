@@ -19,11 +19,12 @@ interface Props {
 export const Product = (props: Props) => {
   const { _id, productName, description, price, imageURL, stockQuantity } =
     props.product;
-  const { addToCart } = useContext<IShopContext>(ShopContext);
+  const { addToCart, addLog } = useContext<IShopContext>(ShopContext);
 
   const handleAddToCart = () => {
     addToCart(_id);
     CartToast(productName);
+    addLog(productName + " added to cart");
   };
 
   const stockZero = stockQuantity === 0;

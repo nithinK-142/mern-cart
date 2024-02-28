@@ -1,5 +1,5 @@
 import { ShopContext } from "@/context/shop-context";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { icons } from "@/assets/icons";
 import {
@@ -24,17 +24,8 @@ import {
 import { CreditCardIcon, XCircleIcon, XIcon } from "lucide-react";
 
 const UserCart = () => {
-  const { cartItemCount, clearCart } = useContext(ShopContext);
-  const [cartLogs, setCartLogs] = useState([
-    {
-      id: 1,
-      title: "item added to the cart",
-    },
-    {
-      id: 2,
-      title: "cart cleared",
-    },
-  ]);
+  const { cartItemCount, clearCart, cartLogs, setCartLogs } =
+    useContext(ShopContext);
 
   const clearCartLogs = () => {
     setCartLogs([]);
