@@ -73,7 +73,7 @@ const UserCart = () => {
             cartLogs.map(({ title, id }) => (
               <DropdownMenuGroup key={id}>
                 <DropdownMenuItem className="flex items-center justify-between">
-                  <span>{title}</span>
+                  <span onClick={(e) => e.stopPropagation()}>{title}</span>
                   <button
                     onClick={(e) => removeLog(e, id)}
                     className="inline-block p-1 bg-blue-600 hover:p-1.5 rounded-full cursor-pointer"
