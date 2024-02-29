@@ -24,17 +24,15 @@ import {
 import { CreditCardIcon, XCircleIcon, XIcon } from "lucide-react";
 
 const UserCart = () => {
-  const { cartItemCount, clearCart, cartLogs, setCartLogs } =
+  const { cartItemCount, clearCart, cartLogs, resetCartLogs, removeLog } =
     useContext(ShopContext);
 
-  const clearCartLogs = () => {
-    setCartLogs([]);
-  };
-
-  const removeLog = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
+  const handleRemoveLog = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    id: number
+  ) => {
     e.stopPropagation();
-    const updatedLogs = cartLogs.filter((log) => log.id !== id);
-    setCartLogs(updatedLogs);
+    removeLog(id);
   };
 
   return (
@@ -56,7 +54,7 @@ const UserCart = () => {
             <div className="absolute right-1 top-0.5 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full p-1">
               <XIcon
                 className="w-4 h-4 cursor-pointer"
-                onClick={clearCartLogs}
+                onClick={resetCartLogs}
               />
             </div>
           </DropdownMenuLabel>
@@ -75,7 +73,7 @@ const UserCart = () => {
                 <DropdownMenuItem className="flex items-center justify-between">
                   <span onClick={(e) => e.stopPropagation()}>{title}</span>
                   <button
-                    onClick={(e) => removeLog(e, id)}
+                    onClick={(e) => handleRemoveLog(e, id)}
                     className="inline-block p-1 bg-blue-600 hover:p-1.5 rounded-full cursor-pointer"
                   />
                 </DropdownMenuItem>

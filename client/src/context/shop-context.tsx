@@ -24,10 +24,9 @@ export interface IShopContext {
   clearCart: () => void;
   logout: () => void;
   cartLogs: { id: number; title: string }[];
-  setCartLogs: React.Dispatch<
-    React.SetStateAction<{ id: number; title: string }[]>
-  >;
   addLog: (log: string) => void;
+  resetCartLogs: () => void;
+  removeLog: (id: number) => void;
 }
 
 const defaultVal: IShopContext = {
@@ -46,8 +45,9 @@ const defaultVal: IShopContext = {
   clearCart: () => null,
   logout: () => null,
   cartLogs: [],
-  setCartLogs: () => null,
   addLog: () => null,
+  resetCartLogs: () => null,
+  removeLog: () => null,
 };
 
 export const ShopContext = createContext<IShopContext>(defaultVal);
@@ -83,6 +83,15 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
   const addLog = (log: string) => {
     const randomId = Math.floor(Math.random() * 1000000);
     setCartLogs([...cartLogs, { id: randomId, title: log }]);
+  };
+
+  const resetCartLogs = () => {
+    setCartLogs([]);
+  };
+
+  const removeLog = (id: number) => {
+    const updatedLogs = cartLogs.filter((log) => log.id !== id);
+    setCartLogs(updatedLogs);
   };
 
   const addToCart = (itemId: string) => {
@@ -195,8 +204,9 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     clearCart,
     logout,
     cartLogs,
-    setCartLogs,
     addLog,
+    resetCartLogs,
+    removeLog,
   };
   return (
     <ShopContext.Provider value={contextValue}>
