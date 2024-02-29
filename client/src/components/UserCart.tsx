@@ -21,7 +21,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { CreditCardIcon, XCircleIcon, XIcon } from "lucide-react";
+import { CreditCardIcon, TrashIcon, XCircleIcon, XIcon } from "lucide-react";
 
 const UserCart = () => {
   const { cartItemCount, clearCart, cartLogs, resetCartLogs, removeLog } =
@@ -70,12 +70,22 @@ const UserCart = () => {
           ) : (
             cartLogs.map(({ title, id }) => (
               <DropdownMenuGroup key={id}>
-                <DropdownMenuItem className="flex items-center justify-between">
-                  <span onClick={(e) => e.stopPropagation()}>{title}</span>
-                  <button
-                    onClick={(e) => handleRemoveLog(e, id)}
-                    className="inline-block p-1 bg-blue-600 hover:p-1.5 rounded-full cursor-pointer"
-                  />
+                <DropdownMenuItem className="relative flex items-center justify-between group">
+                  <span
+                    onClick={(e) => e.stopPropagation()}
+                    className="w-[90%]"
+                  >
+                    {title}
+                  </span>
+                  <div className="flex items-center justify-center">
+                    <div className="p-1 bg-blue-600 rounded-full group-hover:hidden" />
+                    <button
+                      onClick={(e) => handleRemoveLog(e, id)}
+                      className="absolute hidden right-1 group-hover:block"
+                    >
+                      <TrashIcon className="w-4 h-4" />
+                    </button>
+                  </div>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             ))
