@@ -129,6 +129,12 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     } else ErrorToast("No items in the cart!");
   };
 
+  const resetCartStates = () => {
+    setCartItems({});
+    setCartItemCount(0);
+    setCartLogs([]);
+  };
+
   const checkout = async () => {
     const body = { customerID: localStorage.getItem("userID"), cartItems };
     try {
@@ -140,8 +146,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
         }
       );
       SuccessToast("Order placed 👍");
-      setCartItemCount(0);
-      clearCart();
+      resetCartStates();
       fetchAvailableMoney();
       fetchPurchasedItems();
       navigate("/");
@@ -170,7 +175,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     navigate("/auth");
     localStorage.clear();
     setCookies("access_token", null);
-    clearCart();
+    resetCartStates();
     SuccessToast("Successfully logged out!");
   };
 
