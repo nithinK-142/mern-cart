@@ -64,7 +64,7 @@ const UserCart = () => {
           {cartLogs.length === 0 ? (
             <DropdownMenuGroup className="flex justify-center">
               <span className="py-1 text-center text-gray-500">
-                cart is empty
+                No recent activity
               </span>
             </DropdownMenuGroup>
           ) : (
