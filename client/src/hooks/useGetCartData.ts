@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useGetToken } from "./useGetToken";
 import { IProduct } from "@/models/interfaces";
@@ -39,20 +39,24 @@ export const useGetCartData = () => {
     return response.data.availableMoney;
   };
 
-  const { data: products, isLoading: productsLoading } = useQuery<IProduct[]>(
-    "products",
-    fetchProducts,
-    {
-      enabled: isAuthenticated,
-    }
-  );
-  const { data: purchasedItems, isLoading: purchasedItemsLoading } = useQuery<
-    IProduct[]
-  >("purchasedItems", fetchPurchasedItems, {
+  const { data: products, isLoading: productsLoading } = useQuery<IProduct[]>({
+    queryKey: ["products"],
+    queryFn: fetchProducts,
     enabled: isAuthenticated,
   });
+
+  const { data: purchasedItems, isLoading: purchasedItemsLoading } = useQuery<
+    IProduct[]
+  >({
+    queryKey: ["purchasedItems"],
+    queryFn: fetchPurchasedItems,
+    enabled: isAuthenticated,
+  });
+
   const { data: availableMoney, isLoading: availableMoneyLoading } =
-    useQuery<number>("availableMoney", fetchAvailableMoney, {
+    useQuery<number>({
+      queryKey: ["availableMoney"],
+      queryFn: fetchAvailableMoney,
       enabled: isAuthenticated,
     });
 
