@@ -21,19 +21,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { CreditCardIcon, TrashIcon, XCircleIcon, XIcon } from "lucide-react";
+import { CreditCardIcon, XCircleIcon } from "lucide-react";
 
 const UserCart = () => {
-  const { cartItemCount, clearCart, cartLogs, resetCartLogs, removeLog } =
-    useContext(ShopContext);
-
-  const handleRemoveLog = (
-    e: React.MouseEvent<HTMLButtonElement>,
-    id: number
-  ) => {
-    e.stopPropagation();
-    removeLog(id);
-  };
+  const { cartItemCount, clearCart } = useContext(ShopContext);
 
   return (
     <Dialog>
@@ -48,60 +39,24 @@ const UserCart = () => {
             )}
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56">
-          <DropdownMenuLabel className="relative text-center">
-            Cart
-            <div className="absolute right-1 top-0.5 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full p-1">
-              <XIcon
-                className="w-4 h-4 cursor-pointer"
-                onClick={resetCartLogs}
-              />
-            </div>
+        <DropdownMenuContent className="w-36">
+          <DropdownMenuLabel className="py-0 text-center">
+            Cart {cartItemCount > 0 && `(${cartItemCount})`}
           </DropdownMenuLabel>
 
           <DropdownMenuSeparator />
 
-          {cartLogs.length === 0 ? (
-            <DropdownMenuGroup className="flex justify-center">
-              <span className="py-1 text-center text-gray-500">
-                No recent activity
-              </span>
-            </DropdownMenuGroup>
-          ) : (
-            cartLogs.map(({ title, id }) => (
-              <DropdownMenuGroup key={id}>
-                <DropdownMenuItem className="relative flex items-center justify-between group">
-                  <span
-                    onClick={(e) => e.stopPropagation()}
-                    className="w-[90%]"
-                  >
-                    {title}
-                  </span>
-                  <div className="flex items-center justify-center">
-                    <div className="p-1 bg-blue-600 rounded-full group-hover:hidden" />
-                    <button
-                      onClick={(e) => handleRemoveLog(e, id)}
-                      className="absolute hidden right-1 group-hover:block"
-                    >
-                      <TrashIcon className="w-4 h-4" />
-                    </button>
-                  </div>
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-            ))
-          )}
-
-          <DropdownMenuSeparator />
-
-          <DropdownMenuGroup className="flex justify-evenly">
-            <DropdownMenuItem className="flex space-x-2">
-              <Link to="/checkout">checkout</Link>
+          <DropdownMenuGroup>
+            <DropdownMenuItem>
               <CreditCardIcon className="w-4 h-4 mr-2" />
+              <Link to="/checkout" className="text-base">
+                checkout
+              </Link>
             </DropdownMenuItem>
             <DialogTrigger asChild>
-              <DropdownMenuItem className="flex space-x-2">
-                <span> clear cart</span>
+              <DropdownMenuItem>
                 <XCircleIcon className="w-4 h-4 mr-2" />
+                <span> clear cart</span>
               </DropdownMenuItem>
             </DialogTrigger>
           </DropdownMenuGroup>
