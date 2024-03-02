@@ -11,11 +11,12 @@ interface Props {
 }
 const Product = (props: Props) => {
   const { _id, productName, price, imageURL } = props.product;
-  const { addToCart } = useContext<IShopContext>(ShopContext);
+  const { addToCart, addLog } = useContext<IShopContext>(ShopContext);
 
   const handleAddToCart = () => {
     addToCart(_id);
     CartToast(productName);
+    addLog(productName + " added to cart");
   };
 
   return (
