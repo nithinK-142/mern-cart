@@ -9,8 +9,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { DollarSign } from "lucide-react";
+import { DollarSign, MinusIcon, PlusIcon } from "lucide-react";
 import { CartToast } from "@/components/CustomToast";
+import { Input } from "@/components/ui/input";
 
 interface Props {
   product: IProduct;
@@ -19,7 +20,13 @@ interface Props {
 export const Product = (props: Props) => {
   const { _id, productName, description, price, imageURL, stockQuantity } =
     props.product;
-  const { addToCart, addLog } = useContext<IShopContext>(ShopContext);
+  const {
+    addToCart,
+    addLog,
+    removeFromCart,
+    updateCartItemCount,
+    getCartItemCount,
+  } = useContext<IShopContext>(ShopContext);
 
   const handleAddToCart = () => {
     addToCart(_id);
@@ -29,6 +36,7 @@ export const Product = (props: Props) => {
 
   const stockZero = stockQuantity === 0;
 
+  const cartItemCount = getCartItemCount(_id);
   return (
     <Card
       className={`${
@@ -54,6 +62,21 @@ export const Product = (props: Props) => {
       {stockZero ? (
         <CardFooter className="flex items-center justify-center font-medium tracking-wider">
           OUT OF STOCK
+        </CardFooter>
+      ) : cartItemCount > 0 ? (
+        <CardFooter className="flex space-x-2 font-bold">
+          <Button onClick={() => removeFromCart(_id)}>
+            <MinusIcon className="w-4 h-6" />
+          </Button>
+          <Input
+            type="number"
+            value={cartItemCount}
+            onChange={(e) => updateCartItemCount(Number(e.target.value), _id)}
+            className="w-10 sm:w-12"
+          />
+          <Button onClick={() => addToCart(_id)}>
+            <PlusIcon className="w-4 h-6" />
+          </Button>
         </CardFooter>
       ) : (
         <CardFooter>
