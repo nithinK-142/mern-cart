@@ -9,17 +9,21 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { ShopContext } from "@/context/shop-context";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
 const Notifications = () => {
   const { cartLogs, resetCartLogs, removeLog } = useContext(ShopContext);
 
   const [isBellClicked, setIsBellClicked] = useState(false);
 
+  const prevCartLogsLength = useRef(cartLogs.length);
+
   const handleBellClick = () => setIsBellClicked(true);
 
   useEffect(() => {
-    setIsBellClicked(false);
+    if (cartLogs.length > prevCartLogsLength.current) setIsBellClicked(false);
+
+    prevCartLogsLength.current = cartLogs.length;
   }, [cartLogs]);
 
   return (
