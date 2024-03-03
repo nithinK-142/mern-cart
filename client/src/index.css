@@ -90,7 +90,8 @@ input[type="number"] {
 
 /* scrollbar */
 @layer components {
-  .floating-scrollbar {
+  .floating-scrollbar,
+  .floating-scrollbar-notifications {
     overflow-y: auto;
     scrollbar-gutter: stable;
   }
@@ -106,13 +107,29 @@ input[type="number"] {
     background: #90a4ae;
   }
 
+  .floating-scrollbar-notifications {
+    max-height: 40vh;
+  }
+
+  .floating-scrollbar-notifications::-webkit-scrollbar {
+    background-color: transparent;
+    width: 0.5em;
+  }
+
+  .floating-scrollbar-notifications::-webkit-scrollbar-thumb {
+    border-radius: 100vw;
+    background: #90a4ae;
+  }
+
   /* Firefox */
-  .floating-scrollbar {
+  .floating-scrollbar,
+  .floating-scrollbar-notifications {
     scrollbar-width: thin;
     scrollbar-color: #90a4ae transparent;
   }
 
-  .floating-scrollbar:hover {
+  .floating-scrollbar:hover,
+  .floating-scrollbar-notifications:hover {
     scrollbar-color: #90a4ae transparent;
   }
 }

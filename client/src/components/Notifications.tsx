@@ -50,7 +50,7 @@ const Notifications = () => {
             </span>
           </DropdownMenuGroup>
         ) : (
-          <DropdownMenuGroup>
+          <DropdownMenuGroup className="floating-scrollbar-notifications">
             {cartLogs.map(({ title, id }) => (
               <DropdownMenuItem
                 key={id}
