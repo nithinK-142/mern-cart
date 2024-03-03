@@ -28,7 +28,7 @@ const Login = () => {
   const [, setCookies] = useCookies(["access_token"]);
 
   const navigate = useNavigate();
-  const { setIsAuthenticated } = useContext<IShopContext>(ShopContext);
+  const { setIsAuthenticated, addLog } = useContext<IShopContext>(ShopContext);
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -48,6 +48,7 @@ const Login = () => {
       setIsAuthenticated(true);
       navigate("/");
       WelcomeToast(loginUser?.username);
+      addLog(loginUser?.username + " logged in.");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       let errorMessage: string = "";

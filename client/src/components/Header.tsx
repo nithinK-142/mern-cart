@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { IShopContext, ShopContext } from "@/context/shop-context";
 import { icons } from "@/assets/icons";
 import { ModeToggle } from "./ModeToggle";
-// import Notifications from "./Notifications";
+import Notifications from "./Notifications";
 import UserCart from "./UserCart";
 import UserDropdown from "./UserDropdown";
 import { Button } from "./ui/button";
@@ -42,7 +42,7 @@ const Header = () => {
             <div className="flex items-center space-x-4 sm:order-2 md:space-x-6 rtl:space-x-reverse">
               <ModeToggle />
 
-              {/* <Notifications /> */}
+              <Notifications />
 
               <UserCart />
 
