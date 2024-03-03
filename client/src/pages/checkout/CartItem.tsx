@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { DollarSign, MinusIcon, PlusIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { CartAddToast, CartRemoveToast } from "@/components/CustomToast";
 
 interface Props {
   product: IProduct;
@@ -13,10 +14,27 @@ interface Props {
 export const CartItem = (props: Props) => {
   const { _id, productName, price, imageURL } = props.product;
 
-  const { addToCart, removeFromCart, updateCartItemCount, getCartItemCount } =
-    useContext<IShopContext>(ShopContext);
+  const {
+    addToCart,
+    removeFromCart,
+    updateCartItemCount,
+    getCartItemCount,
+    addLog,
+  } = useContext<IShopContext>(ShopContext);
 
   const cartItemCount = getCartItemCount(_id);
+
+  const handleAddToCart = () => {
+    addToCart(_id);
+    CartAddToast(productName);
+    addLog(productName + " added to cart");
+  };
+
+  const handleRemoveFromCart = () => {
+    removeFromCart(_id);
+    CartRemoveToast(productName);
+    addLog(productName + " removed from cart!");
+  };
 
   return (
     <Card
@@ -39,7 +57,7 @@ export const CartItem = (props: Props) => {
           </h2>
         </CardHeader>
         <CardFooter className="flex space-x-2 font-bold">
-          <Button onClick={() => removeFromCart(_id)}>
+          <Button onClick={handleRemoveFromCart}>
             <MinusIcon className="w-4 h-6" />
           </Button>
           <Input
@@ -48,7 +66,7 @@ export const CartItem = (props: Props) => {
             onChange={(e) => updateCartItemCount(Number(e.target.value), _id)}
             className="w-10 sm:w-12"
           />
-          <Button onClick={() => addToCart(_id)}>
+          <Button onClick={handleAddToCart}>
             <PlusIcon className="w-4 h-6" />
           </Button>
         </CardFooter>
