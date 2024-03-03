@@ -50,9 +50,12 @@ const Notifications = () => {
             </span>
           </DropdownMenuGroup>
         ) : (
-          cartLogs.map(({ title, id }) => (
-            <DropdownMenuGroup key={id}>
-              <DropdownMenuItem className="relative flex items-center justify-between group">
+          <DropdownMenuGroup>
+            {cartLogs.map(({ title, id }) => (
+              <DropdownMenuItem
+                key={id}
+                className="relative flex items-center justify-between group"
+              >
                 <span onClick={(e) => e.stopPropagation()} className="w-[90%]">
                   {title}
                 </span>
@@ -69,8 +72,8 @@ const Notifications = () => {
                   </button>
                 </div>
               </DropdownMenuItem>
-            </DropdownMenuGroup>
-          ))
+            ))}
+          </DropdownMenuGroup>
         )}
 
         <DropdownMenuSeparator />

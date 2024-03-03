@@ -1,4 +1,4 @@
-import { CartToast } from "@/components/CustomToast";
+import { CartAddToast } from "@/components/CustomToast";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { IShopContext, ShopContext } from "@/context/shop-context";
@@ -15,7 +15,7 @@ const Product = (props: Props) => {
 
   const handleAddToCart = () => {
     addToCart(_id);
-    CartToast(productName);
+    CartAddToast(productName);
     addLog(productName + " added to cart");
   };
 

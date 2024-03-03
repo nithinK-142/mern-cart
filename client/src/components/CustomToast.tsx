@@ -18,7 +18,7 @@ export const WelcomeToast = (username: string | undefined) => {
   );
 };
 
-export const CartToast = (productname: string) => {
+export const CartAddToast = (productname: string) => {
   // toast(`${productname} added to 🛒`, {
   //   style: {
   //     fontWeight: "bold",
@@ -37,6 +37,24 @@ export const CartToast = (productname: string) => {
     {
       style: {
         backgroundColor: "#A5DD9B",
+      },
+      duration: 1500,
+    }
+  );
+};
+
+export const CartRemoveToast = (productname: string) => {
+  toast(
+    () => (
+      <div className="flex space-x-2">
+        <span className="font-semibold">{productname}</span>
+        <span> removed from </span>
+        <div className="w-6 h-6">{icons.cart}</div>
+      </div>
+    ),
+    {
+      style: {
+        backgroundColor: "#ff6666",
       },
       duration: 1500,
     }
