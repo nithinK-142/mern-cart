@@ -49,7 +49,7 @@ export const Product = (props: Props) => {
         stockZero && "opacity-70"
       } flex flex-col justify-between max-w-[80vw] md:max-w-max md:min-w-[14rem]`}
     >
-      <div className="flex items-center justify-center pt-1 bg-white rounded-tl-xl rounded-tr-xl min-h-56">
+      <div className="flex items-center justify-center pt-1 bg-white dark:opacity-80 rounded-tl-xl rounded-tr-xl min-h-56">
         <img
           src={imageURL}
           className="object-cover max-h-52"
@@ -86,7 +86,9 @@ export const Product = (props: Props) => {
         </CardFooter>
       ) : (
         <CardFooter>
-          <Button onClick={handleAddToCart}>Add to cart</Button>
+          <Button onClick={handleAddToCart} className="dark:opacity-90">
+            Add to cart
+          </Button>
         </CardFooter>
       )}
     </Card>
