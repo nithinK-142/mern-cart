@@ -4,12 +4,12 @@ import Spinner from "@/components/Spinner";
 import { useContext, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Search from "@/components/Search";
-import { ShopContext } from "@/context/shop-context";
+import { SearchContext } from "@/context/search-context";
 
 const Home = () => {
   const { products, productsLoading } = useGetCartData();
   const [displayCount, setDisplayCount] = useState(10);
-  const { filteredProducts, searchTerm } = useContext(ShopContext);
+  const { filteredProducts, searchTerm } = useContext(SearchContext);
 
   if (productsLoading) return <Spinner />;
 

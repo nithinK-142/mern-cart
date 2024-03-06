@@ -9,7 +9,7 @@ import { Input } from "./ui/input";
 //   DropdownMenuTrigger,
 // } from "./ui/dropdown-menu";
 import { useContext } from "react";
-import { ShopContext } from "@/context/shop-context";
+import { SearchContext } from "@/context/search-context";
 
 // type Checked = DropdownMenuCheckboxItemProps["checked"];
 
@@ -18,7 +18,7 @@ const Search = () => {
   // const [showActivityBar, setShowActivityBar] = useState<Checked>(false);
   // const [showPanel, setShowPanel] = useState<Checked>(false);
   const { searchTerm, setSearchTerm, filteredProducts } =
-    useContext(ShopContext);
+    useContext(SearchContext);
 
   return (
     <>

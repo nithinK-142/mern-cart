@@ -27,9 +27,6 @@ export interface IShopContext {
   addLog: (log: string) => void;
   resetCartLogs: () => void;
   removeLog: (id: number) => void;
-  searchTerm: string;
-  setSearchTerm: (term: string) => void;
-  filteredProducts: IProduct[];
 }
 
 const defaultVal: IShopContext = {
@@ -51,9 +48,6 @@ const defaultVal: IShopContext = {
   addLog: () => null,
   resetCartLogs: () => null,
   removeLog: () => null,
-  searchTerm: "",
-  setSearchTerm: () => null,
-  filteredProducts: [],
 };
 
 export const ShopContext = createContext<IShopContext>(defaultVal);
@@ -66,7 +60,6 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     cookies.access_token && cookies.access_token !== ""
   );
   const [cartLogs, setCartLogs] = useState<{ id: number; title: string }[]>([]);
-  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const {
     products,
@@ -87,16 +80,6 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     return 0;
   };
 
-  const filteredProducts = products.filter((product) => {
-    const productName = product.productName.toLowerCase();
-    const description = product.description.toLowerCase();
-    const searchQuery = searchTerm.toLowerCase();
-
-    return (
-      productName.includes(searchQuery) || description.includes(searchQuery)
-    );
-  });
-
   const addLog = (log: string) => {
     const randomId = Math.floor(Math.random() * 1000000);
     setCartLogs([...cartLogs, { id: randomId, title: log }]);
@@ -110,11 +93,8 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
   };
 
   const addToCart = (itemId: string) => {
-    if (!cartItems[itemId]) {
-      setCartItems((prev) => ({ ...prev, [itemId]: 1 }));
-    } else {
-      setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
-    }
+    if (!cartItems[itemId]) setCartItems((prev) => ({ ...prev, [itemId]: 1 }));
+    else setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
     setCartItemCount((prev) => prev + 1);
   };
 
@@ -222,9 +202,6 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     addLog,
     resetCartLogs,
     removeLog,
-    searchTerm,
-    setSearchTerm,
-    filteredProducts,
   };
   return (
     <ShopContext.Provider value={contextValue}>

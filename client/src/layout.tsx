@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/context/theme-provider";
 import Footer from "./components/Footer";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useGetCartData } from "./hooks/useGetCartData";
+import { SearchContextProvider } from "./context/search-context";
 
 function App() {
   const queryClient = new QueryClient();
@@ -24,11 +25,13 @@ function Layout() {
     <main className="h-screen floating-scrollbar">
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
         <ShopContextProvider>
-          <Header />
-          <div className="relative px-10 pt-16 sm:px-20 md:px-32 lg:px-40">
-            <Outlet />
-          </div>
-          {!productsLoading && !purchasedItemsLoading && <Footer />}
+          <SearchContextProvider>
+            <Header />
+            <div className="relative px-10 pt-16 sm:px-20 md:px-32 lg:px-40">
+              <Outlet />
+            </div>
+            {!productsLoading && !purchasedItemsLoading && <Footer />}
+          </SearchContextProvider>
         </ShopContextProvider>
       </ThemeProvider>
     </main>
