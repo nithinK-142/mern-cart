@@ -29,7 +29,7 @@ const Search = () => {
 
   return (
     <>
-      <div className="flex mt-2 w-[86%] mx-auto space-x-4 sm:w-3/4 md:w-3/5 lg:1/3 ">
+      <div className="flex mt-2 w-[86%] mx-auto space-x-4 sm:w-3/4 md:w-3/5 lg:1/3">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
@@ -57,10 +57,10 @@ const Search = () => {
             <DropdownMenuGroup>
               <DropdownMenuItem
                 onClick={resetFilters}
-                className="flex items-center justify-center space-x-2 rounded-sm cursor-pointer bg-stone-600 focus:bg-stone-600"
+                className="flex items-center justify-center py-1 space-x-1 text-white rounded-sm cursor-pointer bg-stone-600 focus:bg-stone-600"
               >
-                <span className="text-white">Reset</span>
-                <ResetIcon className="w-4 h-4 text-white" />
+                <span className="pb-0.5 tracking-wider">Reset</span>
+                <ResetIcon className="w-4 h-4" />
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>
