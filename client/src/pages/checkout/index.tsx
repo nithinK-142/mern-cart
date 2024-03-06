@@ -99,10 +99,10 @@ export const CheckoutPage = () => {
       {paymentDone && (
         <div className="flex flex-col items-center justify-center my-16 mb-20 space-y-4">
           {isExploding && <ConfettiExplosion duration={5000} />}
-          <div className="font-extrabold text-transparent text-6xl md:text-8xl bg-[40%_50%] bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block bg-clip-text relative text-center leading-[90px] tracking-[-8px]">
+          <div className="font-extrabold py-4 text-transparent text-6xl md:text-8xl bg-[40%_50%] bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block bg-clip-text relative text-center leading-[90px] tracking-[-8px]">
             Payment Successfull
           </div>
-          <div className="w-40 h-28">
+          <div className="w-40 h-40">
             <img
               src={gif}
               alt="Payment done"
