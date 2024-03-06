@@ -7,9 +7,9 @@ import Search from "@/components/Search";
 import { SearchContext } from "@/context/search-context";
 
 const Home = () => {
-  const { products, productsLoading } = useGetCartData();
+  const { productsLoading } = useGetCartData();
   const [displayCount, setDisplayCount] = useState(10);
-  const { filteredProducts, searchTerm } = useContext(SearchContext);
+  const { filteredProducts } = useContext(SearchContext);
 
   if (productsLoading) return <Spinner />;
 
@@ -23,7 +23,7 @@ const Home = () => {
           <Product key={product._id} product={product} />
         ))}
       </div>
-      {products.length > displayCount && !searchTerm && (
+      {filteredProducts.length > displayCount && (
         <div className="flex justify-center mt-4">
           <Button
             onClick={handleLoadMore}

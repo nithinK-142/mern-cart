@@ -1,60 +1,70 @@
-// import { Button } from "./ui/button";
-import { SearchIcon, XIcon } from "lucide-react";
+import { FilterIcon, SearchIcon, XIcon } from "lucide-react";
 import { Input } from "./ui/input";
-// import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
-// import {
-//   DropdownMenu,
-//   DropdownMenuCheckboxItem,
-//   DropdownMenuContent,
-//   DropdownMenuTrigger,
-// } from "./ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 import { useContext } from "react";
 import { SearchContext } from "@/context/search-context";
-
-// type Checked = DropdownMenuCheckboxItemProps["checked"];
+import { Button } from "./ui/button";
+import {
+  DropdownMenuGroup,
+  DropdownMenuItem,
+} from "@radix-ui/react-dropdown-menu";
+import { ResetIcon } from "@radix-ui/react-icons";
 
 const Search = () => {
-  // const [showStatusBar, setShowStatusBar] = useState<Checked>(true);
-  // const [showActivityBar, setShowActivityBar] = useState<Checked>(false);
-  // const [showPanel, setShowPanel] = useState<Checked>(false);
-  const { searchTerm, setSearchTerm, filteredProducts } =
-    useContext(SearchContext);
+  const {
+    searchTerm,
+    setSearchTerm,
+    filteredProducts,
+    filters,
+    filterItems,
+    handleFilterChange,
+    resetFilters,
+  } = useContext(SearchContext);
 
   return (
     <>
       <div className="flex mt-2 w-[86%] mx-auto space-x-4 sm:w-3/4 md:w-3/5 lg:1/3 ">
-        {/* <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="outline"
-            className="flex items-center gap-1 shadow-md"
-          >
-            <FilterIcon className="w-4 h-4" />
-            <span className="hidden sm:inline-block">Filters</span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-52">
-          <DropdownMenuCheckboxItem
-            checked={showStatusBar}
-            onCheckedChange={setShowStatusBar}
-          >
-            Status Bar
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            checked={showActivityBar}
-            onCheckedChange={setShowActivityBar}
-            disabled
-          >
-            Activity Bar
-          </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            checked={showPanel}
-            onCheckedChange={setShowPanel}
-          >
-            Panel
-          </DropdownMenuCheckboxItem>
-        </DropdownMenuContent>
-      </DropdownMenu> */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="outline"
+              className="flex items-center gap-1 shadow-md"
+            >
+              <FilterIcon className="w-4 h-4" />
+              <span className="hidden sm:inline-block">Filters</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-44">
+            {filterItems.map(({ label, stateKey }) => (
+              <DropdownMenuCheckboxItem
+                key={stateKey}
+                checked={filters[stateKey]}
+                onCheckedChange={handleFilterChange(stateKey)}
+                onSelect={(event) => event.preventDefault()}
+              >
+                {label}
+              </DropdownMenuCheckboxItem>
+            ))}
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuGroup>
+              <DropdownMenuItem
+                onClick={resetFilters}
+                className="flex items-center justify-center space-x-2 rounded-sm cursor-pointer bg-stone-600 focus:bg-stone-600"
+              >
+                <span className="text-white">Reset</span>
+                <ResetIcon className="w-4 h-4 text-white" />
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         <div className="relative w-full">
           <Input
