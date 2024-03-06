@@ -47,12 +47,12 @@ const UserCart = () => {
           <DropdownMenuSeparator />
 
           <DropdownMenuGroup>
-            <DropdownMenuItem>
-              <CreditCardIcon className="w-4 h-4 mr-2" />
-              <Link to="/checkout" className="text-base">
+            <Link to="/checkout" className="text-base">
+              <DropdownMenuItem>
+                <CreditCardIcon className="w-4 h-4 mr-2" />
                 checkout
-              </Link>
-            </DropdownMenuItem>
+              </DropdownMenuItem>
+            </Link>
             <DialogTrigger asChild>
               <DropdownMenuItem>
                 <XCircleIcon className="w-4 h-4 mr-2" />
