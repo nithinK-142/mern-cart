@@ -27,6 +27,7 @@ export interface IShopContext {
   addLog: (log: string) => void;
   resetCartLogs: () => void;
   removeLog: (id: number) => void;
+  paymentDone: boolean;
 }
 
 const defaultVal: IShopContext = {
@@ -48,6 +49,7 @@ const defaultVal: IShopContext = {
   addLog: () => null,
   resetCartLogs: () => null,
   removeLog: () => null,
+  paymentDone: false,
 };
 
 export const ShopContext = createContext<IShopContext>(defaultVal);
@@ -60,6 +62,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     cookies.access_token && cookies.access_token !== ""
   );
   const [cartLogs, setCartLogs] = useState<{ id: number; title: string }[]>([]);
+  const [paymentDone, setPaymentDone] = useState(false);
 
   const {
     products,
@@ -78,6 +81,24 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
       return cartItems[itemId];
     }
     return 0;
+  };
+  const afterCheckout = async () => {
+    try {
+      resetCartStates();
+      setPaymentDone(true);
+      await fetchAvailableMoney();
+      await fetchPurchasedItems();
+
+      setTimeout(() => {
+        navigate("/");
+        setPaymentDone(false);
+        SuccessToast("Order placed 👍");
+      }, 5000);
+    } catch (error) {
+      console.error("Error occurred during checkout:", error);
+      setPaymentDone(false);
+      ErrorToast("An error occurred during checkout");
+    }
   };
 
   const addLog = (log: string) => {
@@ -149,11 +170,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
           headers,
         }
       );
-      SuccessToast("Order placed 👍");
-      resetCartStates();
-      fetchAvailableMoney();
-      fetchPurchasedItems();
-      navigate("/");
+      afterCheckout();
     } catch (err) {
       let errorMessage: string = "";
       switch (err.response.data.type) {
@@ -202,6 +219,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     addLog,
     resetCartLogs,
     removeLog,
+    paymentDone,
   };
   return (
     <ShopContext.Provider value={contextValue}>

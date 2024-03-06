@@ -1,4 +1,5 @@
 import walle from "@/assets/walle-empty-cart.png";
+import gif from "@/assets/gif.gif";
 import { useContext, useState } from "react";
 import { useGetCartData } from "@/hooks/useGetCartData";
 import { IProduct } from "@/models/interfaces";
@@ -13,12 +14,12 @@ import { icons } from "@/assets/icons";
 export const CheckoutPage = () => {
   const [loading, setLoading] = useState(false);
   const {
-    isAuthenticated,
     availableMoney,
     cartItems,
     getCartItemCount,
     getTotalCartAmount,
     checkout,
+    paymentDone,
   } = useContext<IShopContext>(ShopContext);
   const hasItemsInCart = Object.keys(cartItems).length > 0;
   const { products } = useGetCartData();
@@ -37,16 +38,16 @@ export const CheckoutPage = () => {
     }
 
     setLoading(true);
-    checkout();
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  };
 
-  if (!isAuthenticated) {
-    navigate("/");
-    ErrorToast("You're not logged in, please log in.");
-  }
+    try {
+      checkout();
+      setTimeout(() => setLoading(false), 3000);
+    } catch (error) {
+      setLoading(false);
+      console.error("Error during checkout:", error);
+      ErrorToast("An error occurred during checkout.");
+    }
+  };
 
   return (
     <div>
@@ -60,9 +61,15 @@ export const CheckoutPage = () => {
           })}
         </div>
       ) : (
-        <div className="flex justify-center my-10">
-          <img src={walle} className="select-none md:w-1/3" />
-        </div>
+        !paymentDone && (
+          <div className="flex justify-center my-10">
+            <img
+              src={walle}
+              className="select-none md:w-1/3"
+              alt="Empty cart"
+            />
+          </div>
+        )
       )}
 
       {totalAmount > 0 && (
@@ -83,6 +90,21 @@ export const CheckoutPage = () => {
                 "Checkout"
               )}
             </Button>
+          </div>
+        </div>
+      )}
+
+      {paymentDone && (
+        <div className="flex flex-col items-center justify-center my-16 mb-20 space-y-4">
+          <div className="font-extrabold text-transparent text-6xl md:text-8xl bg-[40%_50%] bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block bg-clip-text relative text-center leading-[90px] tracking-[-8px]">
+            Payment Successfull
+          </div>
+          <div className="w-40 h-28">
+            <img
+              src={gif}
+              alt="Payment done"
+              className="object-cover w-full h-full"
+            />
           </div>
         </div>
       )}
