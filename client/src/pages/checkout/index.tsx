@@ -10,6 +10,7 @@ import { ErrorToast } from "@/components/CustomToast";
 import { Button } from "@/components/ui/button";
 import { DollarSign } from "lucide-react";
 import { icons } from "@/assets/icons";
+import ConfettiExplosion from "react-confetti-explosion";
 
 export const CheckoutPage = () => {
   const [loading, setLoading] = useState(false);
@@ -20,6 +21,7 @@ export const CheckoutPage = () => {
     getTotalCartAmount,
     checkout,
     paymentDone,
+    isExploding,
   } = useContext<IShopContext>(ShopContext);
   const hasItemsInCart = Object.keys(cartItems).length > 0;
   const { products } = useGetCartData();
@@ -96,6 +98,7 @@ export const CheckoutPage = () => {
 
       {paymentDone && (
         <div className="flex flex-col items-center justify-center my-16 mb-20 space-y-4">
+          {isExploding && <ConfettiExplosion duration={5000} />}
           <div className="font-extrabold text-transparent text-6xl md:text-8xl bg-[40%_50%] bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block bg-clip-text relative text-center leading-[90px] tracking-[-8px]">
             Payment Successfull
           </div>

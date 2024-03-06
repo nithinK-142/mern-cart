@@ -28,6 +28,7 @@ export interface IShopContext {
   resetCartLogs: () => void;
   removeLog: (id: number) => void;
   paymentDone: boolean;
+  isExploding: boolean;
 }
 
 const defaultVal: IShopContext = {
@@ -50,6 +51,7 @@ const defaultVal: IShopContext = {
   resetCartLogs: () => null,
   removeLog: () => null,
   paymentDone: false,
+  isExploding: false,
 };
 
 export const ShopContext = createContext<IShopContext>(defaultVal);
@@ -63,6 +65,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
   );
   const [cartLogs, setCartLogs] = useState<{ id: number; title: string }[]>([]);
   const [paymentDone, setPaymentDone] = useState(false);
+  const [isExploding, setIsExploding] = useState(false);
 
   const {
     products,
@@ -86,17 +89,20 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     try {
       resetCartStates();
       setPaymentDone(true);
+      setIsExploding(true);
       await fetchAvailableMoney();
       await fetchPurchasedItems();
 
       setTimeout(() => {
         navigate("/");
         setPaymentDone(false);
+        setIsExploding(false);
         SuccessToast("Order placed 👍");
-      }, 5000);
+      }, 4000);
     } catch (error) {
       console.error("Error occurred during checkout:", error);
       setPaymentDone(false);
+      setIsExploding(false);
       ErrorToast("An error occurred during checkout");
     }
   };
@@ -220,6 +226,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     resetCartLogs,
     removeLog,
     paymentDone,
+    isExploding,
   };
   return (
     <ShopContext.Provider value={contextValue}>
