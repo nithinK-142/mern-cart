@@ -34,7 +34,7 @@ const Search = () => {
           <DropdownMenuTrigger asChild>
             <Button
               variant="outline"
-              className="flex items-center gap-1 shadow-md"
+              className="flex items-center gap-1 shadow-md md:h-10"
             >
               <FilterIcon className="w-4 h-4" />
               <span className="hidden sm:inline-block">Filters</span>
@@ -87,7 +87,7 @@ const Search = () => {
           )}
         </div>
       </div>
-      {filteredProducts.length === 0 && (
+      {filteredProducts.length === 0 && searchTerm !== "" && (
         <div className="py-10 pb-56 font-medium text-center">
           <p>No products found</p>
         </div>
