@@ -28,10 +28,10 @@ export const CartAddToast = (productname: string) => {
 
   toast(
     () => (
-      <div className="flex space-x-2">
+      <div className="flex space-x-2 text-sm text-black/80">
         <span className="font-semibold">{productname}</span>
         <span> added to </span>
-        <div className="w-6 h-6">{icons.cart}</div>
+        <div className="w-5 h-5">{icons.cart}</div>
       </div>
     ),
     {
@@ -39,6 +39,7 @@ export const CartAddToast = (productname: string) => {
         backgroundColor: "#A5DD9B",
       },
       duration: 1500,
+      position: "bottom-right",
     }
   );
 };
@@ -46,10 +47,10 @@ export const CartAddToast = (productname: string) => {
 export const CartRemoveToast = (productname: string) => {
   toast(
     () => (
-      <div className="flex space-x-2">
+      <div className="flex space-x-2 text-sm text-gray-900">
         <span className="font-semibold">{productname}</span>
         <span> removed from </span>
-        <div className="w-6 h-6">{icons.cart}</div>
+        <div className="w-5 h-5 fill-gray-900">{icons.cart}</div>
       </div>
     ),
     {
@@ -57,14 +58,11 @@ export const CartRemoveToast = (productname: string) => {
         backgroundColor: "#ff6666",
       },
       duration: 1500,
+      position: "bottom-right",
     }
   );
 };
 
-export const SuccessToast = (message: string) => {
-  toast.success(message);
-};
+export const SuccessToast = (message: string) => toast.success(message);
 
-export const ErrorToast = (message: string) => {
-  toast.error(message);
-};
+export const ErrorToast = (message: string) => toast.error(message);
