@@ -58,7 +58,7 @@ export const ShopContext = createContext<IShopContext>(defaultVal);
 
 export const ShopContextProvider = (props: { children: React.ReactNode }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cookies, setCookie, removeCookie] = useCookies(["access_token"]);
+  const [cookies, _, removeCookie] = useCookies(["access_token"]);
   const [cartItems, setCartItems] = useState<{ [itemId: string]: number }>({});
   const [cartItemCount, setCartItemCount] = useState<number>(0);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
