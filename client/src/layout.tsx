@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import { ShopContextProvider } from "./context/shop-context";
 import { Toaster } from "react-hot-toast";
@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useGetCartData } from "./hooks/useGetCartData";
 import { SearchContextProvider } from "./context/search-context";
+import Hero from "./components/Hero";
 
 function App() {
   const queryClient = new QueryClient();
@@ -20,13 +21,20 @@ function App() {
 
 function Layout() {
   const { productsLoading, purchasedItemsLoading } = useGetCartData();
+  const { pathname } = useLocation();
+  const isRoot = pathname === "/";
 
   return (
-    <main className="h-screen floating-scrollbar">
+    <main
+      className={`h-screen floating-scrollbar ${
+        isRoot && "gradient dark:gradient-dark"
+      }`}
+    >
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
         <ShopContextProvider>
           <SearchContextProvider>
             <Header />
+            {isRoot && <Hero />}
             <div className="relative px-10 pt-16 sm:px-20 md:px-32 lg:px-40">
               <Outlet />
             </div>

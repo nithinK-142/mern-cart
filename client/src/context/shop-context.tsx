@@ -94,7 +94,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
       await fetchPurchasedItems();
 
       setTimeout(() => {
-        navigate("/");
+        navigate("/shop");
         setPaymentDone(false);
         setIsExploding(false);
         SuccessToast("Order placed 👍");

@@ -84,7 +84,7 @@ export const CheckoutPage = () => {
             </span>
           </div>
           <div className="flex my-4 space-x-6">
-            <Button onClick={() => navigate("/")}>Visit Shop</Button>
+            <Button onClick={() => navigate("/shop")}>Visit Shop</Button>
             <Button onClick={handleCheckout}>
               {loading && hasCredits ? (
                 <span className="h-6">{icons.spinner}</span>

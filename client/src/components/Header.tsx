@@ -15,18 +15,27 @@ const Header = () => {
   const { isAuthenticated } = useContext<IShopContext>(ShopContext);
   const [isNavOpen, setIsNavOpen] = useState(false);
   const { pathname } = useLocation();
+  const isNotRoot = pathname !== "/";
 
   return (
-    <header className="fixed top-0 z-50 w-full bg-white border border-gray-300 dark:border-opacity-20 dark:bg-black/70">
+    <header
+      className={`fixed top-0 z-50 w-full ${
+        isNotRoot &&
+        "bg-white dark:bg-black/70 border border-gray-300 dark:border-opacity-20 "
+      }`}
+    >
       <div
         className={`flex flex-wrap items-center ${
           isAuthenticated ? "justify-between" : "justify-center"
         } max-w-screen-xl p-2 mx-auto`}
       >
-        <h1 className="flex items-center space-x-3 text-xl font-semibold rtl:space-x-reverse">
-          <span className="h-10">{icons.logo}</span>
-          <span>Cart</span>
-        </h1>
+        <Link to="/">
+          <h1 className="flex items-center space-x-3 text-xl font-semibold rtl:space-x-reverse">
+            <span className="h-10">{icons.logo}</span>
+            <span>Cart</span>
+          </h1>
+        </Link>
+
         {isAuthenticated && (
           <>
             <Button
