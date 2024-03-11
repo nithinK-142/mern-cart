@@ -16,6 +16,7 @@ const Header = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const { pathname } = useLocation();
   const isNotRoot = pathname !== "/";
+  const isAuth = pathname === "/auth";
 
   return (
     <header
@@ -25,18 +26,19 @@ const Header = () => {
       }`}
     >
       <div
-        className={`flex flex-wrap items-center ${
-          isAuthenticated ? "justify-between" : "justify-center"
-        } max-w-screen-xl p-2 mx-auto`}
+        className={`flex flex-wrap items-center justify-center max-w-screen-xl p-2 mx-auto ${
+          !isAuth && "justify-between"
+        }`}
       >
-        <Link to="/">
-          <h1 className="flex items-center space-x-3 text-xl font-semibold rtl:space-x-reverse">
-            <span className="h-10">{icons.logo}</span>
-            <span>Cart</span>
-          </h1>
+        <Link
+          to="/"
+          className="flex items-center space-x-3 text-xl font-semibold rtl:space-x-reverse"
+        >
+          <span className="h-10">{icons.logo}</span>
+          <h1>Cart</h1>
         </Link>
 
-        {isAuthenticated && (
+        {isAuthenticated ? (
           <>
             <Button
               size="icon"
@@ -99,6 +101,10 @@ const Header = () => {
               </ul>
             </nav>
           </>
+        ) : (
+          <Button className={isAuth ? "hidden" : "block"}>
+            <Link to="/auth">Login</Link>
+          </Button>
         )}
       </div>
     </header>

@@ -57,7 +57,8 @@ const defaultVal: IShopContext = {
 export const ShopContext = createContext<IShopContext>(defaultVal);
 
 export const ShopContextProvider = (props: { children: React.ReactNode }) => {
-  const [cookies, setCookies] = useCookies(["access_token"]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [cookies, setCookie, removeCookie] = useCookies(["access_token"]);
   const [cartItems, setCartItems] = useState<{ [itemId: string]: number }>({});
   const [cartItemCount, setCartItemCount] = useState<number>(0);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
@@ -199,9 +200,9 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
 
   const logout = () => {
     setIsAuthenticated(false);
-    navigate("/auth");
+    navigate("/");
     localStorage.clear();
-    setCookies("access_token", null);
+    removeCookie("access_token");
     resetCartStates();
     SuccessToast("Successfully logged out!");
   };

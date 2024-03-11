@@ -46,7 +46,7 @@ const Login = () => {
       localStorage.setItem("userID", result.data.userID);
       localStorage.setItem("username", loginUser?.username as string);
       setIsAuthenticated(true);
-      navigate("/");
+      navigate("/shop");
       WelcomeToast(loginUser?.username);
       addLog(loginUser?.username + " logged in.");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
