@@ -56,7 +56,7 @@ const Register = () => {
         confirmPassword: "",
       });
       SuccessToast("Registration Complete, now please login!");
-      navigate("/");
+      navigate("/shop");
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
