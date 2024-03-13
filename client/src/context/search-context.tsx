@@ -1,6 +1,7 @@
 import { useGetCartData } from "@/hooks/useGetCartData";
 import { IProduct } from "@/models/interfaces";
 import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
+import { icons } from "lucide-react";
 import { createContext, useState } from "react";
 
 const filterValues = {
@@ -14,6 +15,13 @@ const filterValues = {
   portable: false,
   gaming: false,
   apple: false,
+};
+
+const sortValues = {
+  wireless: false,
+  audio: false,
+  fitness: false,
+  cameras: false,
 };
 
 type FilterItem = {
@@ -34,28 +42,59 @@ const filterItems: FilterItem[] = [
   { label: "Apple", stateKey: "apple" },
 ];
 
+type SortItem = {
+  label: string;
+  stateKey: keyof FilterState;
+  iconName: keyof typeof icons;
+};
+
+const sortItems: SortItem[] = [
+  { label: "Ascending", stateKey: "ascending", iconName: "ArrowUpAZ" },
+  { label: "Descending", stateKey: "descending", iconName: "ArrowDownAZ" },
+  {
+    label: "Low to High",
+    stateKey: "lowtohigh",
+    iconName: "ArrowUpNarrowWide",
+  },
+  {
+    label: "High to Low",
+    stateKey: "hightolow",
+    iconName: "ArrowDownNarrowWide",
+  },
+];
+
 export interface ISearchContext {
   searchTerm: string;
   setSearchTerm: (term: string) => void;
-  filteredProducts: IProduct[];
+  filteredAndSortedProducts: IProduct[];
 
   filters: FilterState;
   filterItems: FilterItem[];
 
+  sorting: FilterState;
+  sortItems: SortItem[];
+
   handleFilterChange: (stateKey: keyof FilterState) => (value: Checked) => void;
+  handleSortChange: (stateKey: keyof FilterState) => (value: Checked) => void;
   resetFilters: () => void;
+  resetSorting: () => void;
 }
 
 const defaultVal: ISearchContext = {
   searchTerm: "",
   setSearchTerm: () => null,
-  filteredProducts: [],
+  filteredAndSortedProducts: [],
 
   filters: filterValues,
   filterItems: [],
 
+  sorting: sortValues,
+  sortItems: [],
+
   handleFilterChange: () => () => null,
+  handleSortChange: () => () => null,
   resetFilters: () => null,
+  resetSorting: () => null,
 };
 
 export type Checked = DropdownMenuCheckboxItemProps["checked"];
@@ -70,6 +109,7 @@ export const SearchContextProvider = (props: { children: React.ReactNode }) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const [filters, setFilters] = useState<FilterState>(filterValues);
+  const [sorting, setSorting] = useState<FilterState>(sortValues);
 
   const handleFilterChange =
     (stateKey: keyof FilterState) => (value: Checked) => {
@@ -79,39 +119,99 @@ export const SearchContextProvider = (props: { children: React.ReactNode }) => {
       }));
     };
 
-  const resetFilters = () => {
-    setFilters(filterValues);
-  };
+  const handleSortChange =
+    (stateKey: keyof FilterState) => (value: Checked) => {
+      setSorting((prevSorting) => {
+        let updatedSorting = { ...prevSorting };
+
+        if (stateKey === "ascending" || stateKey === "descending") {
+          updatedSorting = {
+            // ...updatedSorting,
+            ascending: stateKey === "ascending" ? value : false,
+            descending: stateKey === "descending" ? value : false,
+            lowtohigh: false,
+            hightolow: false,
+          };
+        } else if (stateKey === "lowtohigh" || stateKey === "hightolow") {
+          updatedSorting = {
+            ...updatedSorting,
+            lowtohigh: stateKey === "lowtohigh" ? value : false,
+            hightolow: stateKey === "hightolow" ? value : false,
+          };
+        }
+
+        return updatedSorting;
+      });
+    };
+
+  const resetFilters = () => setFilters(filterValues);
+
+  const resetSorting = () => setSorting(sortValues);
 
   const { products } = useGetCartData();
 
-  const filteredProducts = products.filter((product) => {
-    const productName = product.productName.toLowerCase();
-    const description = product.description.toLowerCase();
-    const searchQuery = searchTerm.toLowerCase();
+  const filteredAndSortedProducts = products
+    .filter((product) => {
+      const productName = product.productName.toLowerCase();
+      const description = product.description.toLowerCase();
+      const searchQuery = searchTerm.toLowerCase();
 
-    const filterValues = Object.keys(filters).filter((key) => filters[key]);
+      const filterValuesArray = Object.keys(filters).filter(
+        (key) => filters[key]
+      );
 
-    const matchesSearchTerm =
-      productName.includes(searchQuery) || description.includes(searchQuery);
+      const matchesSearchTerm =
+        productName.includes(searchQuery) || description.includes(searchQuery);
 
-    const matchesFilter = filterValues.every((filter) =>
-      product.tags.includes(filter)
-    );
+      const matchesFilter = filterValuesArray.every((filter) =>
+        product.tags.includes(filter)
+      );
 
-    return matchesSearchTerm && matchesFilter;
-  });
+      return matchesSearchTerm && matchesFilter;
+    })
+    .sort((a, b) => {
+      const sortingKeys = Object.keys(sorting).filter((key) => sorting[key]);
+      let comparisonResult = 0;
+
+      sortingKeys.forEach((sortingKey) => {
+        switch (sortingKey) {
+          case "ascending":
+            comparisonResult = a.productName.localeCompare(b.productName);
+            break;
+          case "descending":
+            comparisonResult = b.productName.localeCompare(a.productName);
+            break;
+          case "lowtohigh":
+            comparisonResult = a.price - b.price;
+            break;
+          case "hightolow":
+            comparisonResult = b.price - a.price;
+            break;
+          default:
+            break;
+        }
+
+        if (comparisonResult !== 0) return;
+      });
+
+      return comparisonResult;
+    });
 
   const contextValue: ISearchContext = {
     searchTerm,
     setSearchTerm,
-    filteredProducts,
+    filteredAndSortedProducts,
 
     filters,
     filterItems,
 
+    sorting,
+    sortItems,
+
     handleFilterChange,
+    handleSortChange,
     resetFilters,
+    resetSorting,
   };
   return (
     <SearchContext.Provider value={contextValue}>

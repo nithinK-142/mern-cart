@@ -90,6 +90,7 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
         enter: "fadeInTop 300ms ease-out",
         leave: "fadeOutTop 300ms ease-in forwards",
+        bounce: "bounce 3s linear infinite",
       },
     },
   },

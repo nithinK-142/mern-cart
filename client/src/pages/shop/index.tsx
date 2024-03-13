@@ -9,7 +9,7 @@ import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 const Home = () => {
   const { productsLoading } = useGetCartData();
   const [displayCount, setDisplayCount] = useState(10);
-  const { filteredProducts } = useContext(SearchContext);
+  const { filteredAndSortedProducts } = useContext(SearchContext);
 
   const handleLoadMore = () => setDisplayCount(displayCount + 10);
 
@@ -18,20 +18,31 @@ const Home = () => {
       <Search />
 
       {!productsLoading ? (
-        <div className="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filteredProducts.slice(0, displayCount).map((product) => (
-            <Product key={product._id} product={product} />
-          ))}
-        </div>
+        <>
+          {filteredAndSortedProducts.length === 0 ? (
+            <div className="my-20 text-xl font-semibold tracking-widest text-center text-red-500 opacity-70">
+              NO PRODUCTS AVAILABLE.
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {filteredAndSortedProducts
+                .slice(0, displayCount)
+                .map((product) => (
+                  <Product key={product._id} product={product} />
+                ))}
+            </div>
+          )}
+        </>
       ) : (
         <ProductCardSkeleton />
       )}
 
-      {filteredProducts.length > displayCount && (
-        <div className="flex justify-center mt-4">
+      {filteredAndSortedProducts.length > displayCount && (
+        <div className="flex justify-center mt-8">
           <Button
+            variant={"outline"}
             onClick={handleLoadMore}
-            className="text-white bg-blue-500 hover:bg-blue-500/90 dark:bg-blue-600 dark:hover:bg-blue-600/80"
+            className="animate-bounce"
           >
             Load More
           </Button>

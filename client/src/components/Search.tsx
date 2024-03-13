@@ -1,4 +1,10 @@
-import { FilterIcon, SearchIcon, XIcon } from "lucide-react";
+import {
+  FilterIcon,
+  SearchIcon,
+  SlidersHorizontalIcon,
+  XIcon,
+  icons,
+} from "lucide-react";
 import { Input } from "./ui/input";
 import {
   DropdownMenu,
@@ -20,11 +26,15 @@ const Search = () => {
   const {
     searchTerm,
     setSearchTerm,
-    filteredProducts,
+    filteredAndSortedProducts,
     filters,
     filterItems,
+    sortItems,
+    sorting,
     handleFilterChange,
+    handleSortChange,
     resetFilters,
+    resetSorting,
   } = useContext(SearchContext);
 
   return (
@@ -35,11 +45,12 @@ const Search = () => {
             <Button
               variant="outline"
               className="flex items-center gap-1 shadow-md md:h-10"
+              title="Filters"
             >
               <FilterIcon className="w-4 h-4" />
-              <span className="hidden sm:inline-block">Filters</span>
             </Button>
           </DropdownMenuTrigger>
+
           <DropdownMenuContent className="w-44">
             {filterItems.map(({ label, stateKey }) => (
               <DropdownMenuCheckboxItem
@@ -66,14 +77,56 @@ const Search = () => {
           </DropdownMenuContent>
         </DropdownMenu>
 
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="outline"
+              className="flex items-center gap-1 shadow-md md:h-10"
+              title="Sort"
+            >
+              <SlidersHorizontalIcon className="w-4 h-4" />
+            </Button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent className="w-44">
+            {sortItems.map(({ label, stateKey, iconName }) => {
+              const LucideIcon = icons[iconName];
+              return (
+                <DropdownMenuCheckboxItem
+                  key={stateKey}
+                  checked={sorting[stateKey]}
+                  onCheckedChange={handleSortChange(stateKey)}
+                  onSelect={(event) => event.preventDefault()}
+                  className="flex items-center justify-between"
+                >
+                  {label}
+                  <LucideIcon className="w-5 h-5" />
+                </DropdownMenuCheckboxItem>
+              );
+            })}
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuGroup>
+              <DropdownMenuItem
+                onClick={resetSorting}
+                className="flex items-center justify-center py-1 space-x-1 text-white rounded-sm cursor-pointer bg-stone-600 focus:bg-stone-600"
+              >
+                <span className="pb-0.5 tracking-wider">Reset</span>
+                <ResetIcon className="w-4 h-4" />
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
         <div className="relative w-full">
           <Input
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search a product..."
-            className="pl-8 shadow-md md:h-10"
+            className="shadow-md pl-9 md:h-10"
           />
-          <span className="absolute top-2.5 md:top-3 left-2">
+          <span className="absolute top-2.5 md:top-3 left-3">
             <SearchIcon className="w-4 h-4" />
           </span>
 
@@ -87,7 +140,7 @@ const Search = () => {
           )}
         </div>
       </div>
-      {filteredProducts.length === 0 && searchTerm !== "" && (
+      {filteredAndSortedProducts.length === 0 && searchTerm !== "" && (
         <div className="py-10 pb-56 font-medium text-center">
           <p>No products found</p>
         </div>
