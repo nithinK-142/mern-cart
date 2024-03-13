@@ -44,24 +44,29 @@ const Search = () => {
           <DropdownMenuTrigger asChild>
             <Button
               variant="outline"
-              className="flex items-center gap-1 shadow-md md:h-10"
+              className="shadow-md md:h-10"
               title="Filters"
             >
               <FilterIcon className="w-4 h-4" />
             </Button>
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent className="w-44">
-            {filterItems.map(({ label, stateKey }) => (
-              <DropdownMenuCheckboxItem
-                key={stateKey}
-                checked={filters[stateKey]}
-                onCheckedChange={handleFilterChange(stateKey)}
-                onSelect={(event) => event.preventDefault()}
-              >
-                {label}
-              </DropdownMenuCheckboxItem>
-            ))}
+          <DropdownMenuContent className="w-52">
+            {filterItems.map(({ label, stateKey, iconName }) => {
+              const LucideIcon = icons[iconName];
+              return (
+                <DropdownMenuCheckboxItem
+                  key={stateKey}
+                  checked={filters[stateKey]}
+                  onCheckedChange={handleFilterChange(stateKey)}
+                  onSelect={(event) => event.preventDefault()}
+                  className="flex items-center justify-between group"
+                >
+                  <span className="group-hover:text-rose-700">{label}</span>
+                  <LucideIcon className="w-5 h-5 opacity-60 group-hover:opacity-100" />
+                </DropdownMenuCheckboxItem>
+              );
+            })}
 
             <DropdownMenuSeparator />
 
@@ -81,7 +86,7 @@ const Search = () => {
           <DropdownMenuTrigger asChild>
             <Button
               variant="outline"
-              className="flex items-center gap-1 shadow-md md:h-10"
+              className="shadow-md md:h-10"
               title="Sort"
             >
               <SlidersHorizontalIcon className="w-4 h-4" />
@@ -97,10 +102,10 @@ const Search = () => {
                   checked={sorting[stateKey]}
                   onCheckedChange={handleSortChange(stateKey)}
                   onSelect={(event) => event.preventDefault()}
-                  className="flex items-center justify-between"
+                  className="flex items-center justify-between group"
                 >
-                  {label}
-                  <LucideIcon className="w-5 h-5" />
+                  <span className="group-hover:text-rose-700">{label}</span>
+                  <LucideIcon className="w-5 h-5 opacity-60 group-hover:opacity-100" />
                 </DropdownMenuCheckboxItem>
               );
             })}

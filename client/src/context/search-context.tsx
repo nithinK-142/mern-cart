@@ -27,19 +27,28 @@ const sortValues = {
 type FilterItem = {
   label: string;
   stateKey: keyof FilterState;
+  iconName: keyof typeof icons;
 };
 
 const filterItems: FilterItem[] = [
-  { label: "Wireless", stateKey: "wireless" },
-  { label: "Audio", stateKey: "audio" },
-  { label: "Fitness", stateKey: "fitness" },
-  { label: "Cameras", stateKey: "cameras" },
-  { label: "Storage", stateKey: "storage" },
-  { label: "Virtual Reality", stateKey: "virtualreality" },
-  { label: "Home Automation", stateKey: "homeautomation" },
-  { label: "Portable", stateKey: "portable" },
-  { label: "Gaming", stateKey: "gaming" },
-  { label: "Apple", stateKey: "apple" },
+  { label: "Wireless", stateKey: "wireless", iconName: "Wifi" },
+  { label: "Audio", stateKey: "audio", iconName: "Volume2" },
+  { label: "Fitness", stateKey: "fitness", iconName: "Activity" },
+  { label: "Cameras", stateKey: "cameras", iconName: "Camera" },
+  { label: "Storage", stateKey: "storage", iconName: "Database" },
+  {
+    label: "Virtual Reality",
+    stateKey: "virtualreality",
+    iconName: "Glasses",
+  },
+  {
+    label: "Home Automation",
+    stateKey: "homeautomation",
+    iconName: "Home",
+  },
+  { label: "Portable", stateKey: "portable", iconName: "ShoppingBag" },
+  { label: "Gaming", stateKey: "gaming", iconName: "Gamepad" },
+  { label: "Apple", stateKey: "apple", iconName: "Apple" },
 ];
 
 type SortItem = {
