@@ -9,46 +9,65 @@ import {
 import { Input } from "@/components/ui/input";
 import { IShopContext, ShopContext } from "@/context/shop-context";
 import { UserErrors } from "@/models/errors";
-import { Label } from "@radix-ui/react-label";
 import { TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 
 import axios from "axios";
-import { SyntheticEvent, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { icons } from "@/assets/icons";
 import { ErrorToast, WelcomeToast } from "@/components/CustomToast";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormDescription,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  loginSchema,
+  loginSchemaType,
+  defaultValues,
+} from "@/models/loginSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 const Login = () => {
-  const [loginUser, setLoginUser] = useState<{
-    username: string;
-    password: string;
-  } | null>(null);
   const [loading, setLoading] = useState(false);
   const [, setCookies] = useCookies(["access_token"]);
 
   const navigate = useNavigate();
   const { setIsAuthenticated, addLog } = useContext<IShopContext>(ShopContext);
 
-  const handleSubmit = async (e: SyntheticEvent) => {
-    e.preventDefault();
+  const form = useForm();
 
+  const { handleSubmit, control } = useForm<loginSchemaType>({
+    resolver: zodResolver(loginSchema),
+    defaultValues,
+  });
+
+  const onSubmit: SubmitHandler<loginSchemaType> = async (formData) => {
     try {
       setLoading(true);
       const result = await axios.post(
         `${import.meta.env.VITE_API_URL}/user/login`,
         {
-          username: loginUser?.username,
-          password: loginUser?.password,
+          username: formData?.username,
+          password: formData?.password,
         }
       );
+
+      form.reset();
+
       setCookies("access_token", result.data.token);
       localStorage.setItem("userID", result.data.userID);
-      localStorage.setItem("username", loginUser?.username as string);
+      localStorage.setItem("username", formData?.username as string);
       setIsAuthenticated(true);
       navigate("/shop");
-      WelcomeToast(loginUser?.username);
-      addLog(loginUser?.username + " logged in.");
+      WelcomeToast(formData?.username);
+      addLog(formData?.username + " logged in.");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       let errorMessage: string = "";
@@ -68,55 +87,74 @@ const Login = () => {
     }
   };
 
-  const handleFieldChange = (fieldName: string, value: string) => {
-    setLoginUser((prevUser) => ({
-      ...prevUser!,
-      [fieldName]: value,
-    }));
-  };
-
   return (
     <TabsContent value="login">
-      <form onSubmit={handleSubmit}>
-        <Card>
-          <CardHeader>
-            <CardTitle>Please Login!</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="username">Username</Label>
-              <Input
-                id="username"
-                type="text"
-                defaultValue={loginUser?.username}
-                onChange={(e) => handleFieldChange("username", e.target.value)}
-                required
+      <Form {...form}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Card>
+            <CardHeader>
+              <CardTitle>Please Login!</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <FormField
+                control={control}
+                name="username"
+                render={({ field, formState }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        onChange={(e) => field.onChange(e.target.value)}
+                        required
+                      />
+                    </FormControl>
+                    <FormDescription className="font-medium text-red-600">
+                      {formState.errors.username?.message}
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                defaultValue={loginUser?.password}
-                onChange={(e) => handleFieldChange("password", e.target.value)}
-                required
+              <FormField
+                control={control}
+                name="password"
+                render={({ field, formState }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        onChange={(e) => field.onChange(e.target.value)}
+                        required
+                      />
+                    </FormControl>
+                    <FormDescription className="font-medium text-red-600">
+                      {formState.errors.password?.message}
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
-          </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button type="submit">
-              {loading ? <span className="h-6">{icons.spinner}</span> : "Login"}
-            </Button>
+            </CardContent>
+            <CardFooter className="flex justify-between">
+              <Button type="submit">
+                {loading ? (
+                  <span className="h-6">{icons.spinner}</span>
+                ) : (
+                  "Login"
+                )}
+              </Button>
 
-            <TabsList className="bg-transparent">
-              <TabsTrigger value="register" className="text-sm opacity-70">
-                Dont have an account?!
-              </TabsTrigger>
-            </TabsList>
-          </CardFooter>
-        </Card>
-      </form>
+              <TabsList className="bg-transparent">
+                <TabsTrigger value="register" className="text-sm opacity-70">
+                  Dont have an account?!
+                </TabsTrigger>
+              </TabsList>
+            </CardFooter>
+          </Card>
+        </form>
+      </Form>
     </TabsContent>
   );
 };

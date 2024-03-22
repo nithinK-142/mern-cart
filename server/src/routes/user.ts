@@ -14,7 +14,7 @@ import { IUser, UserModel } from "../models/user";
 import { UserErrors } from "../common/errors";
 
 router.post("/register", async (req: Request, res: Response) => {
-  const { username, password } = req.body;
+  const { email, username, password } = req.body;
   try {
     const user = await UserModel.findOne({ username });
 
@@ -23,7 +23,11 @@ router.post("/register", async (req: Request, res: Response) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new UserModel({ username, password: hashedPassword });
+    const newUser = new UserModel({
+      email,
+      username,
+      password: hashedPassword,
+    });
 
     await newUser.save();
 

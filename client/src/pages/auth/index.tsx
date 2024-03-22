@@ -10,8 +10,8 @@ const AuthPage = () => {
   if (isAuthenticated) return <Navigate to="/shop" />;
 
   return (
-    <div className="flex justify-center mt-28">
-      <Tabs defaultValue="login" className="w-[340px] sm:w-[400px] h-[400px]">
+    <div className="flex justify-center mt-20 mb-16">
+      <Tabs defaultValue="login" className="w-[340px] sm:w-[400px]">
         <TabsList className="grid w-full h-10 grid-cols-2 mb-2">
           <TabsTrigger value="login" className="text-base">
             Login
