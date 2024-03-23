@@ -10,12 +10,12 @@ import bcrypt from "bcrypt";
 
 const router = Router();
 
-import { IUser, UserModel } from "../models/user";
+import { IUser, UserModel, loginSchema, registerSchema } from "../models/user";
 import { UserErrors } from "../common/errors";
 
 router.post("/register", async (req: Request, res: Response) => {
-  const { email, username, password } = req.body;
   try {
+    const { email, username, password } = registerSchema.parse(req.body);
     const user = await UserModel.findOne({ username });
 
     if (user) {
@@ -38,8 +38,8 @@ router.post("/register", async (req: Request, res: Response) => {
 });
 
 router.post("/login", async (req: Request, res: Response) => {
-  const { username, password } = req.body;
   try {
+    const { username, password } = loginSchema.parse(req.body);
     const user: IUser | null = await UserModel.findOne({ username });
     if (!user) {
       return res.status(400).json({ type: UserErrors.NO_USER_FOUND });
