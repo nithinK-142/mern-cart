@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { useGetCartData } from "@/hooks/useGetCartData";
 import { IProduct } from "@/models/interfaces";
 import axios from "axios";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ProductErrors } from "@/models/errors";
 import { ErrorToast, SuccessToast } from "@/components/CustomToast";
+import { AuthContext } from "./auth-context";
 
 export interface IShopContext {
   addToCart: (itemId: string) => void;
@@ -18,8 +19,6 @@ export interface IShopContext {
   checkout: () => void;
   availableMoney: number;
   purchasedItems: IProduct[];
-  isAuthenticated: boolean;
-  setIsAuthenticated: (isAuthenticated: boolean) => void;
   cartItems: { [itemId: string]: number };
   clearCart: () => void;
   logout: () => void;
@@ -41,8 +40,6 @@ const defaultVal: IShopContext = {
   checkout: () => null,
   availableMoney: 0,
   purchasedItems: [],
-  isAuthenticated: false,
-  setIsAuthenticated: () => null,
   cartItems: {},
   clearCart: () => null,
   logout: () => null,
@@ -58,16 +55,14 @@ export const ShopContext = createContext<IShopContext>(defaultVal);
 
 export const ShopContextProvider = (props: { children: React.ReactNode }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cookies, _, removeCookie] = useCookies(["access_token"]);
+  const [, _, removeCookie] = useCookies(["access_token"]);
   const [cartItems, setCartItems] = useState<{ [itemId: string]: number }>({});
   const [cartItemCount, setCartItemCount] = useState<number>(0);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
-    cookies.access_token && cookies.access_token !== ""
-  );
   const [cartLogs, setCartLogs] = useState<{ id: number; title: string }[]>([]);
   const [paymentDone, setPaymentDone] = useState(false);
   const [isExploding, setIsExploding] = useState(false);
 
+  const { setIsAuthenticated } = useContext(AuthContext);
   const {
     products,
     availableMoney,
@@ -217,8 +212,6 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     checkout,
     availableMoney,
     purchasedItems,
-    isAuthenticated,
-    setIsAuthenticated,
     cartItems,
     clearCart,
     logout,

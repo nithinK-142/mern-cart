@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { IShopContext, ShopContext } from "@/context/shop-context";
+import { AuthContext, IAuthContext } from "@/context/auth-context";
 import { UserErrors } from "@/models/errors";
 import { TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 
@@ -39,7 +40,8 @@ const Login = () => {
   const [, setCookies] = useCookies(["access_token"]);
 
   const navigate = useNavigate();
-  const { setIsAuthenticated, addLog } = useContext<IShopContext>(ShopContext);
+  const { addLog } = useContext<IShopContext>(ShopContext);
+  const { setIsAuthenticated } = useContext<IAuthContext>(AuthContext);
 
   const form = useForm();
 

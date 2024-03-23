@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useGetCartData } from "./hooks/useGetCartData";
 import { SearchContextProvider } from "./context/search-context";
 import Hero from "./components/Hero";
+import { AuthContextProvider } from "./context/auth-context";
 
 function App() {
   const queryClient = new QueryClient();
@@ -31,16 +32,18 @@ function Layout() {
       }`}
     >
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-        <ShopContextProvider>
-          <SearchContextProvider>
-            <Header />
-            {isRoot && <Hero />}
-            <div className="relative px-10 pt-16 sm:px-20 md:px-32 lg:px-40">
-              <Outlet />
-            </div>
-            {!productsLoading && !purchasedItemsLoading && <Footer />}
-          </SearchContextProvider>
-        </ShopContextProvider>
+        <AuthContextProvider>
+          <ShopContextProvider>
+            <SearchContextProvider>
+              <Header />
+              {isRoot && <Hero />}
+              <div className="relative px-10 pt-16 sm:px-20 md:px-32 lg:px-40">
+                <Outlet />
+              </div>
+              {!productsLoading && !purchasedItemsLoading && <Footer />}
+            </SearchContextProvider>
+          </ShopContextProvider>
+        </AuthContextProvider>
       </ThemeProvider>
     </main>
   );

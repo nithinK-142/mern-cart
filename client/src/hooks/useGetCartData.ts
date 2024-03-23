@@ -3,11 +3,11 @@ import axios from "axios";
 import { useGetToken } from "./useGetToken";
 import { IProduct } from "@/models/interfaces";
 import { useContext } from "react";
-import { ShopContext } from "@/context/shop-context";
+import { AuthContext, IAuthContext } from "@/context/auth-context";
 
 export const useGetCartData = () => {
   const { headers } = useGetToken();
-  const { isAuthenticated } = useContext(ShopContext);
+  const { isAuthenticated } = useContext<IAuthContext>(AuthContext);
 
   const fetchProducts = async () => {
     const response = await axios.get<{ products: IProduct[] }>(

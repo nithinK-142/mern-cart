@@ -1,4 +1,4 @@
-import { ShopContext } from "@/context/shop-context";
+import { AuthContext, IAuthContext } from "@/context/auth-context";
 import { useContext, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { ErrorToast } from "./CustomToast";
@@ -6,7 +6,8 @@ import { useCookies } from "react-cookie";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const [cookies] = useCookies(["access_token"]);
-  const { isAuthenticated, setIsAuthenticated } = useContext(ShopContext);
+  const { isAuthenticated, setIsAuthenticated } =
+    useContext<IAuthContext>(AuthContext);
 
   useEffect(() => {
     if (

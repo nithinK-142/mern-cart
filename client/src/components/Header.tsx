@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { IShopContext, ShopContext } from "@/context/shop-context";
+import { IAuthContext, AuthContext } from "@/context/auth-context";
 import { icons } from "@/assets/icons";
 import { ModeToggle } from "./ModeToggle";
 import Notifications from "./Notifications";
@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 import { navItems } from "@/utils/constants";
 
 const Header = () => {
-  const { isAuthenticated } = useContext<IShopContext>(ShopContext);
+  const { isAuthenticated } = useContext<IAuthContext>(AuthContext);
   const [isNavOpen, setIsNavOpen] = useState(false);
   const { pathname } = useLocation();
   const isNotRoot = pathname !== "/";
