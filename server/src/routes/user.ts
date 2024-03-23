@@ -7,6 +7,7 @@ import {
 } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { escape } from "validator";
 
 const router = Router();
 
@@ -15,7 +16,11 @@ import { UserErrors } from "../common/errors";
 
 router.post("/register", async (req: Request, res: Response) => {
   try {
-    const { email, username, password } = registerSchema.parse(req.body);
+    const { email, username, password } = registerSchema.parse({
+      email: escape(req.body.email),
+      username: escape(req.body.username),
+      password: escape(req.body.password),
+    });
     const user = await UserModel.findOne({ username });
 
     if (user) {
@@ -39,7 +44,10 @@ router.post("/register", async (req: Request, res: Response) => {
 
 router.post("/login", async (req: Request, res: Response) => {
   try {
-    const { username, password } = loginSchema.parse(req.body);
+    const { username, password } = loginSchema.parse({
+      username: escape(req.body.username),
+      password: escape(req.body.password),
+    });
     const user: IUser | null = await UserModel.findOne({ username });
     if (!user) {
       return res.status(400).json({ type: UserErrors.NO_USER_FOUND });
@@ -94,7 +102,9 @@ router.get(
       if (!user) {
         return res.status(400).json({ type: UserErrors.NO_USER_FOUND });
       }
-      res.json({ availableMoney: user.availableMoney });
+      const encodedAvailableMoney = escape(user.availableMoney.toString());
+
+      res.json({ availableMoney: encodedAvailableMoney });
     } catch (err) {
       res.status(500).json({ type: err });
     }
