@@ -1,5 +1,9 @@
 import { Router, Request, Response } from "express";
-import { ProductModel } from "../models/product";
+import {
+  ProductModel,
+  checkoutSchema,
+  purchasedItemsSchema,
+} from "../models/product";
 import { UserModel } from "../models/user";
 import { verifyToken } from "./user";
 import { ProductErrors } from "../common/errors";
@@ -16,11 +20,16 @@ router.get("/", verifyToken, async (_, res: Response) => {
 });
 
 router.post("/checkout", verifyToken, async (req: Request, res: Response) => {
-  const { customerID, cartItems } = req.body;
+  const result = checkoutSchema.safeParse(req.body);
+  if (!result.success) {
+    return res
+      .status(400)
+      .json({ errors: result.error.formErrors.fieldErrors });
+  }
+  const { customerID, cartItems } = result.data;
   try {
     const user = await UserModel.findById(customerID);
-    
-    
+
     const productIDs = Object.keys(cartItems);
     const products = await ProductModel.find({ _id: { $in: productIDs } });
     // const products = await ProductModel.find({}, '_id');
@@ -73,7 +82,15 @@ router.get(
   "/purchased-items/:customerID",
   verifyToken,
   async (req: Request, res: Response) => {
-    const { customerID } = req.params;
+    const result = purchasedItemsSchema.safeParse({
+      customerID: req.params.customerID,
+    });
+    if (!result.success) {
+      return res
+        .status(400)
+        .json({ errors: result.error.formErrors.fieldErrors });
+    }
+    const { customerID } = result.data;
 
     try {
       const user = await UserModel.findById(customerID);
