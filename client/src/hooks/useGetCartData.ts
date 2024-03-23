@@ -8,6 +8,8 @@ import { AuthContext, IAuthContext } from "@/context/auth-context";
 export const useGetCartData = () => {
   const { headers } = useGetToken();
   const { isAuthenticated } = useContext<IAuthContext>(AuthContext);
+  const userId = localStorage.getItem("userID");
+  const isReadyToCall = userId !== null && isAuthenticated;
 
   const fetchProducts = async () => {
     const response = await axios.get<{ products: IProduct[] }>(
@@ -21,9 +23,7 @@ export const useGetCartData = () => {
 
   const fetchPurchasedItems = async () => {
     const response = await axios.get<{ purchasedItems: IProduct[] }>(
-      `${
-        import.meta.env.VITE_API_URL
-      }/product/purchased-items/${localStorage.getItem("userID")}`,
+      `${import.meta.env.VITE_API_URL}/product/purchased-items/${userId}`,
       { headers }
     );
     return response.data.purchasedItems;
@@ -31,9 +31,7 @@ export const useGetCartData = () => {
 
   const fetchAvailableMoney = async () => {
     const response = await axios.get<{ availableMoney: string }>(
-      `${
-        import.meta.env.VITE_API_URL
-      }/user/available-money/${localStorage.getItem("userID")}`,
+      `${import.meta.env.VITE_API_URL}/user/available-money/${userId}`,
       { headers }
     );
     return parseFloat(response.data.availableMoney);
@@ -42,7 +40,7 @@ export const useGetCartData = () => {
   const { data: products, isLoading: productsLoading } = useQuery<IProduct[]>({
     queryKey: ["products"],
     queryFn: fetchProducts,
-    enabled: isAuthenticated,
+    enabled: isReadyToCall,
   });
 
   const { data: purchasedItems, isLoading: purchasedItemsLoading } = useQuery<
@@ -50,14 +48,14 @@ export const useGetCartData = () => {
   >({
     queryKey: ["purchasedItems"],
     queryFn: fetchPurchasedItems,
-    enabled: isAuthenticated,
+    enabled: isReadyToCall,
   });
 
   const { data: availableMoney, isLoading: availableMoneyLoading } =
     useQuery<number>({
       queryKey: ["availableMoney"],
       queryFn: fetchAvailableMoney,
-      enabled: isAuthenticated,
+      enabled: isReadyToCall,
     });
 
   return {
