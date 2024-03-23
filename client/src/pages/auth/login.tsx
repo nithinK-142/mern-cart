@@ -63,11 +63,11 @@ const Login = () => {
 
       setCookies("access_token", result.data.token);
       localStorage.setItem("userID", result.data.userID);
-      localStorage.setItem("username", formData?.username as string);
+      localStorage.setItem("username", result.data.username);
       setIsAuthenticated(true);
       navigate("/shop");
-      WelcomeToast(formData?.username);
-      addLog(formData?.username + " logged in.");
+      WelcomeToast(result.data.username);
+      addLog(result.data.username + " logged in.");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       let errorMessage: string = "";

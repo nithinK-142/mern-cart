@@ -67,7 +67,7 @@ router.post("/login", async (req: Request, res: Response) => {
 
     res.cookie("authToken", token, cookieOptions);
 
-    res.json({ token, userID: user._id });
+    res.json({ token, userID: user._id, username: user.username });
   } catch (err) {
     res.status(500).json({ type: err });
   }
