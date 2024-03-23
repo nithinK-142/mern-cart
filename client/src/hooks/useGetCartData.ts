@@ -30,13 +30,13 @@ export const useGetCartData = () => {
   };
 
   const fetchAvailableMoney = async () => {
-    const response = await axios.get<{ availableMoney: number }>(
+    const response = await axios.get<{ availableMoney: string }>(
       `${
         import.meta.env.VITE_API_URL
       }/user/available-money/${localStorage.getItem("userID")}`,
       { headers }
     );
-    return response.data.availableMoney;
+    return parseFloat(response.data.availableMoney);
   };
 
   const { data: products, isLoading: productsLoading } = useQuery<IProduct[]>({
