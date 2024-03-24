@@ -26,25 +26,25 @@ export const registerSchema = z.object({
   email: z
     .string({ errorMap: () => ({ message: "Invalid email!" }) })
     .min(6)
-    .max(15)
+    .max(30)
     .email(),
   username: z
     .string()
     .min(3, "Username is too short!")
-    .max(15, "Username is too long!"),
+    .max(20, "Username is too long!"),
   password: z
     .string()
     .min(6, "Password is too short!")
-    .max(10, "Password is too long!"),
+    .max(20, "Password is too long!"),
 });
 
 export const loginSchema = z.object({
   username: z
     .string()
     .min(3, "Username is too short!")
-    .max(15, "Username is too long!"),
+    .max(20, "Username is too long!"),
   password: z
     .string()
     .min(6, "Password is too short!")
-    .max(10, "Password is too long!"),
+    .max(20, "Password is too long!"),
 });

@@ -10,7 +10,7 @@ export const loginSchema = z.object({
   password: z
     .string()
     .min(6, "Password is too short!")
-    .max(10, "Password is too long!"),
+    .max(20, "Password is too long!"),
 });
 
 export type loginSchemaType = z.infer<typeof loginSchema>;
