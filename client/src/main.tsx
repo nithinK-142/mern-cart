@@ -12,7 +12,6 @@ import AuthPage from "./pages/auth/index.tsx";
 import Shop from "./pages/shop/index.tsx";
 import { CheckoutPage } from "./pages/checkout/index.tsx";
 import { PurchasedItemsPage } from "./pages/purchased-items/index.tsx";
-import Test from "./pages/test/index.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 
 const router = createBrowserRouter(
@@ -43,7 +42,6 @@ const router = createBrowserRouter(
           </ProtectedRoute>
         }
       />
-      <Route path="test" element={<Test />} />
     </Route>
   )
 );
