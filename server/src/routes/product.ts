@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Router, type Request, type Response } from "express";
 import {
   ProductModel,
   checkoutSchema,
@@ -50,11 +50,11 @@ router.post("/checkout", verifyToken, async (req: Request, res: Response) => {
         return res.status(400).json({ type: ProductErrors.NO_PRODUCT_FOUND });
       }
 
-      if (product.stockQuantity < cartItems[item]) {
+      if (product.stockQuantity < cartItems[item]!) {
         return res.status(400).json({ type: ProductErrors.NOT_ENOUGH_STOCK });
       }
 
-      totalPrice += product.price * cartItems[item];
+      totalPrice += product.price * cartItems[item]!;
     }
 
     if (user.availableMoney < totalPrice) {

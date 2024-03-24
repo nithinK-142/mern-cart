@@ -12,3 +12,29 @@
   },
   "include": ["./*.js", "src/**/*.ts", "test/**/*.ts"]
 }
+
+// {
+//   "compilerOptions": {
+//     /* Base Options: */
+//     "esModuleInterop": true,
+//     "skipLibCheck": true,
+//     "target": "es2022",
+//     "outDir": "dist",
+//     "verbatimModuleSyntax": true,
+//     "allowJs": true,
+//     "resolveJsonModule": true,
+//     "moduleDetection": "force",
+//     /* Strictness */
+//     "strict": true,
+//     "noUncheckedIndexedAccess": true,
+//     "forceConsistentCasingInFileNames": true,
+//     "noImplicitAny": true,
+//     /* If NOT transpiling with TypeScript: */
+//     "moduleResolution": "Bundler",
+//     "module": "ESNext",
+//     "noEmit": true,
+//     /* If your code doesn't run in the DOM: */
+//     "lib": ["es2022"]
+//   },
+//   "include": ["./*.js", "src/**/*.ts", "test/**/*.ts", "build.js"]
+// }

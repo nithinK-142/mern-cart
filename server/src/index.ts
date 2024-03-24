@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 config();
 
-import express, { Request, Response } from "express";
+import express, { type Request, type Response } from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import helmet from "helmet";

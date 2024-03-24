@@ -1,9 +1,9 @@
 import {
   Router,
-  Request,
-  Response,
-  NextFunction,
-  CookieOptions,
+  type Request,
+  type Response,
+  type NextFunction,
+  type CookieOptions,
 } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
@@ -11,7 +11,12 @@ import { escape } from "validator";
 
 const router = Router();
 
-import { IUser, UserModel, loginSchema, registerSchema } from "../models/user";
+import {
+  type IUser,
+  UserModel,
+  loginSchema,
+  registerSchema,
+} from "../models/user";
 import { UserErrors } from "../common/errors";
 
 router.post("/register", async (req: Request, res: Response) => {
