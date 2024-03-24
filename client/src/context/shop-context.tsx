@@ -163,7 +163,14 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
   };
 
   const checkout = async () => {
-    const body = { customerID: localStorage.getItem("userID"), cartItems };
+    const userId = localStorage.getItem("userID");
+
+    if (userId === null) {
+      ErrorToast("ERROR: Please Login Again!!");
+      return;
+    }
+
+    const body = { customerID: userId, cartItems };
     try {
       await axios.post(
         `${import.meta.env.VITE_API_URL}/product/checkout`,
