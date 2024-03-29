@@ -3,7 +3,7 @@ import walle from "@/assets/walle-hero.jpg";
 
 export default function Hero() {
   return (
-    <div className="w-full py-6 sm:py-12 md:py-24 lg:py-32 xl:py-20">
+    <div className="w-full py-16 md:py-20 lg:py-32 xl:py-20">
       <div className="container px-4 md:px-6">
         <div className="grid gap-6 lg:grid-cols-[1fr_600px] lg:gap-12 xl:grid-cols-[1fr_800px]">
           <img
