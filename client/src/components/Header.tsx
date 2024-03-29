@@ -20,10 +20,10 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full ${
+      className={`${
         isNotRoot &&
-        "bg-white dark:bg-black/70 border border-gray-300 dark:border-opacity-20 "
-      }`}
+        "fixed top-0 bg-white dark:bg-black/70 border border-gray-300 dark:border-opacity-20"
+      } z-50 w-full`}
     >
       <div
         className={`flex flex-wrap items-center justify-center max-w-screen-xl p-2 mx-auto ${
