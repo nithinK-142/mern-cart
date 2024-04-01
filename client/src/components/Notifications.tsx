@@ -8,11 +8,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { ShopContext } from "@/context/shop-context";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useShopContext } from "@/hooks/useAllContext";
 
 const Notifications = () => {
-  const { cartLogs, resetCartLogs, removeLog } = useContext(ShopContext);
+  const { cartLogs, resetCartLogs, removeLog } = useShopContext();
 
   const [isBellClicked, setIsBellClicked] = useState(false);
 

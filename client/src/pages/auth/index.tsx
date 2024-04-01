@@ -2,11 +2,10 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Login from "./login";
 import Register from "./register";
 import { Navigate } from "react-router-dom";
-import { AuthContext, IAuthContext } from "@/context/auth-context";
-import { useContext } from "react";
+import { useAuthContext } from "@/hooks/useAllContext";
 
 const AuthPage = () => {
-  const { isAuthenticated } = useContext<IAuthContext>(AuthContext);
+  const { isAuthenticated } = useAuthContext();
   if (isAuthenticated) return <Navigate to="/shop" />;
 
   return (

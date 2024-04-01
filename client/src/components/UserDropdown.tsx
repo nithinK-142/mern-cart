@@ -10,8 +10,6 @@ import {
   CircleDollarSign,
   LogOutIcon,
 } from "lucide-react";
-import { IShopContext, ShopContext } from "@/context/shop-context";
-import { useContext } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,9 +22,10 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { useGetCartData } from "@/hooks/useGetCartData";
 import { Skeleton } from "./ui/skeleton";
+import { useShopContext } from "@/hooks/useAllContext";
 
 const UserDropdown = () => {
-  const { logout } = useContext<IShopContext>(ShopContext);
+  const { logout } = useShopContext();
   const { availableMoney, availableMoneyLoading } = useGetCartData();
   const validMoney = !availableMoneyLoading && availableMoney > 0;
   const user = localStorage.getItem("username");

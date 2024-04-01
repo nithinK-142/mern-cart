@@ -1,11 +1,10 @@
-import { useContext } from "react";
-import { IShopContext, ShopContext } from "@/context/shop-context";
 import { IProduct } from "@/models/interfaces";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { DollarSign, MinusIcon, PlusIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { CartAddToast, CartRemoveToast } from "@/components/CustomToast";
+import { useShopContext } from "@/hooks/useAllContext";
 
 interface Props {
   product: IProduct;
@@ -20,7 +19,7 @@ export const CartItem = (props: Props) => {
     updateCartItemCount,
     getCartItemCount,
     addLog,
-  } = useContext<IShopContext>(ShopContext);
+  } = useShopContext();
 
   const cartItemCount = getCartItemCount(_id);
 

@@ -13,14 +13,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { useContext } from "react";
-import { SearchContext } from "@/context/search-context";
 import { Button } from "./ui/button";
 import {
   DropdownMenuGroup,
   DropdownMenuItem,
 } from "@radix-ui/react-dropdown-menu";
 import { ResetIcon } from "@radix-ui/react-icons";
+import { useSearchContext } from "@/hooks/useAllContext";
 
 const Search = () => {
   const {
@@ -35,7 +34,7 @@ const Search = () => {
     handleSortChange,
     resetFilters,
     resetSorting,
-  } = useContext(SearchContext);
+  } = useSearchContext();
 
   return (
     <>

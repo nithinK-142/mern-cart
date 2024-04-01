@@ -1,9 +1,8 @@
 import walle from "@/assets/walle-empty-cart.png";
 import gif from "@/assets/gif.gif";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useGetCartData } from "@/hooks/useGetCartData";
 import { IProduct } from "@/models/interfaces";
-import { IShopContext, ShopContext } from "@/context/shop-context";
 import { CartItem } from "./CartItem";
 import { useNavigate } from "react-router-dom";
 import { ErrorToast } from "@/components/CustomToast";
@@ -11,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { DollarSign } from "lucide-react";
 import { icons } from "@/assets/icons";
 import ConfettiExplosion from "react-confetti-explosion";
+import { useShopContext } from "@/hooks/useAllContext";
 
 export const CheckoutPage = () => {
   const [loading, setLoading] = useState(false);
@@ -22,7 +22,7 @@ export const CheckoutPage = () => {
     checkout,
     paymentDone,
     isExploding,
-  } = useContext<IShopContext>(ShopContext);
+  } = useShopContext();
   const hasItemsInCart = Object.keys(cartItems).length > 0;
   const { products } = useGetCartData();
   const totalAmount = getTotalCartAmount();

@@ -1,13 +1,12 @@
-import { AuthContext, IAuthContext } from "@/context/auth-context";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { ErrorToast } from "./CustomToast";
 import { useCookies } from "react-cookie";
+import { useAuthContext } from "@/hooks/useAllContext";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const [cookies] = useCookies(["access_token"]);
-  const { isAuthenticated, setIsAuthenticated } =
-    useContext<IAuthContext>(AuthContext);
+  const { isAuthenticated, setIsAuthenticated } = useAuthContext();
   const [showErrorToast, setShowErrorToast] = useState(false);
 
   useEffect(() => {

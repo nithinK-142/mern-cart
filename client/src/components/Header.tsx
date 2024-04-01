@@ -1,5 +1,4 @@
-import { useContext, useState } from "react";
-import { IAuthContext, AuthContext } from "@/context/auth-context";
+import { useState } from "react";
 import { icons } from "@/assets/icons";
 import { ModeToggle } from "./ModeToggle";
 import Notifications from "./Notifications";
@@ -10,9 +9,10 @@ import { Menu } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { navItems } from "@/utils/constants";
+import { useAuthContext } from "@/hooks/useAllContext";
 
 const Header = () => {
-  const { isAuthenticated } = useContext<IAuthContext>(AuthContext);
+  const { isAuthenticated } = useAuthContext();
   const [isNavOpen, setIsNavOpen] = useState(false);
   const { pathname } = useLocation();
   const isNotRoot = pathname !== "/";

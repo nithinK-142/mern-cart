@@ -1,17 +1,16 @@
 import { CartAddToast } from "@/components/CustomToast";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import { IShopContext, ShopContext } from "@/context/shop-context";
+import { useShopContext } from "@/hooks/useAllContext";
 import { IProduct } from "@/models/interfaces";
 import { DollarSign } from "lucide-react";
-import { useContext } from "react";
 
 interface Props {
   product: IProduct;
 }
 const Product = (props: Props) => {
   const { _id, productName, price, imageURL } = props.product;
-  const { addToCart, addLog } = useContext<IShopContext>(ShopContext);
+  const { addToCart, addLog } = useShopContext();
 
   const handleAddToCart = () => {
     addToCart(_id);

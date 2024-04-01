@@ -1,15 +1,15 @@
 import { useGetCartData } from "@/hooks/useGetCartData";
 import { Product } from "./Product";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Search from "@/components/Search";
-import { SearchContext } from "@/context/search-context";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
+import { useSearchContext } from "@/hooks/useAllContext";
 
 const Home = () => {
   const { productsLoading } = useGetCartData();
   const [displayCount, setDisplayCount] = useState(10);
-  const { filteredAndSortedProducts } = useContext(SearchContext);
+  const { filteredAndSortedProducts } = useSearchContext();
 
   const handleLoadMore = () => setDisplayCount(displayCount + 10);
 

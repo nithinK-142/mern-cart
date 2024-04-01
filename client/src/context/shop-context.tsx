@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 import { useGetCartData } from "@/hooks/useGetCartData";
 import { IProduct } from "@/models/interfaces";
 import axios from "axios";
@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ProductErrors } from "@/models/errors";
 import { ErrorToast, SuccessToast } from "@/components/CustomToast";
-import { AuthContext } from "./auth-context";
+import { useAuthContext } from "@/hooks/useAllContext";
 
 export interface IShopContext {
   addToCart: (itemId: string) => void;
@@ -62,7 +62,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
   const [paymentDone, setPaymentDone] = useState(false);
   const [isExploding, setIsExploding] = useState(false);
 
-  const { setIsAuthenticated } = useContext(AuthContext);
+  const { setIsAuthenticated } = useAuthContext();
   const {
     products,
     availableMoney,

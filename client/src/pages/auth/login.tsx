@@ -7,13 +7,11 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { IShopContext, ShopContext } from "@/context/shop-context";
-import { AuthContext, IAuthContext } from "@/context/auth-context";
 import { UserErrors } from "@/models/errors";
 import { TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { icons } from "@/assets/icons";
@@ -34,14 +32,15 @@ import {
 } from "@/models/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useAuthContext, useShopContext } from "@/hooks/useAllContext";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [, setCookies] = useCookies(["access_token"]);
 
   const navigate = useNavigate();
-  const { addLog } = useContext<IShopContext>(ShopContext);
-  const { setIsAuthenticated } = useContext<IAuthContext>(AuthContext);
+  const { addLog } = useShopContext();
+  const { setIsAuthenticated } = useAuthContext();
 
   const form = useForm();
 

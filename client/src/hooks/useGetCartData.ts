@@ -2,12 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useGetToken } from "./useGetToken";
 import { IProduct } from "@/models/interfaces";
-import { useContext } from "react";
-import { AuthContext, IAuthContext } from "@/context/auth-context";
+import { useAuthContext } from "./useAllContext";
 
 export const useGetCartData = () => {
   const { headers } = useGetToken();
-  const { isAuthenticated } = useContext<IAuthContext>(AuthContext);
+  const { isAuthenticated } = useAuthContext();
   const userId = localStorage.getItem("userID");
   const isReadyToCall = userId !== null && isAuthenticated;
 
