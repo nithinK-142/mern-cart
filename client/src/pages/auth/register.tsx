@@ -12,7 +12,7 @@ import { TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 import axios from "axios";
 import { useState } from "react";
 import { icons } from "@/assets/icons";
-import { UserErrors } from "@/models/errors";
+import { UserErrors } from "@/utils/errors";
 import { useNavigate } from "react-router-dom";
 import { ErrorToast, SuccessToast } from "@/components/CustomToast";
 

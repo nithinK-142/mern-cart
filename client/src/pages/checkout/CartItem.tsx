@@ -1,4 +1,4 @@
-import { IProduct } from "@/models/interfaces";
+import { IProduct } from "@/utils/product";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { DollarSign, MinusIcon, PlusIcon } from "lucide-react";

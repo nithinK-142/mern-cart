@@ -1,5 +1,5 @@
 import { useGetCartData } from "@/hooks/useGetCartData";
-import { IProduct } from "@/models/interfaces";
+import { IProduct } from "@/utils/product";
 import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
 import { icons } from "lucide-react";
 import { createContext, useState } from "react";

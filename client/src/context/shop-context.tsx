@@ -1,11 +1,11 @@
 import { createContext, useState } from "react";
 import { useGetCartData } from "@/hooks/useGetCartData";
-import { IProduct } from "@/models/interfaces";
+import { IProduct } from "@/utils/product";
 import axios from "axios";
 import { useGetToken } from "@/hooks/useGetToken";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { ProductErrors } from "@/models/errors";
+import { ProductErrors } from "@/utils/errors";
 import { ErrorToast, SuccessToast, UserToast } from "@/components/CustomToast";
 import { useAuthContext } from "@/hooks/useAllContext";
 

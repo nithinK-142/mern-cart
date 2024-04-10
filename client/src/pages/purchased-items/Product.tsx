@@ -2,7 +2,7 @@ import { CartAddToast } from "@/components/CustomToast";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { useShopContext } from "@/hooks/useAllContext";
-import { IProduct } from "@/models/interfaces";
+import { IProduct } from "@/utils/product";
 import { DollarSign } from "lucide-react";
 
 interface Props {

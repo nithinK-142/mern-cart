@@ -7,7 +7,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { UserErrors } from "@/models/errors";
+import { UserErrors } from "@/utils/errors";
 import { TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 
 import axios from "axios";

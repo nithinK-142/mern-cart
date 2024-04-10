@@ -2,7 +2,7 @@ import walle from "@/assets/walle-empty-cart.png";
 import gif from "@/assets/gif.gif";
 import { useState } from "react";
 import { useGetCartData } from "@/hooks/useGetCartData";
-import { IProduct } from "@/models/interfaces";
+import { IProduct } from "@/utils/product";
 import { CartItem } from "./CartItem";
 import { useNavigate } from "react-router-dom";
 import { ErrorToast } from "@/components/CustomToast";

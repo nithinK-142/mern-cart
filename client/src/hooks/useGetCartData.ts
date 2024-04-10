@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useGetToken } from "./useGetToken";
-import { IProduct } from "@/models/interfaces";
+import { IProduct } from "@/utils/product";
 import { useAuthContext } from "./useAllContext";
 
 export const useGetCartData = () => {
