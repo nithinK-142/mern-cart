@@ -1,9 +1,7 @@
 import { Router, type Request, type Response } from "express";
-import {
-  ProductModel,
-  checkoutSchema,
-  purchasedItemsSchema,
-} from "../models/product";
+import { checkoutSchema } from "../schemas/checkout";
+import { ProductModel } from "../models/product";
+import { purchasedItemsSchema } from "../schemas/purchasedItems";
 import { UserModel } from "../models/user";
 import { verifyToken } from "./user";
 import { ProductErrors } from "../common/errors";

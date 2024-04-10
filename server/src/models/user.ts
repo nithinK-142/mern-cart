@@ -1,7 +1,6 @@
-import { Schema, model } from "mongoose";
-import { z } from "zod";
+import { Schema, model, Document } from "mongoose";
 
-export interface IUser {
+export interface IUser extends Document {
   _id?: string;
   email: string;
   username: string;
@@ -21,30 +20,3 @@ const UserSchema = new Schema<IUser>({
 });
 
 export const UserModel = model<IUser>("user", UserSchema);
-
-export const registerSchema = z.object({
-  email: z
-    .string({ errorMap: () => ({ message: "Invalid email!" }) })
-    .min(6)
-    .max(30)
-    .email(),
-  username: z
-    .string()
-    .min(3, "Username is too short!")
-    .max(20, "Username is too long!"),
-  password: z
-    .string()
-    .min(6, "Password is too short!")
-    .max(20, "Password is too long!"),
-});
-
-export const loginSchema = z.object({
-  username: z
-    .string()
-    .min(3, "Username is too short!")
-    .max(20, "Username is too long!"),
-  password: z
-    .string()
-    .min(6, "Password is too short!")
-    .max(20, "Password is too long!"),
-});
