@@ -15,7 +15,7 @@ import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { icons } from "@/assets/icons";
-import { ErrorToast, WelcomeToast } from "@/components/CustomToast";
+import { ErrorToast, UserToast } from "@/components/CustomToast";
 import {
   Form,
   FormField,
@@ -67,7 +67,7 @@ const Login = () => {
       localStorage.setItem("username", result.data.username);
       setIsAuthenticated(true);
       navigate("/shop");
-      WelcomeToast(result.data.username);
+      UserToast(`Welcome, ${result.data.username} 👏`);
       addLog(result.data.username + " logged in.");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {

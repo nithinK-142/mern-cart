@@ -1,7 +1,7 @@
 import { icons } from "@/assets/icons";
 import toast from "react-hot-toast";
 
-export const WelcomeToast = (username: string | undefined) => {
+export const UserToast = (message: string) => {
   toast.custom(
     (t) => (
       <div
@@ -9,9 +9,7 @@ export const WelcomeToast = (username: string | undefined) => {
           t.visible ? "animate-enter" : "animate-leave"
         } bg-[#333] dark:text-black text-[#fff] dark:bg-white flex space-x-2 px-4 py-2.5 rounded-lg shadow-lg`}
       >
-        <p className="text-sm font-medium text-center">
-          Welcome, {username} 👏
-        </p>
+        <p className="text-sm font-medium text-center">{message}</p>
       </div>
     ),
     { duration: 2000 }

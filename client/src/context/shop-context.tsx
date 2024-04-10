@@ -6,7 +6,7 @@ import { useGetToken } from "@/hooks/useGetToken";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ProductErrors } from "@/models/errors";
-import { ErrorToast, SuccessToast } from "@/components/CustomToast";
+import { ErrorToast, SuccessToast, UserToast } from "@/components/CustomToast";
 import { useAuthContext } from "@/hooks/useAllContext";
 
 export interface IShopContext {
@@ -203,10 +203,10 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
   const logout = () => {
     setIsAuthenticated(false);
     navigate("/");
+    UserToast(`See you later, ${localStorage.getItem("username")} 👋`);
     localStorage.clear();
     removeCookie("access_token");
     resetCartStates();
-    SuccessToast("Successfully logged out!");
   };
 
   const contextValue: IShopContext = {
