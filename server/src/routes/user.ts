@@ -22,9 +22,16 @@ router.post("/register", async (req: Request, res: Response) => {
       username: escape(req.body.username),
       password: escape(req.body.password),
     });
-    const user = await UserModel.findOne({ username });
 
-    if (user) {
+    const existingEmail = await UserModel.findOne({ email });
+
+    if (existingEmail) {
+      return res.status(400).json({ type: UserErrors.EMAIL_ALREADY_EXISTS });
+    }
+
+    const existingUser = await UserModel.findOne({ username });
+
+    if (existingUser) {
       return res.status(400).json({ type: UserErrors.USERNAME_ALREADY_EXISTS });
     }
 

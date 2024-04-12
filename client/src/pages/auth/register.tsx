@@ -63,7 +63,11 @@ const Register = () => {
     } catch (err: any) {
       if (err.response?.data?.type === UserErrors.USERNAME_ALREADY_EXISTS) {
         ErrorToast("ERROR: Username already in use!");
-      } else ErrorToast("ERROR: Something went wrong!");
+      } else if (err.response?.data?.type === UserErrors.EMAIL_ALREADY_EXISTS) {
+        ErrorToast("ERROR: Email already in use!");
+      } else {
+        ErrorToast("ERROR: Something went wrong!");
+      }
     } finally {
       setLoading(false);
     }
