@@ -3,10 +3,10 @@ config();
 
 import express, { type Request, type Response } from "express";
 import cors from "cors";
-import mongoose from "mongoose";
 import helmet from "helmet";
 import { userRouter } from "./routes/user";
 import { productRouter } from "./routes/product";
+import connectDB from "./database/config";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -37,15 +37,6 @@ app.get("/", (_req: Request, res: Response) => {
 
 app.use("/user", userRouter);
 app.use("/product", productRouter);
-
-const connectDB = async () => {
-  try {
-    await mongoose.connect(`${process.env.MONGODB_URL}`);
-    console.log("MongoDB connected");
-  } catch (error) {
-    console.error(`ERROR: ${error}`);
-  }
-};
 
 connectDB();
 
