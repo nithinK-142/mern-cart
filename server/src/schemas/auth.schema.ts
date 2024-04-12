@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const registerSchema = z.object({
+const authSchema = z.object({
   email: z
     .string({ errorMap: () => ({ message: "Invalid email!" }) })
     .min(6)
@@ -15,3 +15,11 @@ export const registerSchema = z.object({
     .min(6, "Password is too short!")
     .max(20, "Password is too long!"),
 });
+
+export const registerSchema = authSchema.pick({
+  email: true,
+  username: true,
+  password: true,
+});
+
+export const loginSchema = authSchema.pick({ username: true, password: true });

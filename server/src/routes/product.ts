@@ -1,9 +1,11 @@
 import { Router, type Request, type Response } from "express";
-import { checkoutSchema } from "../schemas/checkout";
 import { ProductModel } from "../models/product";
-import { purchasedItemsSchema } from "../schemas/purchasedItems";
 import { UserModel } from "../models/user";
 import { verifyToken } from "./user";
+import {
+  checkoutSchema,
+  purchasedItemsSchema,
+} from "../schemas/purchase.schema";
 import { ProductErrors } from "../common/errors";
 
 const router = Router();
