@@ -204,7 +204,8 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     setIsAuthenticated(false);
     navigate("/");
     UserToast(`See you later, ${localStorage.getItem("username")} 👋`);
-    localStorage.clear();
+    localStorage.removeItem("username");
+    localStorage.removeItem("userID");
     removeCookie("access_token");
     resetCartStates();
   };
