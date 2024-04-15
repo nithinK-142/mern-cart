@@ -6,7 +6,7 @@ import cors from "cors";
 import helmet from "helmet";
 import { userRouter } from "./routes/user";
 import { productRouter } from "./routes/product";
-import connectDB from "./database/config";
+import dbConnect from "./database/config";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -38,7 +38,7 @@ app.get("/", (_req: Request, res: Response) => {
 app.use("/user", userRouter);
 app.use("/product", productRouter);
 
-connectDB();
+dbConnect();
 
 app.listen(PORT, () => console.log("SERVER STARTED"));
 

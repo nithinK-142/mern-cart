@@ -15,8 +15,8 @@ const UserSchema = new Schema<IUser>({
   password: { type: String, required: true },
   availableMoney: { type: Number, default: 5000 },
   purchasedItems: [
-    { type: Schema.Types.ObjectId, ref: "product", default: [] },
+    { type: Schema.Types.ObjectId, ref: "Product", default: [] },
   ],
 });
 
-export const UserModel = model<IUser>("user", UserSchema);
+export const UserModel = model<IUser>("User", UserSchema);

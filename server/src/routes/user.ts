@@ -11,7 +11,7 @@ import { escape } from "validator";
 
 const router = Router();
 
-import { type IUser, UserModel } from "../models/user";
+import { type IUser, UserModel } from "../models/user.model";
 import { UserErrors } from "../common/errors";
 import { registerSchema, loginSchema } from "../schemas/auth.schema";
 

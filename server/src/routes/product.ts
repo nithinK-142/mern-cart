@@ -1,6 +1,6 @@
 import { Router, type Request, type Response } from "express";
-import { ProductModel } from "../models/product";
-import { UserModel } from "../models/user";
+import { ProductModel } from "../models/product.model";
+import { UserModel } from "../models/user.model";
 import { verifyToken } from "./user";
 import {
   checkoutSchema,
