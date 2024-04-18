@@ -23,16 +23,12 @@ router.post("/register", async (req: Request, res: Response) => {
       password: escape(req.body.password),
     });
 
-    const existingEmail = await UserModel.findOne({ email });
-
-    if (existingEmail) {
-      return res.status(400).json({ type: UserErrors.EMAIL_ALREADY_EXISTS });
-    }
-
-    const existingUser = await UserModel.findOne({ username });
+    const existingUser = await UserModel.findOne({
+      $or: [{ username }, { email }],
+    });
 
     if (existingUser) {
-      return res.status(400).json({ type: UserErrors.USERNAME_ALREADY_EXISTS });
+      return res.status(400).json({ type: UserErrors.USER_ALREADY_EXISTS });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);

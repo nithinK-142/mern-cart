@@ -61,10 +61,8 @@ const Register = () => {
       navigate("/shop");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
-      if (err.response?.data?.type === UserErrors.USERNAME_ALREADY_EXISTS) {
-        ErrorToast("ERROR: Username already in use!");
-      } else if (err.response?.data?.type === UserErrors.EMAIL_ALREADY_EXISTS) {
-        ErrorToast("ERROR: Email already in use!");
+      if (err.response?.data?.type === UserErrors.USER_ALREADY_EXISTS) {
+        ErrorToast("ERROR: Username or Email already in use!");
       } else {
         ErrorToast("ERROR: Something went wrong!");
       }
