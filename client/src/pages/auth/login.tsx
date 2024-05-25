@@ -33,6 +33,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAuthContext, useShopContext } from "@/hooks/useAllContext";
+import { PasswordInput } from "@/components/ui/password-input";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -124,7 +125,7 @@ const Login = () => {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input
+                      <PasswordInput
                         {...field}
                         onChange={(e) => field.onChange(e.target.value)}
                         required

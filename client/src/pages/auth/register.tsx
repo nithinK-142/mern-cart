@@ -33,6 +33,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { PasswordInput } from "@/components/ui/password-input";
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
@@ -127,7 +128,7 @@ const Register = () => {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input
+                      <PasswordInput
                         {...field}
                         onChange={(e) => field.onChange(e.target.value)}
                         required
@@ -147,7 +148,7 @@ const Register = () => {
                   <FormItem>
                     <FormLabel>Confirm Password</FormLabel>
                     <FormControl>
-                      <Input
+                      <PasswordInput
                         {...field}
                         onChange={(e) => field.onChange(e.target.value)}
                         required
