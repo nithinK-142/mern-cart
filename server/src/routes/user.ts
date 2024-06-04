@@ -11,9 +11,9 @@ import { escape } from "validator";
 
 const router = Router();
 
-import { type IUser, UserModel } from "../models/user.model";
+import { type IUser, UserModel } from "../model/user.model";
 import { UserErrors } from "../common/errors";
-import { registerSchema, loginSchema } from "../schemas/auth.schema";
+import { registerSchema, loginSchema } from "../schema/auth.schema";
 
 router.post("/register", async (req: Request, res: Response) => {
   try {
