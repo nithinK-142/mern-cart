@@ -8,12 +8,16 @@ export const verifyToken = (
 ) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
-    jwt.verify(authHeader, process.env.SECRET as string, (err) => {
-      if (err) {
-        return res.sendStatus(403);
+    jwt.verify(
+      authHeader.split(" ")[1],
+      process.env.SECRET as string,
+      (err) => {
+        if (err) {
+          return res.sendStatus(403);
+        }
+        next();
       }
-      next();
-    });
+    );
   } else {
     return res.sendStatus(401);
   }
