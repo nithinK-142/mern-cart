@@ -12,7 +12,7 @@ export const useGetCartData = () => {
 
   const fetchProducts = async () => {
     const response = await axios.get<{ products: IProduct[] }>(
-      `${import.meta.env.VITE_API_URL}/product`,
+      `${import.meta.env.VITE_API_URL}/api/v1/product`,
       {
         headers,
       }
@@ -22,7 +22,9 @@ export const useGetCartData = () => {
 
   const fetchPurchasedItems = async () => {
     const response = await axios.get<{ purchasedItems: IProduct[] }>(
-      `${import.meta.env.VITE_API_URL}/product/purchased-items/${userId}`,
+      `${
+        import.meta.env.VITE_API_URL
+      }/api/v1/product/purchased-items/${userId}`,
       { headers }
     );
     return response.data.purchasedItems;
@@ -30,7 +32,7 @@ export const useGetCartData = () => {
 
   const fetchAvailableMoney = async () => {
     const response = await axios.get<{ availableMoney: string }>(
-      `${import.meta.env.VITE_API_URL}/user/available-money/${userId}`,
+      `${import.meta.env.VITE_API_URL}/api/v1/user/available-money/${userId}`,
       { headers }
     );
     return parseFloat(response.data.availableMoney);

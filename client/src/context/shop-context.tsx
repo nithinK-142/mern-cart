@@ -173,7 +173,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     const body = { customerID: userId, cartItems };
     try {
       await axios.post(
-        `${import.meta.env.VITE_API_URL}/product/checkout`,
+        `${import.meta.env.VITE_API_URL}/api/v1/product/checkout`,
         body,
         {
           headers,
