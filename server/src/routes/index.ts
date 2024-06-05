@@ -4,7 +4,7 @@ import { userRouter } from "./user.routes";
 
 const router = Router();
 
-router.use("/api/user", userRouter);
-router.use("/api/product", productRouter);
+router.use("/api/v1/user", userRouter);
+router.use("/api/v1/product", productRouter);
 
 export default router;
