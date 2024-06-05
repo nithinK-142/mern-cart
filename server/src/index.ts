@@ -4,9 +4,8 @@ config();
 import express, { type Request, type Response } from "express";
 import cors from "cors";
 import helmet from "helmet";
-import { userRouter } from "./routes/user";
-import { productRouter } from "./routes/product";
 import dbConnect from "./database/config";
+import router from "./routes";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -35,8 +34,7 @@ app.get("/", (_req: Request, res: Response) => {
   res.status(200).send("Mern Cart API");
 });
 
-app.use("/user", userRouter);
-app.use("/product", productRouter);
+app.use(router);
 
 dbConnect();
 
