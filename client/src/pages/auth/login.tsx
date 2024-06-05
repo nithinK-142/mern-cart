@@ -34,6 +34,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAuthContext, useShopContext } from "@/hooks/useAllContext";
 import { PasswordInput } from "@/components/ui/password-input";
+import { jwtDecode, JwtPayload } from "jwt-decode";
+
+interface AccessToken extends JwtPayload {
+  id: string;
+  username: string;
+}
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -63,13 +69,16 @@ const Login = () => {
 
       form.reset();
 
-      setCookies("access_token", result.data.token);
-      localStorage.setItem("userID", result.data.userID);
-      localStorage.setItem("username", result.data.username);
+      const accessToken = result.data.access_token;
+      setCookies("access_token", accessToken);
+      const { id, username } = jwtDecode<AccessToken>(accessToken);
+      localStorage.setItem("userID", id);
+      localStorage.setItem("username", username);
+
       setIsAuthenticated(true);
       navigate("/shop");
-      UserToast(`Welcome, ${result.data.username} 👏`);
-      addLog(result.data.username + " logged in.");
+      UserToast(`Welcome, ${username} 👏`);
+      addLog(username + " logged in.");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       let errorMessage: string = "";

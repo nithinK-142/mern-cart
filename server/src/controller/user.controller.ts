@@ -1,9 +1,4 @@
-import {
-  type Request,
-  type Response,
-  type NextFunction,
-  type CookieOptions,
-} from "express";
+import type { Request, Response, CookieOptions } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { escape } from "validator";
@@ -58,7 +53,10 @@ export const loginUser = async (req: Request, res: Response) => {
       return res.status(400).json({ type: UserErrors.WRONG_CREDENTIALS });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.SECRET as string);
+    const token = jwt.sign(
+      { id: user._id, username: user.username },
+      process.env.SECRET as string
+    );
 
     const cookieOptions: CookieOptions = {
       httpOnly: true,
@@ -66,9 +64,9 @@ export const loginUser = async (req: Request, res: Response) => {
       secure: true,
     };
 
-    res.cookie("authToken", token, cookieOptions);
+    res.cookie("access_token", token, cookieOptions);
 
-    res.json({ token, userID: user._id, username: user.username });
+    res.json({ access_token: token });
   } catch (err) {
     res.status(500).json({ type: err });
   }
