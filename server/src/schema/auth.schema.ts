@@ -4,12 +4,12 @@ const authSchema = z.object({
   email: z
     .string({ errorMap: () => ({ message: "Invalid email!" }) })
     .min(6)
-    .max(30)
+    .max(50)
     .email(),
   username: z
     .string()
     .min(3, "Username is too short!")
-    .max(20, "Username is too long!"),
+    .max(50, "Username is too long!"),
   password: z
     .string()
     .min(6, "Password is too short!")

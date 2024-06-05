@@ -22,7 +22,7 @@ import {
   registerSchema,
   registerSchemaType,
   defaultValues,
-} from "@/schemas/registerSchema";
+} from "@/schema/registerSchema";
 
 import {
   Form,

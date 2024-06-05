@@ -13,13 +13,13 @@ export const registerSchema = z
         },
       })
       .min(6)
-      .max(30)
+      .max(50)
       .email(),
     username: z
       .string()
       .trim()
       .min(3, "Username is too short!")
-      .max(20, "Username is too long!"),
+      .max(50, "Username is too long!"),
     password: z
       .string()
       .trim()

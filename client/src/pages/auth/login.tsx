@@ -29,7 +29,7 @@ import {
   loginSchema,
   loginSchemaType,
   defaultValues,
-} from "@/schemas/loginSchema";
+} from "@/schema/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAuthContext, useShopContext } from "@/hooks/useAllContext";
