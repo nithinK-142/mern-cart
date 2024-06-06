@@ -1,11 +1,11 @@
-import type { Request, Response, CookieOptions } from "express";
-import jwt from "jsonwebtoken";
+import type { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { escape } from "validator";
 
 import { type IUser, UserModel } from "../model/user.model";
 import { UserErrors } from "../common/errors";
 import { registerSchema, loginSchema } from "../schema/auth.schema";
+import { generateAccessToken } from "../utils/generateToken";
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
@@ -53,20 +53,16 @@ export const loginUser = async (req: Request, res: Response) => {
       return res.status(400).json({ type: UserErrors.WRONG_CREDENTIALS });
     }
 
-    const token = jwt.sign(
-      { id: user._id, username: user.username },
-      process.env.SECRET as string
-    );
+    const accessToken = generateAccessToken({
+      id: user._id!,
+      username: user.username,
+    });
 
-    const cookieOptions: CookieOptions = {
-      httpOnly: true,
-      sameSite: "strict",
-      secure: true,
-    };
+    res.cookie("access_token", accessToken, {
+      maxAge: Number(process.env.ACCESS_TOKEN_MAXAGE),
+    });
 
-    res.cookie("access_token", token, cookieOptions);
-
-    res.json({ access_token: token });
+    res.json({ access_token: accessToken });
   } catch (err) {
     res.status(500).json({ type: err });
   }
