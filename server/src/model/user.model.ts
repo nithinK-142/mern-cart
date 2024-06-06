@@ -7,6 +7,8 @@ export interface IUser extends Document {
   password: string;
   availableMoney: number;
   purchasedItems: string[];
+  refreshToken: String;
+  refreshTokenExpiry: Date;
 }
 
 const UserSchema = new Schema<IUser>({
@@ -17,6 +19,8 @@ const UserSchema = new Schema<IUser>({
   purchasedItems: [
     { type: Schema.Types.ObjectId, ref: "Product", default: [] },
   ],
+  refreshToken: { type: String },
+  refreshTokenExpiry: { type: Date },
 });
 
 export const UserModel = model<IUser>("User", UserSchema);

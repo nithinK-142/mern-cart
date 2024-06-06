@@ -1,11 +1,14 @@
-import type { Request, Response } from "express";
+import type { CookieOptions, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { escape } from "validator";
 
 import { type IUser, UserModel } from "../model/user.model";
 import { UserErrors } from "../common/errors";
 import { registerSchema, loginSchema } from "../schema/auth.schema";
-import { generateAccessToken } from "../utils/generateToken";
+import {
+  generateAccessToken,
+  generateRefreshTokens,
+} from "../utils/generateToken";
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
@@ -58,6 +61,22 @@ export const loginUser = async (req: Request, res: Response) => {
       username: user.username,
     });
 
+    const { refreshToken, refreshTokenExpiry } = generateRefreshTokens(
+      user._id!
+    );
+
+    user.refreshToken = refreshToken;
+    user.refreshTokenExpiry = refreshTokenExpiry;
+    await user.save();
+
+    const cookieOptions: CookieOptions = {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      maxAge: Number(process.env.REFRESH_TOKEN_MAXAGE),
+    };
+
+    res.cookie("refresh_token", refreshToken, cookieOptions);
     res.cookie("access_token", accessToken, {
       maxAge: Number(process.env.ACCESS_TOKEN_MAXAGE),
     });
