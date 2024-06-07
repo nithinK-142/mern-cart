@@ -10,7 +10,7 @@ export const verifyToken = (
   if (authHeader) {
     jwt.verify(
       authHeader.split(" ")[1],
-      process.env.SECRET as string,
+      process.env.ACCESS_TOKEN_SECRET as string,
       (err) => {
         if (err) {
           return res.sendStatus(403);
@@ -18,7 +18,5 @@ export const verifyToken = (
         next();
       }
     );
-  } else {
-    return res.sendStatus(401);
-  }
+  } else return res.sendStatus(401);
 };
