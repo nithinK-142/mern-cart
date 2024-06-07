@@ -1,4 +1,4 @@
-import type { CookieOptions, Request, Response } from "express";
+import type { Request, Response, CookieOptions } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { escape } from "validator";

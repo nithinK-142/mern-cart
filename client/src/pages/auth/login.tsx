@@ -12,7 +12,6 @@ import { TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 
 import axios from "axios";
 import { useState } from "react";
-import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { icons } from "@/assets/icons";
 import { ErrorToast, UserToast } from "@/components/CustomToast";
@@ -43,7 +42,6 @@ interface AccessToken extends JwtPayload {
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
-  const [, setCookies] = useCookies(["access_token"]);
 
   const navigate = useNavigate();
   const { addLog } = useShopContext();
@@ -69,9 +67,7 @@ const Login = () => {
 
       form.reset();
 
-      const accessToken = result.data.access_token;
-      setCookies("access_token", accessToken);
-      const { id, username } = jwtDecode<AccessToken>(accessToken);
+      const { id, username } = jwtDecode<AccessToken>(result.data.access_token);
       localStorage.setItem("userID", id);
       localStorage.setItem("username", username);
 
