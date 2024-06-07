@@ -1,5 +1,6 @@
 import type { CookieOptions, Request, Response } from "express";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { escape } from "validator";
 
 import { type IUser, UserModel } from "../model/user.model";
@@ -100,5 +101,63 @@ export const getAvailableMoney = async (req: Request, res: Response) => {
     res.json({ availableMoney: encodedAvailableMoney });
   } catch (err) {
     res.status(500).json({ type: err });
+  }
+};
+
+interface RefreshTokenPayload {
+  id: string;
+  iat: number;
+  exp: number;
+}
+interface RefreshTokenRequest extends Request {
+  refreshTokenPayload?: RefreshTokenPayload;
+}
+
+export const generateTokens = async (
+  req: RefreshTokenRequest,
+  res: Response
+) => {
+  try {
+    const { access_token, refresh_token } = req.cookies;
+    if (!access_token && !refresh_token) {
+      return res.sendStatus(401);
+    }
+
+    const payload = jwt.verify(
+      refresh_token,
+      process.env.REFRESH_TOKEN_SECRET!
+    ) as RefreshTokenPayload;
+    req.refreshTokenPayload = payload;
+
+    const user = await UserModel.findOne({ _id: req.refreshTokenPayload?.id });
+    if (!user) {
+      return res.sendStatus(403);
+    }
+
+    if (
+      user.refreshToken !== refresh_token ||
+      user.refreshTokenExpiry < new Date()
+    ) {
+      return res.status(403).json({ message: "Please login again." });
+    }
+
+    const { id, username } = user;
+    const accessToken = generateAccessToken({ id: id.toString(), username });
+
+    const cookieOptions: CookieOptions = {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      maxAge: user.refreshTokenExpiry.getTime() - Date.now(),
+    };
+
+    console.log("Refreshing token");
+    res.cookie("refresh_token", user.refreshToken, cookieOptions);
+    res.cookie("access_token", accessToken, {
+      maxAge: Number(process.env.ACCESS_TOKEN_MAXAGE),
+    });
+    return res.status(200).json({ message: "Token Refreshed" });
+  } catch (error) {
+    return res.sendStatus(403);
   }
 };
