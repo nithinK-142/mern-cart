@@ -3,6 +3,7 @@ import express, { type Request, type Response } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
+import faviconMiddleware from "./middleware/favicon.middleware";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(faviconMiddleware);
 
 // routes
 import router from "./routes";
