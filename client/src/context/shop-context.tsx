@@ -1,13 +1,12 @@
 import { createContext, useState } from "react";
 import { useGetCartData } from "@/hooks/useGetCartData";
 import { IProduct } from "@/utils/product";
-import axios from "axios";
-import { useGetToken } from "@/hooks/useGetToken";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { ProductErrors } from "@/utils/errors";
 import { ErrorToast, SuccessToast, UserToast } from "@/components/CustomToast";
 import { useAuthContext } from "@/hooks/useAllContext";
+import { useAxiosInstance } from "@/hooks/useAxiosInstance";
 
 export interface IShopContext {
   addToCart: (itemId: string) => void;
@@ -71,8 +70,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
     fetchPurchasedItems,
   } = useGetCartData();
 
-  const { headers } = useGetToken();
-
+  const { axiosProductInstance } = useAxiosInstance();
   const navigate = useNavigate();
 
   const getCartItemCount = (itemId: string): number => {
@@ -172,13 +170,7 @@ export const ShopContextProvider = (props: { children: React.ReactNode }) => {
 
     const body = { customerID: userId, cartItems };
     try {
-      await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/v1/product/checkout`,
-        body,
-        {
-          headers,
-        }
-      );
+      await axiosProductInstance.post("/checkout", body);
       afterCheckout();
     } catch (err) {
       let errorMessage: string = "";

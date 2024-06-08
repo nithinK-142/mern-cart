@@ -9,7 +9,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 
-import axios from "axios";
 import { useState } from "react";
 import { icons } from "@/assets/icons";
 import { UserErrors } from "@/utils/errors";
@@ -34,11 +33,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { PasswordInput } from "@/components/ui/password-input";
+import { useAxiosInstance } from "@/hooks/useAxiosInstance";
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const { axiosUserInstance } = useAxiosInstance();
   const form = useForm();
 
   const { handleSubmit, control } = useForm<registerSchemaType>({
@@ -50,7 +51,7 @@ const Register = () => {
     try {
       setLoading(true);
 
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/user/register`, {
+      await axiosUserInstance.post("/register", {
         email: formData.email,
         username: formData.username,
         password: formData.password,

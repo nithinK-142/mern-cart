@@ -10,7 +10,6 @@ import { Input } from "@/components/ui/input";
 import { UserErrors } from "@/utils/errors";
 import { TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { icons } from "@/assets/icons";
@@ -34,8 +33,9 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useAuthContext, useShopContext } from "@/hooks/useAllContext";
 import { PasswordInput } from "@/components/ui/password-input";
 import { jwtDecode, JwtPayload } from "jwt-decode";
+import { useAxiosInstance } from "@/hooks/useAxiosInstance";
 
-interface AccessToken extends JwtPayload {
+export interface AccessToken extends JwtPayload {
   id: string;
   username: string;
 }
@@ -47,6 +47,7 @@ const Login = () => {
   const { addLog } = useShopContext();
   const { setIsAuthenticated } = useAuthContext();
 
+  const { axiosUserInstance } = useAxiosInstance();
   const form = useForm();
 
   const { handleSubmit, control } = useForm<loginSchemaType>({
@@ -57,13 +58,11 @@ const Login = () => {
   const onSubmit: SubmitHandler<loginSchemaType> = async (formData) => {
     try {
       setLoading(true);
-      const result = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/v1/user/login`,
-        {
-          username: formData?.username,
-          password: formData?.password,
-        }
-      );
+
+      const result = await axiosUserInstance.post("/login", {
+        username: formData?.username,
+        password: formData?.password,
+      });
 
       form.reset();
 

@@ -1,39 +1,31 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { useGetToken } from "./useGetToken";
 import { IProduct } from "@/utils/product";
 import { useAuthContext } from "./useAllContext";
+import { useAxiosInstance } from "./useAxiosInstance";
 
 export const useGetCartData = () => {
-  const { headers } = useGetToken();
+  const { axiosUserInstance, axiosProductInstance } = useAxiosInstance();
   const { isAuthenticated } = useAuthContext();
   const userId = localStorage.getItem("userID");
   const isReadyToCall = userId !== null && isAuthenticated;
 
   const fetchProducts = async () => {
-    const response = await axios.get<{ products: IProduct[] }>(
-      `${import.meta.env.VITE_API_URL}/api/v1/product`,
-      {
-        headers,
-      }
+    const response = await axiosProductInstance.get<{ products: IProduct[] }>(
+      "/"
     );
     return response.data.products;
   };
 
   const fetchPurchasedItems = async () => {
-    const response = await axios.get<{ purchasedItems: IProduct[] }>(
-      `${
-        import.meta.env.VITE_API_URL
-      }/api/v1/product/purchased-items/${userId}`,
-      { headers }
-    );
+    const response = await axiosProductInstance.get<{
+      purchasedItems: IProduct[];
+    }>(`/purchased-items/${userId}`);
     return response.data.purchasedItems;
   };
 
   const fetchAvailableMoney = async () => {
-    const response = await axios.get<{ availableMoney: string }>(
-      `${import.meta.env.VITE_API_URL}/api/v1/user/available-money/${userId}`,
-      { headers }
+    const response = await axiosUserInstance.get<{ availableMoney: string }>(
+      `/available-money/${userId}`
     );
     return parseFloat(response.data.availableMoney);
   };
