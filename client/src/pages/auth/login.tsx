@@ -34,6 +34,7 @@ import { useAuthContext, useShopContext } from "@/hooks/useAllContext";
 import { PasswordInput } from "@/components/ui/password-input";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import { useAxiosInstance } from "@/hooks/useAxiosInstance";
+import { useCookies } from "react-cookie";
 
 export interface AccessToken extends JwtPayload {
   id: string;
@@ -42,6 +43,7 @@ export interface AccessToken extends JwtPayload {
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
+  const [cookies, setCookie] = useCookies(["access_token"]);
 
   const navigate = useNavigate();
   const { addLog } = useShopContext();
@@ -65,6 +67,17 @@ const Login = () => {
       });
 
       form.reset();
+
+      const accessTokenMaxAge = eval(import.meta.env.VITE_ACCESS_TOKEN_MAXAGE);
+
+      if (!cookies.access_token) {
+        setCookie("access_token", result.data.access_token, {
+          path: "/",
+          maxAge: accessTokenMaxAge / 1000,
+          sameSite: "lax",
+          secure: import.meta.env.PROD,
+        });
+      }
 
       const { id, username } = jwtDecode<AccessToken>(result.data.access_token);
       localStorage.setItem("userID", id);

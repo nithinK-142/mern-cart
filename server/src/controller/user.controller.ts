@@ -78,9 +78,14 @@ export const loginUser = async (req: Request, res: Response) => {
     };
 
     res.cookie("refresh_token", refreshToken, cookieOptions);
-    res.cookie("access_token", accessToken, {
+
+    const accessTokenCookieOptions: CookieOptions = {
+      ...cookieOptions,
       maxAge: Number(process.env.ACCESS_TOKEN_MAXAGE),
-    });
+      httpOnly: false,
+    };
+
+    res.cookie("access_token", accessToken, accessTokenCookieOptions);
 
     res.json({ access_token: accessToken });
   } catch (err) {
@@ -109,6 +114,7 @@ interface RefreshTokenPayload {
   iat: number;
   exp: number;
 }
+
 interface RefreshTokenRequest extends Request {
   refreshTokenPayload?: RefreshTokenPayload;
 }
